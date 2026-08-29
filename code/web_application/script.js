@@ -18,6 +18,15 @@ function checkFields() {
     terms.focus();
     return false;
   }
-
-  return true;
+  //Add event listener to the form submission to convert
+  const value = {
+    packageName: document.getElementById("packageName").value,
+    vulnerabilityName: document.getElementById("vulnerabilityName").value,
+    reporterEmail: document.getElementById("reporterEmail").value,
+    severity: document.getElementById("severity").value,
+    issueDescription: document.getElementById("issuedescrip").value,
+    terms: document.getElementById("terms").checked};
+    const jsonString = JSON.stringify(value);
+    console.log(jsonString);
+    return false;
 }
