@@ -18,7 +18,8 @@ function checkFields() {
     terms.focus();
     return false;
   }
-  //Add event listener to the form submission to convert
+
+  // Collect values from the form fields and create a JSON object
   const value = {
     packageName: document.getElementById("packageName").value,
     vulnerabilityName: document.getElementById("vulnerabilityName").value,
@@ -28,5 +29,34 @@ function checkFields() {
     terms: document.getElementById("terms").checked};
     const jsonString = JSON.stringify(value);
     console.log(jsonString);
-    return false;
+
+  // extract the primary field and email field from the parsed object 
+  const parsedObject = JSON.parse(jsonString);
+  // log their values in the console
+  const { packageName, reporterEmail } = parsedObject;
+  console.log(packageName, reporterEmail);
+
+  // Use spread operator
+  // Add a new field submissionDate with the current date and time to the parsed object
+  const updatedpObject = {
+  ...parsedObject,
+  submissionDate: new Date().toISOString()
+  };
+
+  // Log the updated parsed object in the console
+  console.log(updatedpObject);
+
+  // closure to track the number of times the form has been submitted successfully
+  tracker();
+  return false;
 }
+
+// Track how many times the form has been successfully submitted and log the submission count each time the form is submitted
+const tracker = (() => {
+  let count = 0;
+
+  return function () {
+    count++;
+    console.log("Submission count:", count);
+  };
+})();
