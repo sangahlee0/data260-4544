@@ -1,4 +1,5 @@
-function Validation = () => {
+// js function with arrow function syntax
+const Validation = () => {
   const textFields = document.querySelectorAll(
     'input[type="text"], textarea'
   );
@@ -54,7 +55,6 @@ function Validation = () => {
 // Track how many times the form has been successfully submitted and log the submission count each time the form is submitted
 const tracker = (() => {
   let count = 0;
-
   return function () {
     count++;
     console.log("Submission count:", count);
