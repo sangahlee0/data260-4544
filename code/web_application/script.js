@@ -1,5 +1,15 @@
 // js function with arrow function syntax
 const Validation = () => {
+  // get the issue description field and check if it has more than 25 characters
+  const issueDescr = document.getElementById("IssueDescription");
+
+  if (issueDescr.value.trim().length <= 25) {
+    alert("The issue description must contain more than 25 characters.");
+    issueDescr.focus();
+    return false;
+  }
+
+  // get all text fields and check if they have more than 25 characters
   const textFields = document.querySelectorAll(
     'input[type="text"], textarea'
   );
