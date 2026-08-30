@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW1-SANG AH LEE</title>
+  </head>
+
+  <body>
+    <h1>Open-source package vulnerabilities</h1>
+    <h2> Please input/choose the following: </h2>
+      <ul>
+        <li>Package Name</li>
+        <li>Vulnerability Name</li>
+        <li>Reporter Email</li>
+        <li>Content Description</li>
+        <li>Severity</li>
+      </ul>
+      <br>
+      <dt><strong>Input the open-source package vulnerabilites</strong></dt>
+    <br>
+    <form onsubmit="return Validation()">
+      <br>
+      <label for="PackageName"> Package Name: </label>
+      <br>
+      <input id="packageName" type="text" required>
+      <br>
+      <label for="VulnerabilityName"> Vulnerability Name: </label>
+      <br>
+      <input id="vulnerabilityName" type = "text" required>
+      <br>
+      <label for="ReporterEmail"> Reporter Email: </label>
+      <br>
+      <input id="reporterEmail" type = "text" required>
+      <br>
+      <label for="Severity"> Severity: </label>
+      <br>
+      <select id="Severity" name="Severity" required>
+        <option disabled selected value> -- select an option -- </option>
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+        <option>Critical</option>
+      </select>
+      <p><label for="IssueDescription">Issue Description:</label></p>
+      <textarea 
+        id="IssueDescription" 
+        name="IssueDescription" 
+        rows="4" 
+        cols="50"
+        placeholder="Include a description of the vulnerability issue." required></textarea>
+      <br><br>
+      <input type="checkbox" id="terms" name="terms" value="terms">
+      <label for="terms">I agree to the terms and conditions.</label><br>
+      <br>
+  <input type="submit" value="Submit">
+    </form>
+  <!--Add script tag at end of HTML file -->
+  <script src="./script.js"></script>
+  </body>
+</html>
+
+
