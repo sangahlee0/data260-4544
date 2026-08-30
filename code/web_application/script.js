@@ -1,4 +1,4 @@
-function checkFields() {
+function Validation = () => {
   const textFields = document.querySelectorAll(
     'input[type="text"], textarea'
   );
