@@ -1,4 +1,4 @@
 .PHONY: verify-hw01
 
 verify-hw01:
-	python3 verify_hw01.py
+	cd code && python3 verify-hw01.py

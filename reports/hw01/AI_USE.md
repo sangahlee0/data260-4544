@@ -1,6 +1,11 @@
-(1) what you used an AI assistant for and what you did yourself; 
-- I used the AI assistant to understand certain 
-(2) one AI-produced output that was wrong/unsuitable, or one thing you independently verified; 
-(3) how you detected the problem or verified the result;
-- I utilized AI to check why I was getting certain error messages, or why instances were not working. One instance is when I was running the experiment, but when I ran the command, it did not show me anything. I utilized AI to find different ways to test it, and realized that when I specify the model (ex. --model qwen3.8b), it fixed the issue and I was able to get my results
-(4) what you changed and why it works now.
+### (1) What you used an AI assistant for and what you did yourself; 
+- I used the AI assistant to understand certain syntax; especially in places where I was unsure why a certain logic was necessary. Some specific moments are when I was figuring out the logic between what a planner and reviewer does, and why they were required.
+- I searched the internet for HTML examples, and searched up different HTML code to create the website. I also coded myself, only utilizing AI for clarification or for syntax errors.
+- I also drafted the md files myself, and utilized an assistant to check and make sure the format was more pleasing to see.
+- I also utilized AI to figure out how to incorporate Makefile into my project.
+### (2) One AI-produced output that was wrong/unsuitable, or one thing you independently verified;
+- An output that I verified was when I was trying to figure out how to run the tests. I was running the model, but it did not return any results. After some digging, I realized that I need to specify the model for the tests to run properly. 
+### (3) How you detected the problem or verified the result;
+- I utilized AI to check why I was getting certain error messages, or why instances were not working. One instance is when I was running the experiment, but when I ran the command, it did not show me anything. I utilized AI to find different ways to test it, and realized that when I specify the model (ex. --model qwen2.5:3b), it fixed the issue and I was able to get my results
+### (4) What you changed and why it works now;
+- I changed the model from 'qwen3.8b' to 'qwen2.5:3b'. I started with the first option, but the latency between each run started to grow with more than 10 minutes in between runs, and it was within the first 5 runs out of 40. This caused me to look up other options using AI, and after looking at what was causing the lag, I determined that it was a hardware issue, and lowered to a different model for this assignment. This fixed the issue I was facing, and I did not have to wait 7 hours for my tests to run.
