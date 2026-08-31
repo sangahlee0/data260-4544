@@ -9,19 +9,6 @@ const Validation = () => {
         return false;
     }
 
-    // get all text fields and check if they have more than 25 characters
-    const textFields = document.querySelectorAll(
-        'input[type="text"], textarea'
-    );
-
-    for (const field of textFields) {
-        if (field.value.trim().length <= 25) {
-            alert("Each text field must contain more than 25 characters.");
-            field.focus();
-            return false;
-        }
-    }
-
     const terms = document.getElementById("terms");
 
     if (!terms.checked) {
@@ -32,11 +19,11 @@ const Validation = () => {
 
     // Collect values from the form fields and create a JSON object
     const value = {
-        packageName: document.getElementById("packageName").value,
-        vulnerabilityName: document.getElementById("vulnerabilityName").value,
-        reporterEmail: document.getElementById("reporterEmail").value,
-        severity: document.getElementById("severity").value,
-        issueDescription: document.getElementById("issueDescription").value,
+        packageName: document.getElementById("PackageName").value,
+        vulnerabilityName: document.getElementById("VulnerabilityName").value,
+        reporterEmail: document.getElementById("ReporterEmail").value,
+        severity: document.getElementById("Severity").value,
+        issueDescription: document.getElementById("IssueDescription").value,
         terms: document.getElementById("terms").checked
     };
     const jsonString = JSON.stringify(value);

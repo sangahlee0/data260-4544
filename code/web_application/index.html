@@ -19,21 +19,21 @@
     <li>Severity</li>
   </ul>
   <br>
-  <dt><strong>Input the open-source package vulnerabilites</strong></dt>
+  <p><strong>Input the open-source package vulnerabilites</strong></p>
   <br>
   <form onsubmit="return Validation()">
     <br>
     <label for="PackageName"> Package Name: </label>
     <br>
-    <input id="packageName" type="text" required>
+    <input id="PackageName" type="text" required autofocus placeholder="e.g. numpy, lodash, etc.">
     <br>
     <label for="VulnerabilityName"> Vulnerability Name: </label>
     <br>
-    <input id="vulnerabilityName" type="text" required>
+    <input id="VulnerabilityName" type="text" required placeholder="e.g. Login page security bug">
     <br>
     <label for="ReporterEmail"> Reporter Email: </label>
     <br>
-    <input id="reporterEmail" type="text" required>
+    <input id="ReporterEmail" type="email" required placeholder="Enter your email">
     <br>
     <label for="Severity"> Severity: </label>
     <br>
@@ -51,7 +51,7 @@
     <input type="checkbox" id="terms" name="terms" value="terms">
     <label for="terms">I agree to the terms and conditions.</label><br>
     <br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Report Vulnerability">
   </form>
   <!--Add script tag at end of HTML file -->
   <script src="./script.js"></script>
