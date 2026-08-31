@@ -1,0 +1,35 @@
+# HW01 Reproducible Run Instructions
+Follow these steps to reproduce the experiment and verification script for HW01:
+
+**Needs:** Python 3.11/3.12, Ollama, Docker, AWS Account (optional for ECS deployment)
+
+1. **Python Version:** Ensure you are using **Python 3.11 or 3.12** (avoid Python 3.13 due to NumPy/LangChain compatibility issues).
+2. **Ollama Setup:** Ensure Ollama is installed and running locally, and pull the required tool-capable local model:
+   ```bash
+   ollama serve
+   ollama pull qwen2.5:3b
+
+3. **Use a virtual environment:** 
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+
+4. Run the Self-Check Verification Script:
+    ```bash
+    make verify-hw01
+
+5. Run the agents:
+    ```bash
+    python3 code/agents_demo.py --model qwen2.5:3b --title "Add Vulnerability Name" --content "Enter your description text here."
+
+## To run the 40 Non-Determinism Experiments:
+```bash 
+python3 code/agents_demo.py --experiment --model qwen2.5:3b
+
+## Docker running
+docker build -t hw01-webapp .
+docker run -d -p 8080:80 --name hw01-container hw01-webapp
+
+## Deploy to AWS ECS
+docker tag hw01-webapp:latest <your-aws-account-id>.dkr.ecr.<region>.amazonaws.com/hw01-webapp:latest
+docker push <your-aws-account-id>.dkr.ecr.<region>.amazonaws.com/hw01-webapp:latest

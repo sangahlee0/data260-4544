@@ -1,0 +1,4 @@
+{
+  "title": "Login page security bug",
+  "content": "An unvalidated input vulnerability in the login form allows attackers to bypass authentication controls and accessing sensitive records."
+}
