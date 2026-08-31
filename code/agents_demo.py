@@ -1,8 +1,8 @@
+from email.policy import strict
 import argparse, json, os, re, sys, time
 from dataclasses import dataclass
 from typing import List, Dict, Any, Iterable, Tuple
 
-from code.agents_demo import finalize
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -245,9 +245,21 @@ class SimpleAgent:
         raw = chain.invoke({"task": task, "history": history_text})
         return parse_and_coerce(raw, title, content, strict)
 
+def run_pipeline(planner, reviewer, finalizer, task, title, content, strict):
+    """3-agent pipeline run planner -> reviewer -> finalizer and returns the final output and transcript."""
+    transcript = []
+    
+    a = planner.respond(transcript, task, title, content, strict)
+    transcript.append({"role": "Planner", "content": a.get("message", "")})
+    
+    b = reviewer.respond(transcript, task, title, content, strict)
+    transcript.append({"role": "Reviewer", "content": b.get("message", "")})
+    
+    final = finalizer.respond(transcript, task, title, content, strict)
+    return final, transcript
 
 # Experiment Runs
-def measure_nondeterminism(title: str, content: str, strict: bool = False) -> List[Dict[str, Any]]:
+def measure_nondeterminism(model_name: str, base_url: str, strict: bool = False) -> List[Dict[str, Any]]:
     """Runs 40 benchmark iterations (20 at temp=0.7, 20 at temp=0.0) and returns results with tags, summary, and latency."""
     # Domain-relevant input
     input_path = Path("reports/hw01/cases/nondeterminism_input.json")
@@ -255,26 +267,47 @@ def measure_nondeterminism(title: str, content: str, strict: bool = False) -> Li
         data = json.load(f)
     results = []
 
-    print("Starting 40-run non-determinism benchmark...")
+    # Capture time for the logs
+    print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] Starting 40-run non-determinism benchmark...")
 
+    task = (
+            f'Given vulnerability name "{data["title"]}" and description "{data["content"]}", produce exactly 3 topical tags '
+            f'and a one-sentence summary in your own words.'
+    )
+    
     # Run 20 times at temperature 0.7
     # Run 20 times at temperature 0.0
     for temp in [0.7, 0.0]:
-        print(f"\nRunning 20 iterations at temperature={temp} ---")
+        print(f"\n[{time.strftime('%H:%M:%S')}] Running 20 iterations at temperature={temp} ---")
+
+        llm = ChatOllama(model=model_name, temperature=temp, base_url=base_url, num_ctx=2048)
+        planner = SimpleAgent(name="Planner", system="Propose exactly 3 distinct, topical tags (prefer multi-word phrases) and a one-line summary for the vulnerability.", model=llm)
+        reviewer = SimpleAgent(name="Reviewer", system="Validate: tags topical and not generic; summary ≤ 25 words; no code or markdown. ", model=llm)
+        finalizer = SimpleAgent(name="Finalizer", system="Use reviewer feedback to finalize. Output exactly 3 tags in data.tags and the final summary in data.summary.", model=llm)
+
         for i in range(1, 21):
             # Time to calculate the latency
             start = time.time()
-            output = finalize(data["title"], data["content"], temperature=temp)
-            latency = (time.time() - start) * 1000  # in ms
 
-            tags = (output.get("tags", []) if isinstance(output, dict) else output)
-            results.append({
-                "temperature": temp, 
-                "run": i, 
-                "latency_ms": latency, 
-                "tags": sorted(list(set(tags)))
-            })
-            print(f"{i}/20 Completed ({latency:.1f}ms)")
+            try:
+                final, _ = run_pipeline(planner, reviewer, finalizer, task, data["title"], data["content"], strict)
+                output = final.get("data", {})
+    
+                latency = (time.time() - start) * 1000  # in ms
+
+                tags = (output.get("tags", []) if isinstance(output, dict) else output)
+                results.append({
+                    "temperature": temp, 
+                    "run": i, 
+                    "latency_ms": latency, 
+                    "tags": sorted(list(set(tags)))
+                })
+                timestamp = time.strftime('%H:%M:%S')
+                print(f"[{timestamp}] {i}/20 Completed ({latency:.1f}ms)")
+            except Exception as e:
+                print(f"[{time.strftime('%H:%M:%S')}] Error occurred on run {i}: {e}")
+                continue
+                            
     # Raw results save
     results_path = Path("reports/hw01/raw/nondeterminism_results.json")
 
@@ -284,7 +317,7 @@ def measure_nondeterminism(title: str, content: str, strict: bool = False) -> Li
     with open(results_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
 
-    print(f"\nSaved raw results to {results_path}")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] Saved raw results to {results_path}")
 
 
 # -------------------------
@@ -293,15 +326,21 @@ def measure_nondeterminism(title: str, content: str, strict: bool = False) -> Li
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--title", default="Your Blog Title Here")
-    ap.add_argument("--content", default="Your blog post content goes here.")
+    ap.add_argument("--title", default="Your Vulnerability Name Here")
+    ap.add_argument("--content", default="Your vulnerability description goes here.")
     ap.add_argument("--email", default="student@example.com")
     ap.add_argument("--model", default=os.environ.get("SMOL_MODEL", "your-ollama-model-tag"))
     ap.add_argument("--base_url", default=os.environ.get("OLLAMA_URL", "http://localhost:11434"))
     ap.add_argument("--turns", type=int, default=1)
     ap.add_argument("--strict", action="store_true")
+    ap.add_argument("--experiment", action="store_true", help="Run the 40-run non-determinism benchmark.")
     args = ap.parse_args()
 
+    # Run the 40-run non-determinism benchmark if --experiment is specified
+    if args.experiment:
+        measure_nondeterminism(model_name=args.model, base_url=args.base_url, strict=args.strict)
+        return
+    
     # Initialize Ollama chat model (students can adjust params)
     try:
         llm = ChatOllama(
@@ -322,7 +361,7 @@ def main():
     # Define three agents (Planner -> Reviewer -> Finalizer)
     planner = SimpleAgent(
         name="Planner",
-        system="Propose exactly 3 distinct, topical tags (prefer multi-word phrases) and a one-line summary for the blog post.",
+        system="Propose exactly 3 distinct, topical tags (prefer multi-word phrases) and a one-line summary for the vulnerability.",
         model=llm,
     )
     reviewer = SimpleAgent(
@@ -343,7 +382,7 @@ def main():
     )
 
     task = (
-        f'Given blog title "{args.title}" and content "{args.content}", produce exactly 3 topical tags '
+        f'Given vulnerability name "{args.title}" and description "{args.content}", produce exactly 3 topical tags '
         f'and a one-sentence summary in your own words. Email is {args.email}.'
     )
 
@@ -379,9 +418,6 @@ def main():
 
 
 if __name__ == "__main__":
-    if "--experiment" in sys.argv:
-        measure_nondeterminism()
-    else:
-        main()
+    main()
 
     

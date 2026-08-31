@@ -1,0 +1,5 @@
+[2026-08-31 03:24:31] Starting 40-run non-determinism benchmark...
+
+[03:24:31] Running 20 iterations at temperature=0.7 ---
+[03:33:47] 1/20 Completed (555861.9ms)
+[03:41:17] 2/20 Completed (450671.9ms)
