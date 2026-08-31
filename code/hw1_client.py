@@ -2,10 +2,10 @@
 small command-line demo that imports the adapter
 """
 import sys
-import json
 
 sys.path.insert(0, "src")
 
+import json
 from model_client import complete
 
 with open("AGENT.md") as f:
@@ -45,7 +45,7 @@ while True:
           f"output tokens: {result['output_tokens']}, "
           f"total: {result['total_tokens']})\n")
 
-    print(f"Total turn count: {turn_count}\n")
-    print(f"Cumulative input tokens: {cumulative_in}\n")
-    print(f"Cumulative output tokens: {cumulative_out}\n")
-    print(f"Cumulative total tokens: {cumulative_in + cumulative_out}\n")
+print(f"Total turn count: {turn_count}\n")
+print(f"Cumulative input tokens: {cumulative_in}\n")
+print(f"Cumulative output tokens: {cumulative_out}\n")
+print(f"Cumulative total tokens: {cumulative_in + cumulative_out}\n")

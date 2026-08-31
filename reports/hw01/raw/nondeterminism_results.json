@@ -1,1 +1,402 @@
-[]
+[
+  {
+    "temperature": 0.7,
+    "run": 1,
+    "latency_ms": 12351.03178024292,
+    "tags": [
+      "Authentication",
+      "Input Validation",
+      "Unauthorized Access"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 2,
+    "latency_ms": 10005.93090057373,
+    "tags": [
+      "Authentication Bypass",
+      "Login Form Vulnerability",
+      "Unvalidated Input"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 3,
+    "latency_ms": 9798.418045043945,
+    "tags": [
+      "Authorization",
+      "Input Validation",
+      "Security"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 4,
+    "latency_ms": 13362.888097763062,
+    "tags": [
+      "Authentication",
+      "Input Validation",
+      "Sensitive Data Exposure"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 5,
+    "latency_ms": 14545.751094818115,
+    "tags": [
+      "Authentication Bypass",
+      "Input Validation",
+      "Login Security"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 6,
+    "latency_ms": 23240.858793258667,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "WebSecurity"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 7,
+    "latency_ms": 28103.668212890625,
+    "tags": [
+      "Authentication",
+      "Input Validation",
+      "Sensitive Data Exposure"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 8,
+    "latency_ms": 25638.76509666443,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "LoginSecurity"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 9,
+    "latency_ms": 20734.86089706421,
+    "tags": [
+      "Access Control",
+      "Authentication",
+      "Login Form"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 10,
+    "latency_ms": 18773.426055908203,
+    "tags": [
+      "Input Validation",
+      "Login",
+      "Security"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 11,
+    "latency_ms": 20187.130212783813,
+    "tags": [
+      "input-validation",
+      "login",
+      "security"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 12,
+    "latency_ms": 22062.75987625122,
+    "tags": [
+      "Authentication",
+      "Input Validation",
+      "Security"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 13,
+    "latency_ms": 18739.65311050415,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "UnauthorizedAccess"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 14,
+    "latency_ms": 18016.91484451294,
+    "tags": [
+      "Authentication Bypass",
+      "Input Validation",
+      "SQL Injection"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 15,
+    "latency_ms": 20601.23109817505,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "UnauthorizedAccess"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 16,
+    "latency_ms": 24230.98587989807,
+    "tags": [
+      "access-exploitation",
+      "input-validation",
+      "login-vulnerability"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 17,
+    "latency_ms": 21502.406120300293,
+    "tags": [
+      "Authentication",
+      "Input Validation",
+      "Security Vulnerability"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 18,
+    "latency_ms": 18761.04998588562,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "Security"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 19,
+    "latency_ms": 17709.579944610596,
+    "tags": [
+      "Authentication Bypass",
+      "Input Validation",
+      "Login Security"
+    ]
+  },
+  {
+    "temperature": 0.7,
+    "run": 20,
+    "latency_ms": 19091.077089309692,
+    "tags": [
+      "authentication-bypass",
+      "input-validation",
+      "security-controls"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 1,
+    "latency_ms": 17737.347841262817,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 2,
+    "latency_ms": 17152.923107147217,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 3,
+    "latency_ms": 17349.55883026123,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 4,
+    "latency_ms": 17254.359245300293,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 5,
+    "latency_ms": 17352.06389427185,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 6,
+    "latency_ms": 17365.222930908203,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 7,
+    "latency_ms": 17285.381078720093,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 8,
+    "latency_ms": 17451.619148254395,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 9,
+    "latency_ms": 16772.0890045166,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 10,
+    "latency_ms": 17029.408931732178,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 11,
+    "latency_ms": 16812.42084503174,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 12,
+    "latency_ms": 16817.150831222534,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 13,
+    "latency_ms": 19188.941717147827,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 14,
+    "latency_ms": 18919.126987457275,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 15,
+    "latency_ms": 19309.3318939209,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 16,
+    "latency_ms": 18500.567197799683,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 17,
+    "latency_ms": 18738.867044448853,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 18,
+    "latency_ms": 18513.8578414917,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 19,
+    "latency_ms": 19300.644874572754,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  },
+  {
+    "temperature": 0.0,
+    "run": 20,
+    "latency_ms": 18803.921937942505,
+    "tags": [
+      "Authentication",
+      "InputValidation",
+      "SensitiveDataExposure"
+    ]
+  }
+]

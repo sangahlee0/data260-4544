@@ -1,5 +1,47 @@
-[2026-08-31 03:24:31] Starting 40-run non-determinism benchmark...
+[2026-08-31 04:35:09] Starting 40-run non-determinism benchmark...
 
-[03:24:31] Running 20 iterations at temperature=0.7 ---
-[03:33:47] 1/20 Completed (555861.9ms)
-[03:41:17] 2/20 Completed (450671.9ms)
+[04:35:09] Running 20 iterations at temperature=0.7 ---
+[04:35:22] 1/20 Completed (12351.0ms)
+[04:35:32] 2/20 Completed (10005.9ms)
+[04:35:42] 3/20 Completed (9798.4ms)
+[04:35:55] 4/20 Completed (13362.9ms)
+[04:36:09] 5/20 Completed (14545.8ms)
+[04:36:33] 6/20 Completed (23240.9ms)
+[04:37:01] 7/20 Completed (28103.7ms)
+[04:37:26] 8/20 Completed (25638.8ms)
+[04:37:47] 9/20 Completed (20734.9ms)
+[04:38:06] 10/20 Completed (18773.4ms)
+[04:38:26] 11/20 Completed (20187.1ms)
+[04:38:48] 12/20 Completed (22062.8ms)
+[04:39:07] 13/20 Completed (18739.7ms)
+[04:39:25] 14/20 Completed (18016.9ms)
+[04:39:46] 15/20 Completed (20601.2ms)
+[04:40:10] 16/20 Completed (24231.0ms)
+[04:40:31] 17/20 Completed (21502.4ms)
+[04:40:50] 18/20 Completed (18761.0ms)
+[04:41:08] 19/20 Completed (17709.6ms)
+[04:41:27] 20/20 Completed (19091.1ms)
+
+[04:41:27] Running 20 iterations at temperature=0.0 ---
+[04:41:45] 1/20 Completed (17737.3ms)
+[04:42:02] 2/20 Completed (17152.9ms)
+[04:42:19] 3/20 Completed (17349.6ms)
+[04:42:36] 4/20 Completed (17254.4ms)
+[04:42:54] 5/20 Completed (17352.1ms)
+[04:43:11] 6/20 Completed (17365.2ms)
+[04:43:28] 7/20 Completed (17285.4ms)
+[04:43:46] 8/20 Completed (17451.6ms)
+[04:44:03] 9/20 Completed (16772.1ms)
+[04:44:20] 10/20 Completed (17029.4ms)
+[04:44:36] 11/20 Completed (16812.4ms)
+[04:44:53] 12/20 Completed (16817.2ms)
+[04:45:12] 13/20 Completed (19188.9ms)
+[04:45:31] 14/20 Completed (18919.1ms)
+[04:45:51] 15/20 Completed (19309.3ms)
+[04:46:09] 16/20 Completed (18500.6ms)
+[04:46:28] 17/20 Completed (18738.9ms)
+[04:46:46] 18/20 Completed (18513.9ms)
+[04:47:06] 19/20 Completed (19300.6ms)
+[04:47:25] 20/20 Completed (18803.9ms)
+
+[2026-08-31 04:47:25] Saved raw results to reports/hw01/raw/nondeterminism_results.json
