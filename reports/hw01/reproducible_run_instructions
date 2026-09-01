@@ -27,7 +27,7 @@ Follow these steps to reproduce the experiment and verification script for HW01:
 python3 code/agents_demo.py --experiment --model qwen2.5:3b
 
 ## Docker running
-docker build -t hw01-webapp .
+docker build -t hw01-webapp -f code/Dockerfile .
 docker run -d -p 8080:80 --name hw01-container hw01-webapp
 
 ## Deploy to AWS ECS
