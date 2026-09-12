@@ -187,6 +187,42 @@ async function updateVulnerability() {
     }
 }
 
+// Delete the record with the highest ID in the list of vulnerabilities
+async function deleteHighestID() {
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('Failed to fetch vulnerabilities');
+        const vulnerabilities = await response.json();
+
+        // Check whether list of vulnerabilities is empty before attempting to delete the highest ID
+        if (vulnerabilities.length === 0) {
+            alert('No vulnerabilities to delete');
+            return;
+        }
+
+        const highestID = Math.max(...vulnerabilities.map(v => v.id));
+
+        if (!confirm(`Are you sure you want to delete Vulnerability ID ${highestID}?`)) {
+            return;
+        }
+
+        const deleteResponse = await fetch(`${API_URL}/${highestID}`, {
+            method: 'DELETE'
+        });
+
+        if (!deleteResponse.ok) {
+            const error = await deleteResponse.json();
+            throw new Error(error.detail || 'Failed to delete vulnerability');
+        }
+
+        console.log(`Deleted Vulnerability ID ${highestID}`);
+        await loadVulnerabilities();
+        alert(`Vulnerability ID ${highestID} deleted successfully`);
+    } catch (error) {
+        console.error('Error deleting vulnerability:', error);
+        alert('Failed to delete vulnerability: ' + error.message);
+    }
+}
 
 // Load vulnerabilities when the page loads
 window.addEventListener('DOMContentLoaded', loadVulnerabilities);

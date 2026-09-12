@@ -73,6 +73,15 @@ button:hover, input[type="submit"]:hover {
 #updateButton:hover {
     background-color: #43ba67;
 }
+
+#deleteButton {
+    background-color: #593d9f;
+}
+
+#deleteButton:hover {
+    background-color: #1b7b20;
+}
+
 #feedbackList {
     background: white;
     padding: 20px;
