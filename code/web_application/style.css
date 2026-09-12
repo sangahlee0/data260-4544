@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    line-height: 1.6;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #4CAF50;
+}
+
+h2 {
+    color: #555;
+    margin-top: 40px;
+}
+
+/*---Form---*/
+form {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+button, input[type="submit"] {
+    background-color: #ffd256;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#updateButton {
+    background-color: #2196F3;
+}
+
+#updateButton:hover {
+    background-color: #43ba67;
+}
+#feedbackList {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+#feedbackList li {
+    background: #f9f9f9;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #4CAF50;
+}
+
+#feedbackList button {
+    background-color: #ff4444;
+    margin: 10px 0 0 0;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+#feedbackList button:hover {
+    background-color: #cc0000;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin: 10px 5px 10px 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+/* need to override display block for checkbox label to inline so that the checkbox and label are on the same line */
+.terms-label {
+    display: inline; /* Keep the label inline with the checkbox */
+    font-weight: normal; /*prevent the label from being bold */
+}
+
+/*-- for 375px--*/
+@media (max-width: 375px) {
+    body {
+        padding: 10px;
+    }
+    #feedbackList {
+        overflow-x: auto;
+    }
+}
+
+/*--Image for the vulnerability report--*/
+#loadingState { color: #666; font-style: italic;}
+#emptyState { color: #18682d; font-weight: bold;}
+#errorState { color: #cc0000; font-weight: bold;}
