@@ -48,11 +48,18 @@ async def read_root():
 from fastapi import Response
 
 @app.get("/api/vulnerabilities", response_model=List[Vulnerability])
-async def get_vulnerabilities(response: Response):
+# None | None is used to indicate search param can be None or a string
+async def get_vulnerabilities(response: Response, search: str = None | None):
     """Get all vulnerabilities - Returns JSON array of vulnerability objects"""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
+
+    if search:
+        # Filter vulnerabilities based on search query (case-insensitive)
+        search = search.lower()
+        # Return vulnerabilities where the search term is in package_name or vulnerability_name
+        return [v for v in vulnerabilities if search in v.package_name.lower() or search in v.vulnerability_name.lower()]
     return vulnerabilities
 
 @app.post("/api/vulnerabilities", response_model=Vulnerability, status_code=201)

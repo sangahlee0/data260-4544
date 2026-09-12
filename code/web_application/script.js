@@ -84,7 +84,7 @@ const displayVulnerabilities = (vulnerabilities) => {
 }
 
 // Calls get request to the API to fetch all vulnerabilities and display them in the list
-const loadVulnerabilities = async () => {
+const loadVulnerabilities = async (search='') => {
     const loadingEl = document.getElementById("loadingState");
     const emptyEl = document.getElementById("emptyState");
     const errorEl = document.getElementById("errorState");
@@ -94,7 +94,7 @@ const loadVulnerabilities = async () => {
     errorEl.hidden = true;
 
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}?search=${encodeURIComponent(search)}`);
         if (!response.ok) throw new Error('Failed to fetch vulnerabilities');
         const vulnerabilities = await response.json();
         loadingEl.hidden = true;
@@ -233,3 +233,20 @@ document.getElementById("vulnerabilityForm").addEventListener("submit", submitVu
 document.getElementById("updateButton").addEventListener("click", updateVulnerability);
 // Attach the click event listener to the delete button
 document.getElementById("deleteButton").addEventListener("click", deleteHighestID);
+
+
+// Attach the click event listener to the search button
+document.getElementById("searchButton").addEventListener("click", async () => {
+    const searchValue = document.getElementById("searchInput").value.trim();
+    if (!searchValue) {
+        alert("Please input a search.");
+        return;
+    }
+    
+    await loadVulnerabilities(searchValue);
+});
+// Attach the click event listener to the clear search button
+document.getElementById("clearSearchButton").addEventListener("click", () => {
+    document.getElementById("searchInput").value = '';
+    loadVulnerabilities();
+});
