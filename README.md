@@ -20,31 +20,50 @@ Model: qwen2.5:3b (switched from qwen3.8b due to hardware issues)
 ```text
 data260-4544/
 ├── code/
-│   ├── web_application/
-|   |   ├── script.js
-|   |   ├── index.html
+│   ├── agentgraph_demo.py
 │   ├── agents_demo.py
 │   ├── Dockerfile
 │   ├── hw1_client.py
+│   ├── hw2experiment_run.py
 │   ├── metric_helper.py
-│   └── verify-hw01.py
+│   ├── nodes.py
+│   ├── router.py
+│   ├── state.py
+│   ├── validateplanner.py
+│   ├── verify-hw01.py
+│   ├── verify-hw02.py
+│   ├── workflow.py
+│   ├── reports/hw01/verification.json
+│   └── web_application/
+│       ├── index.html
+│       ├── main.py
+│       ├── script.js
+│       ├── style.css
+│       └── temp.js
 ├── src/
 │   └── model_client.py
 ├── reports/
 │   ├── hw01/
-│   │   ├── RUN_LOG.txt
-│   │   ├── METRICS.md
 │   │   ├── AI_USE.md
-│   │   ├── report.pdf
-│   │   ├── verification.json
+│   │   ├── METRICS.md
+│   │   ├── RUN_LOG.txt
+│   │   ├── cases/nondeterminism_input.json
+│   │   ├── raw/nondeterminism_results.json
+│   │   ├── report (2).pdf
 │   │   ├── reproducible_run_instructions
-│   │   ├── cases/
-│   │   |   └── nondeterminism_input.json
-│   │   └── raw/
-│   │       └── nondeterminism_results.json
+│   │   └── verification.json
 │   ├── hw02/
+│   │   ├── AI_USE.md
+│   │   ├── METRICS.md
+│   │   ├── RUN_LOG.txt
+│   │   ├── cases/
+│   │   ├── raw/
+│   │   ├── reproducible_run_instructions
+│   │   ├── LEE_HW2.pdf
+│   │   └── verification.json
 │   └── hw03/
 ├── AGENT.md
 ├── DOMAIN_SCHEMA.md
 ├── Makefile
 └── README.md
+```
