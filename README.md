@@ -38,8 +38,7 @@ data260-4544/
 │       ├── index.html
 │       ├── main.py
 │       ├── script.js
-│       ├── style.css
-│       └── temp.js
+│       └── style.css
 ├── src/
 │   └── model_client.py
 ├── reports/
