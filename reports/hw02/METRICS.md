@@ -17,7 +17,7 @@
 |---:|---:|---:|---:|---:|---:|---:|
 | 30 | 30 | 100% | 9,172.86 | 8,877.02 | 5,190.33 | 17,487.08 |
 
-#### Outcome Distribution
+#### Outcome Distribution 
 
 | Outcome | Count | Percentage |
 |---|---:|---:|
