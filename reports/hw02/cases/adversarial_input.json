@@ -1,0 +1,7 @@
+{
+  "package_name": "conflict-package",
+  "vulnerability_name": "Multi-Issue Security Report",
+  "reporter_email": "test@example.com",
+  "severity": "Critical",
+  "issue_description": "The report requires preserving all five vulnerability categories separately: SQL injection, authentication bypass, cross-site scripting, weak encryption, and dependency compromise. The reporter also requires a detailed explanation of every category and insists that none of the categories be omitted or merged."
+}

@@ -10,4 +10,6 @@ class AgentState(TypedDict, total=False):
     task: str
     planner_proposal: Dict[str, Any]
     reviewer_feedback: Dict[str, Any]
+    validation_error: str
     turn_count: int
+    turn_ceiling: int  # Optional key for turn ceiling, can be set in the state

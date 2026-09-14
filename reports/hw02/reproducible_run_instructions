@@ -1,0 +1,34 @@
+# HW02 Reproducible Run Instructions
+Follow these steps to reproduce the experiment and verification script for HW01:
+
+**Needs:** Python 3.11/3.12, Ollama, pydantic, fastapi, uvicorn, Docker, AWS Account (optional for ECS deployment)
+
+1. **Python Version:** Ensure you are using **Python 3.11 or 3.12** (avoid Python 3.13 due to NumPy/LangChain compatibility issues).
+2. **Ollama Setup:** Ensure Ollama is installed and running locally, and pull the required tool-capable local model:
+   ```bash
+   ollama serve
+   ollama pull qwen2.5:3b
+
+3. **Use a virtual environment:** 
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+
+4. Run the Self-Check Verification Script:
+    ```bash
+    make verify-hw02
+
+5. Run the tests
+## To run the Experiments :
+```bash 
+# Run graph 30 times with fixed domain input
+echo "===== Q3 Schema Validation Experiment: $(date) =====" >> ../reports/hw02/RUN_LOG.txt
+python3 hw2experiment_run.py --experiment 3 2>&1 | tee -a ../reports/hw02/RUN_LOG.txt
+
+# Compare turn ceilings of 2 and 10 over 20 runs each using same frozen input and model settings
+echo "===== Q4 Turn Ceiling Comparison: $(date) =====" >> ../reports/hw02/RUN_LOG.txt     
+python3 hw2experiment_run.py --experiment 4 2>&1 | tee -a ../reports/hw02/RUN_LOG.txt
+
+# Run adversarial input 5 times
+echo "===== Q5 Adversarial Experiment: $(date) =====" >> ../reports/hw02/RUN_LOG.txt
+python3 hw2experiment_run.py --experiment 5 2>&1 | tee -a ../reports/hw02/RUN_LOG.txt
