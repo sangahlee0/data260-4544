@@ -70,12 +70,14 @@ const displayVulnerabilities = (vulnerabilities) => {
     // Clear the list before displaying new records
     listEl.innerHTML = '';
 
+    // if there are no vulnterabilities show empty message, and otherwise hide it
     if (vulnerabilities.length === 0) {
         emptyEl.hidden = false;
         return;
     }
     emptyEl.hidden = true;
 
+    // Take every vulnerability object and make new <li> for it, filling it in with package name, vulnerability name, and severity and add to page
     vulnerabilities.forEach(v => {
         const li = document.createElement('li');
         li.textContent = `${v.package_name} — ${v.vulnerability_name} (${v.severity})`;
@@ -160,17 +162,28 @@ async function updateVulnerability() {
     }
 
     try {
+        // Fetch the current record 1 so untouched fields aren't wiped out
+        const listResponse = await fetch(API_URL);
+        if (!listResponse.ok) throw new Error('Failed to fetch current vulnerabilities');
+        const vulnerabilities = await listResponse.json();
+        const existing = vulnerabilities.find(v => v.id === 1);
+
+        if (!existing) {
+            alert('Vulnerability ID 1 does not exist.');
+            return;
+        }
         const response = await fetch(`${API_URL}/1`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
+            // Update using new, or use existing
             body: JSON.stringify({ 
                 package_name: packageName,
                 vulnerability_name: vulnerabilityName,
-                reporter_email: emailInput,
-                severity: severityInput,
-                issue_description: descriptionInput
+                reporter_email: emailInput || existing.reporter_email, 
+                severity: severityInput || existing.severity,
+                issue_description: descriptionInput || existing.issue_description
             })
         });
 
@@ -179,6 +192,7 @@ async function updateVulnerability() {
             throw new Error(error.detail || 'Failed to update vulnerability');
         }
         
+        document.getElementById("vulnerabilityForm").reset();
         await loadVulnerabilities();
         alert(`Vulnerability ID 1 updated successfully`);
     } catch (error) {
