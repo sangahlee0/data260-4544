@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Literal
 from state import AgentState
 
-turn_ceiling = 2
+turn_ceiling = 10
 
 def router_logic(state: AgentState) -> Literal["planner", "reviewer", "END"]:
     if state.get("turn_count", 0) >= turn_ceiling:

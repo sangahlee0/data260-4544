@@ -31,12 +31,15 @@ class VulnerabilityUpdate(BaseModel):
     reporter_email: str
     severity: str
     issue_description: str
-
+"""
 # In-memory vulnerability storage
 vulnerabilities: List[Vulnerability] = [
     Vulnerability(id=1, package_name="express", vulnerability_name="SQL Injection", reporter_email="alice@example.com", severity="high", issue_description="SQL injection vulnerability found in express package"),
     Vulnerability(id=2, package_name="react", vulnerability_name="Cross-Site Scripting", reporter_email="bob@example.com", severity="medium", issue_description="XSS vulnerability found in react package")
 ]
+"""
+# Empty list to store vulnerabilities
+vulnerabilities: List[Vulnerability] = []
 
 # Serve the main HTML page
 @app.get("/")
@@ -49,7 +52,7 @@ from fastapi import Response
 
 @app.get("/api/vulnerabilities", response_model=List[Vulnerability])
 # None | None is used to indicate search param can be None or a string
-async def get_vulnerabilities(response: Response, search: str = None | None):
+async def get_vulnerabilities(response: Response, search: str | None = None):
     """Get all vulnerabilities - Returns JSON array of vulnerability objects"""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
