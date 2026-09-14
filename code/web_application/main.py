@@ -51,11 +51,11 @@ async def read_root():
 from fastapi import Response
 
 @app.get("/api/vulnerabilities", response_model=List[Vulnerability])
-# None | None is used to indicate search param can be None or a string
+# Search can be a string or None; if omitted, it defaults to None
 async def get_vulnerabilities(response: Response, search: str | None = None):
     """Get all vulnerabilities - Returns JSON array of vulnerability objects"""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
+    response.headers["Pragma"] = "no-cache" # making sure we don't use a chaced version of this response
     response.headers["Expires"] = "0"
 
     if search:
