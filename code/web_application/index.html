@@ -8,53 +8,74 @@
   <title>HW1-SANG AH LEE</title>
 </head>
 
+<!-- The <body> tag contains all the content that will be displayed on the page. -->
 <body>
-  <h1>Open-source package vulnerabilities</h1>
-  <h2> Please input/choose the following: </h2>
-  <ul>
-    <li>Package Name</li>
-    <li>Vulnerability Name</li>
-    <li>Reporter Email</li>
-    <li>Content Description</li>
-    <li>Severity</li>
-  </ul>
-  <br>
-  <p><strong>Input the open-source package vulnerabilites</strong></p>
-  <br>
-  <form onsubmit="return Validation()">
-    <br>
-    <label for="PackageName"> Package Name: </label>
-    <br>
-    <input id="PackageName" type="text" required autofocus placeholder="e.g. numpy, lodash, etc.">
-    <br>
-    <label for="VulnerabilityName"> Vulnerability Name: </label>
-    <br>
-    <input id="VulnerabilityName" type="text" required placeholder="e.g. Login page security bug">
-    <br>
-    <label for="ReporterEmail"> Reporter Email: </label>
-    <br>
-    <input id="ReporterEmail" type="email" required placeholder="Enter your email">
-    <br>
-    <label for="Severity"> Severity: </label>
-    <br>
-    <select id="Severity" name="Severity" required>
-      <option disabled selected value> -- select an option -- </option>
-      <option>Low</option>
-      <option>Medium</option>
-      <option>High</option>
-      <option>Critical</option>
-    </select>
-    <p><label for="IssueDescription">Issue Description:</label></p>
-    <textarea id="IssueDescription" name="IssueDescription" rows="4" cols="50"
-      placeholder="Include a description of the vulnerability issue." required></textarea>
-    <br><br>
-    <input type="checkbox" id="terms" name="terms" value="terms">
-    <label for="terms">I agree to the terms and conditions.</label><br>
-    <br>
-    <input type="submit" value="Report Vulnerability">
-  </form>
-  <!--Add script tag at end of HTML file -->
-  <script src="./script.js"></script>
+<!-- Headings -->
+<!-- <h1> has the largest heading size and subsequent headings have smeller heading sizes with <h6> having the smallest -->
+<h1>Open-source package vulnerabilities</h1>
+<h2> Please input/choose the following: </h2>
+<ul>
+  <li>Package Name</li>
+  <li>Vulnerability Name</li>
+  <li>Reporter Email</li>
+  <li>Content Description</li>
+  <li>Severity</li>
+</ul>
+<br>
+<p><strong>Input the open-source package vulnerabilites</strong></p><br>
+<!-- Form to collect feedback -->
+<!-- The <form> tag in HTML is used to collect user input and send it to a server for processing. -->
+<form id="vulnerabilityForm">
+<br>
+<label for="PackageName"> Package Name: </label>
+<input id="PackageName" type="text" required autofocus placeholder="e.g. numpy, lodash, etc.">
+<br>
+<label for="VulnerabilityName"> Vulnerability Name: </label>
+<input id="VulnerabilityName" type="text" required placeholder="e.g. Login page security bug">
+<br>
+<label for="ReporterEmail"> Reporter Email: </label>
+<input id="ReporterEmail" type="email" required placeholder="Enter your email">
+<br>
+<label for="Severity"> Severity: </label>
+  <select id="Severity" name="Severity" required>
+    <option disabled selected value> -- select an option -- </option>
+    <option>Low</option>
+    <option>Medium</option>
+    <option>High</option>
+    <option>Critical</option>
+  </select>
+<p><label for="IssueDescription">Issue Description:</label></p>
+  <textarea id="IssueDescription" name="IssueDescription" rows="4" cols="50"
+    placeholder="Include a description of the vulnerability issue." required></textarea>
+<br><br>
+<label class="terms-label">
+  <input type="checkbox" id="terms" name="terms" value="terms" required>
+  I agree to the terms and conditions.
+</label>
+<input type="submit" value="Report Vulnerability">
+<button id="updateButton" type="button">Update Record 1</button>
+<button id="deleteButton" type="button">Delete Highest ID</button>
+</form>
+
+<section id="searchSection">
+  <h2>Search Vulnerabilities</h2>
+  <input type="text" id="searchInput" placeholder="Search by package or vulnerability name: ">
+  <button id="searchButton" type="button">Search</button>
+  <button id="clearSearchButton" type="button">Clear Search</button>
+</section>
+
+<!-- Container for views -->
+<ul id="feedbackList"></ul>
+
+<!--Provide visible loading, empty, and error states -->
+<p id="loadingState" hidden>Loading</p>
+<p id="emptyState"> No vulnerability reports have been submitted.</p>
+<p id="errorState" hidden role="alert">There was an issue. Please try again.</p>
+
+<!--Add script tag at end of HTML file -->
+<script src="./script.js"></script>
+
 </body>
+
 
 </html>

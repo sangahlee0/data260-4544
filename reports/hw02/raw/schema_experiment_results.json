@@ -1,0 +1,152 @@
+[
+  {
+    "run": 1,
+    "outcome": "valid first attempt",
+    "latency_ms": 9027.218959003221
+  },
+  {
+    "run": 2,
+    "outcome": "valid first attempt",
+    "latency_ms": 6246.940291021019
+  },
+  {
+    "run": 3,
+    "outcome": "valid first attempt",
+    "latency_ms": 5446.9772090087645
+  },
+  {
+    "run": 4,
+    "outcome": "valid first attempt",
+    "latency_ms": 5598.010040994268
+  },
+  {
+    "run": 5,
+    "outcome": "valid first attempt",
+    "latency_ms": 6068.708291975781
+  },
+  {
+    "run": 6,
+    "outcome": "valid first attempt",
+    "latency_ms": 6152.47279102914
+  },
+  {
+    "run": 7,
+    "outcome": "valid first attempt",
+    "latency_ms": 5543.199167004786
+  },
+  {
+    "run": 8,
+    "outcome": "valid first attempt",
+    "latency_ms": 6331.594666989986
+  },
+  {
+    "run": 9,
+    "outcome": "valid first attempt",
+    "latency_ms": 5309.839874971658
+  },
+  {
+    "run": 10,
+    "outcome": "valid first attempt",
+    "latency_ms": 5501.29166705301
+  },
+  {
+    "run": 11,
+    "outcome": "valid first attempt",
+    "latency_ms": 5698.155624966603
+  },
+  {
+    "run": 12,
+    "outcome": "valid first attempt",
+    "latency_ms": 5889.597458008211
+  },
+  {
+    "run": 13,
+    "outcome": "valid first attempt",
+    "latency_ms": 5190.3264169814065
+  },
+  {
+    "run": 14,
+    "outcome": "valid first attempt",
+    "latency_ms": 6199.941625003703
+  },
+  {
+    "run": 15,
+    "outcome": "valid first attempt",
+    "latency_ms": 8624.38283400843
+  },
+  {
+    "run": 16,
+    "outcome": "valid first attempt",
+    "latency_ms": 8726.82220902061
+  },
+  {
+    "run": 17,
+    "outcome": "valid first attempt",
+    "latency_ms": 16651.488500006963
+  },
+  {
+    "run": 18,
+    "outcome": "valid first attempt",
+    "latency_ms": 17487.07616701722
+  },
+  {
+    "run": 19,
+    "outcome": "valid first attempt",
+    "latency_ms": 14027.012749982532
+  },
+  {
+    "run": 20,
+    "outcome": "valid first attempt",
+    "latency_ms": 13036.960750003345
+  },
+  {
+    "run": 21,
+    "outcome": "valid first attempt",
+    "latency_ms": 11344.94529204676
+  },
+  {
+    "run": 22,
+    "outcome": "valid first attempt",
+    "latency_ms": 10708.193583006505
+  },
+  {
+    "run": 23,
+    "outcome": "valid first attempt",
+    "latency_ms": 11236.600999953225
+  },
+  {
+    "run": 24,
+    "outcome": "valid first attempt",
+    "latency_ms": 10656.163042003755
+  },
+  {
+    "run": 25,
+    "outcome": "valid first attempt",
+    "latency_ms": 12302.325540978927
+  },
+  {
+    "run": 26,
+    "outcome": "valid first attempt",
+    "latency_ms": 12893.239374971017
+  },
+  {
+    "run": 27,
+    "outcome": "valid first attempt",
+    "latency_ms": 11147.937375004403
+  },
+  {
+    "run": 28,
+    "outcome": "valid first attempt",
+    "latency_ms": 9836.33133402327
+  },
+  {
+    "run": 29,
+    "outcome": "valid first attempt",
+    "latency_ms": 10694.029082951602
+  },
+  {
+    "run": 30,
+    "outcome": "valid first attempt",
+    "latency_ms": 11608.122583013028
+  }
+]

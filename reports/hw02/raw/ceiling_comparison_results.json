@@ -1,0 +1,216 @@
+{
+  "ceiling_2": {
+    "turn_ceiling": 2,
+    "completion_rate": 0.0,
+    "mean_latency_ms": 2920.503739651758,
+    "runs": [
+      {
+        "run": 1,
+        "successful completion": false,
+        "latency_ms": 3273.381084029097
+      },
+      {
+        "run": 2,
+        "successful completion": false,
+        "latency_ms": 3233.8199589867145
+      },
+      {
+        "run": 3,
+        "successful completion": false,
+        "latency_ms": 2748.2305410085246
+      },
+      {
+        "run": 4,
+        "successful completion": false,
+        "latency_ms": 3069.5710830041207
+      },
+      {
+        "run": 5,
+        "successful completion": false,
+        "latency_ms": 2707.2712079971097
+      },
+      {
+        "run": 6,
+        "successful completion": false,
+        "latency_ms": 2808.442500012461
+      },
+      {
+        "run": 7,
+        "successful completion": false,
+        "latency_ms": 2807.3857079725713
+      },
+      {
+        "run": 8,
+        "successful completion": false,
+        "latency_ms": 2637.6816669944674
+      },
+      {
+        "run": 9,
+        "successful completion": false,
+        "latency_ms": 2245.901625021361
+      },
+      {
+        "run": 10,
+        "successful completion": false,
+        "latency_ms": 2953.603334026411
+      },
+      {
+        "run": 11,
+        "successful completion": false,
+        "latency_ms": 3105.8377500157803
+      },
+      {
+        "run": 12,
+        "successful completion": false,
+        "latency_ms": 3055.379167024512
+      },
+      {
+        "run": 13,
+        "successful completion": false,
+        "latency_ms": 2958.8917499640957
+      },
+      {
+        "run": 14,
+        "successful completion": false,
+        "latency_ms": 3242.917917028535
+      },
+      {
+        "run": 15,
+        "successful completion": false,
+        "latency_ms": 3392.1996660064906
+      },
+      {
+        "run": 16,
+        "successful completion": false,
+        "latency_ms": 2786.9010000140406
+      },
+      {
+        "run": 17,
+        "successful completion": false,
+        "latency_ms": 2859.3189169769175
+      },
+      {
+        "run": 18,
+        "successful completion": false,
+        "latency_ms": 2870.6862090039067
+      },
+      {
+        "run": 19,
+        "successful completion": false,
+        "latency_ms": 2990.4500419506803
+      },
+      {
+        "run": 20,
+        "successful completion": false,
+        "latency_ms": 2662.2036659973674
+      }
+    ]
+  },
+  "ceiling_10": {
+    "turn_ceiling": 10,
+    "completion_rate": 1.0,
+    "mean_latency_ms": 11274.448437555111,
+    "runs": [
+      {
+        "run": 1,
+        "successful completion": true,
+        "latency_ms": 5768.508167006075
+      },
+      {
+        "run": 2,
+        "successful completion": true,
+        "latency_ms": 12821.337166999001
+      },
+      {
+        "run": 3,
+        "successful completion": true,
+        "latency_ms": 8115.847749984823
+      },
+      {
+        "run": 4,
+        "successful completion": true,
+        "latency_ms": 12576.11458399333
+      },
+      {
+        "run": 5,
+        "successful completion": true,
+        "latency_ms": 16793.888874992263
+      },
+      {
+        "run": 6,
+        "successful completion": true,
+        "latency_ms": 18072.141417011153
+      },
+      {
+        "run": 7,
+        "successful completion": true,
+        "latency_ms": 11773.85520801181
+      },
+      {
+        "run": 8,
+        "successful completion": true,
+        "latency_ms": 10623.890582995955
+      },
+      {
+        "run": 9,
+        "successful completion": true,
+        "latency_ms": 10736.04783398332
+      },
+      {
+        "run": 10,
+        "successful completion": true,
+        "latency_ms": 10384.480375039857
+      },
+      {
+        "run": 11,
+        "successful completion": true,
+        "latency_ms": 10596.847250009887
+      },
+      {
+        "run": 12,
+        "successful completion": true,
+        "latency_ms": 9686.193292029202
+      },
+      {
+        "run": 13,
+        "successful completion": true,
+        "latency_ms": 10605.420582985971
+      },
+      {
+        "run": 14,
+        "successful completion": true,
+        "latency_ms": 10578.435666975565
+      },
+      {
+        "run": 15,
+        "successful completion": true,
+        "latency_ms": 9872.39795800997
+      },
+      {
+        "run": 16,
+        "successful completion": true,
+        "latency_ms": 10546.780249977019
+      },
+      {
+        "run": 17,
+        "successful completion": true,
+        "latency_ms": 11256.556167034432
+      },
+      {
+        "run": 18,
+        "successful completion": true,
+        "latency_ms": 11545.138750050683
+      },
+      {
+        "run": 19,
+        "successful completion": true,
+        "latency_ms": 12061.604541027918
+      },
+      {
+        "run": 20,
+        "successful completion": true,
+        "latency_ms": 11073.482332983986
+      }
+    ]
+  }
+}

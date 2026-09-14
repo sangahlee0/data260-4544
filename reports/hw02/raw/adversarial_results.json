@@ -1,0 +1,27 @@
+[
+  {
+    "run": 1,
+    "outcome": "valid first attempt",
+    "latency_ms": 6172.315957956016
+  },
+  {
+    "run": 2,
+    "outcome": "valid first attempt",
+    "latency_ms": 6507.481792010367
+  },
+  {
+    "run": 3,
+    "outcome": "valid first attempt",
+    "latency_ms": 6102.010832983069
+  },
+  {
+    "run": 4,
+    "outcome": "valid first attempt",
+    "latency_ms": 5223.074708017521
+  },
+  {
+    "run": 5,
+    "outcome": "valid first attempt",
+    "latency_ms": 5525.226166995708
+  }
+]

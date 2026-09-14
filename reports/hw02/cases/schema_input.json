@@ -1,0 +1,7 @@
+{
+  "package_name": "numpy",
+  "vulnerability_name": "SQL Injection",
+  "reporter_email": "test@example.com",
+  "severity": "High",
+  "issue_description": "User input is not properly sanitized before being used in a SQL query."
+}

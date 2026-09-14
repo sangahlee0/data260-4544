@@ -282,7 +282,7 @@ def measure_nondeterminism(model_name: str, base_url: str, strict: bool = False)
 
         llm = ChatOllama(model=model_name, temperature=temp, base_url=base_url, num_ctx=2048)
         planner = SimpleAgent(name="Planner", system="Propose exactly 3 distinct, topical tags (prefer multi-word phrases) and a one-line summary for the vulnerability.", model=llm)
-        reviewer = SimpleAgent(name="Reviewer", system="Validate: tags topical and not generic; summary ≤ 25 words; no code or markdown. ", model=llm)
+        reviewer = SimpleAgent(name="Reviewer", system="Validate: tags topical and not generic; summary ≤ 25 words; no code or markdown.", model=llm)
         finalizer = SimpleAgent(name="Finalizer", system="Use reviewer feedback to finalize. Output exactly 3 tags in data.tags and the final summary in data.summary.", model=llm)
 
         for i in range(1, 21):
