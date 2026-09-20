@@ -3,6 +3,12 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
 
+import time
+
+# Idle time-out
+IDLE_TIMEOUT_SECONDS = 180 # 3 min inactivity
+
+
 
 # Create a router object
 # This behaves like a mini FastAPI app
@@ -51,8 +57,10 @@ def login_page(request: Request):
     error = request.query_params.get("error")   # Checks if there is somethig named error, otherwise would return None
 
 
-    if error:
-        e_message = "The username or password is invalid"
+    if error == "session_expired":
+        e_message = "The session has expired. Please log in again."
+    elif error:
+        e_message = "The username or password is invalid. Please try again."
     else:
         e_message = None
 
@@ -79,6 +87,8 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     if username == VALID_USERNAME and password == VALID_PASSWORD:
         # Store logged-in user in session
         request.session["user"] = username
+        # For the time where user is last active
+        request.session["last_active"] = time.time()
 
         # Redirect user to dashboard
         return RedirectResponse(
@@ -108,13 +118,26 @@ def dashboard(request: Request):
     - Redirects to login page if session is missing
     """
     user = request.session.get("user")
+    last_active = request.session.get("last_active")    # For when user was last active
 
-    # If user is not logged in, block access
-    if not user:
+    # If user is not logged, block access
+    if not user or not last_active:
         return RedirectResponse(
             url="/login",
             status_code=HTTP_302_FOUND
         )
+
+
+    # If user is idle and it is past the active, block access
+    if time.time() - last_active > IDLE_TIMEOUT_SECONDS:
+        request.session.clear()
+        return RedirectResponse(
+            url="/login?error=session_expired",
+            status_code=HTTP_302_FOUND
+        ) 
+
+    # Else if the user is active, then keep the time refreshed to most recent
+    request.session["last_active"] = time.time()
 
     # If user is logged in, render dashboard
     return templates.TemplateResponse(

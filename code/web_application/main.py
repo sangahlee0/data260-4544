@@ -129,7 +129,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-secret-key")
 app.add_middleware(
     SessionMiddleware,
     secret_key=SECRET_KEY,
-    https_only=False,
+    https_only=True,
     same_site="lax",
     max_age=3600
 )
