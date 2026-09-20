@@ -1,0 +1,475 @@
+Sun Sep 20 02:15:00 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 1
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8422.63it/s]
+
+Semantic nodes created: 624
+
+Sentence-window nodes created: 12453
+Number of token chunks: 1398
+
+Chunk 1:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+Chunk 2:
+gain to them Let us revenge this with
+our pikes, ere we become rakes: for the gods know I
+speak this in hunger for bread, not in thirst for revenge.
+
+Second Citizen:
+Would you proceed especially against Caius Marcius?
+
+All:
+Against him first: he's a very dog to the commonalty.
+
+Second Citizen:
+Consi
+
+Semantic node 1:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+Semantic node 2:
+All:
+Come, come.
+
+First Citizen:
+Soft! who comes here?
+
+Second Citizen:
+Worthy Menenius Agrippa; one that hath always loved
+the people.
+
+First Citizen:
+He's one honest enough: would all the rest were so!
+
+MENENIUS:
+What work's, my countrymen, in hand? where go you
+With bats and clubs? The matter? 
+
+Sentence-window node 1:
+Original sentence:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+
+
+Sentence window:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+ All:
+Speak, speak.
+
+ First Citizen:
+You are all resolved rather to die than to famish?
+
+ All:
+Resolved. 
+
+Sentence-window node 2:
+Original sentence:
+All:
+Speak, speak.
+
+
+
+Sentence window:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+ All:
+Speak, speak.
+
+ First Citizen:
+You are all resolved rather to die than to famish?
+
+ All:
+Resolved.  resolved.
+
+
+Sun Sep 20 02:15:38 UTC 2026
+Sun Sep 20 02:16:15 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 1
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 13840.37it/s]
+
+Semantic nodes created: 624
+
+Sentence-window nodes created: 12453
+Number of token chunks: 1398
+
+Chunk 1:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+Chunk 2:
+gain to them Let us revenge this with
+our pikes, ere we become rakes: for the gods know I
+speak this in hunger for bread, not in thirst for revenge.
+
+Second Citizen:
+Would you proceed especially against Caius Marcius?
+
+All:
+Against him first: he's a very dog to the commonalty.
+
+Second Citizen:
+Consi
+
+Semantic node 1:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+Semantic node 2:
+All:
+Come, come.
+
+First Citizen:
+Soft! who comes here?
+
+Second Citizen:
+Worthy Menenius Agrippa; one that hath always loved
+the people.
+
+First Citizen:
+He's one honest enough: would all the rest were so!
+
+MENENIUS:
+What work's, my countrymen, in hand? where go you
+With bats and clubs? The matter? 
+
+Sentence-window node 1:
+Original sentence:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+
+
+Sentence window:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+ All:
+Speak, speak.
+
+ First Citizen:
+You are all resolved rather to die than to famish?
+
+ All:
+Resolved. 
+
+Sentence-window node 2:
+Original sentence:
+All:
+Speak, speak.
+
+
+
+Sentence window:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+ All:
+Speak, speak.
+
+ First Citizen:
+You are all resolved rather to die than to famish?
+
+ All:
+Resolved.  resolved.
+
+
+Sun Sep 20 02:16:50 UTC 2026
+Sun Sep 20 04:18:29 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 1
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 10211.39it/s]
+Token nodes created: 1597
+
+Semantic nodes created: 624
+
+Sentence-window nodes created: 12453
+
+First token node:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+First semantic node:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+First sentence-window node:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+
+First Citizen:
+Before we proceed any further, hear me speak.
+
+ All:
+Speak, speak.
+
+ First Citizen:
+You are all resolved rather to die than to famish?
+
+ All:
+Resolved. 
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03180171 -0.01723168  0.00352711  0.01779777  0.02241933 -0.03617587
+  0.04027275  0.03695787]
+Retrieval latency: 25.07 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.55165971116126930.5603         881         shall be to him then as our good wills, A sure destruction.  BRUTUS: So it must fall out To him or our authorities. For an end, We must suggest the people in wh
+2       0.5399666403232230.5238         804         nor more attain'd than by A place below the first: for what miscarries Shall be the general's fault, though he perform To the utmost of a man, and giddy censure
+3       0.53556996337324130.5539         830         but they Upon their ancient malice will forget With the least cause these his new honours, which That he will give them make I as little question As he is proud
+Traceback (most recent call last):
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/RAG/rag_pipeline.py", line 173, in <module>
+    main()
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/RAG/rag_pipeline.py", line 167, in main
+    retriever_helper(token_index, "Token", query, k, embed_model, "q1")
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/RAG/rag_pipeline.py", line 127, in retriever_helper
+    document_embeddings = np.vstack(document_embeddings)
+                                    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'document_embeddings' where it is not associated with a value
+Sun Sep 20 04:20:50 UTC 2026
+Sun Sep 20 04:23:27 UTC 2026
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/RAG/rag_pipeline.py", line 115
+    cos_sim = float(np.dot(query_embedding, doc_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(doc_embedding)))        store_score = float(result.score) if result.score is not None else None
+                                                                                                                                       ^^^^^^^^^^^
+SyntaxError: invalid syntax
+Sun Sep 20 04:23:27 UTC 2026
+Sun Sep 20 04:24:37 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 1
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8276.59it/s]
+Token nodes created: 1597
+
+Semantic nodes created: 624
+
+Sentence-window nodes created: 12453
+
+First token node:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+First semantic node:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+
+All:
+Resolved. resolved.
+
+First Citizen:
+First, you know Caius Marcius is chief enemy to the people.
+
+All:
+We know't, we know't.
+
+First Citizen:
+Let us
+
+First sentence-window node:
+First Citizen:
+Before we proceed any further, hear me speak.
+
+
+First Citizen:
+Before we proceed any further, hear me speak.
+
+ All:
+Speak, speak.
+
+ First Citizen:
+You are all resolved rather to die than to famish?
+
+ All:
+Resolved. 
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03180171 -0.01723168  0.00352711  0.01779777  0.02241933 -0.03617587
+  0.04027275  0.03695787]
+Retrieval latency: 29.09 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.55165971116126930.5603         881         shall be to him then as our good wills, A sure destruction.  BRUTUS: So it must fall out To him or our authorities. For an end, We must suggest the people in wh
+2       0.5399666403232230.5238         804         nor more attain'd than by A place below the first: for what miscarries Shall be the general's fault, though he perform To the utmost of a man, and giddy censure
+3       0.53556996337324130.5539         830         but they Upon their ancient malice will forget With the least cause these his new honours, which That he will give them make I as little question As he is proud
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03180171 -0.01723168  0.00352711  0.01779777  0.02241933 -0.03617587
+  0.04027275  0.03695787]
+Retrieval latency: 11.92 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.51814619730458580.5449         2344        Citizens: To the rock, to the rock with him!  SICINIUS: Peace! We need not put new matter to his charge: What you have seen him do and heard him speak, Beating 
+2       0.51043157941643980.5234         10348       MENENIUS: You have made Good work, you and your cry! Shall's to the Capitol?  COMINIUS: O, ay, what else?  SICINIUS: Go, masters, get you home; be not dismay'd:
+3       0.49530708989854350.4640         2947        First Conspirator: How is it with our general?  AUFIDIUS: Even so As with a man by his own alms empoison'd, And with his charity slain.  Second Conspirator: Mos
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03180171 -0.01723168  0.00352711  0.01779777  0.02241933 -0.03617587
+  0.04027275  0.03695787]
+Retrieval latency: 143.57 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.54163147584580540.5626         208         BRUTUS: Let them go on; This mutiny were better put in hazard, Than stay, past doubt, for greater: If, as his nature is, he fall in rage With their refusal, bot
+2       0.5308008920412270.6001         198         BRUTUS: In this point charge him home, that he affects Tyrannical power: if he evade us there, Enforce him with his envy to the people, And that the spoil got o
+3       0.53048664352816520.5654         318         BRUTUS: Fame, at the which he aims, In whom already he's well graced, can not Better be held nor more attain'd than by A place below the first: for what miscarr
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_sentence_window_results.json
+Sun Sep 20 04:27:00 UTC 2026

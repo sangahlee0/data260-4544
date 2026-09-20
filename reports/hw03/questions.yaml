@@ -1,0 +1,24 @@
+- id: q1
+  question: "Which version of Starlette fixes the denial-of-service vulnerability caused by parsing large files in multipart forms?"
+  expected_answer: "The vulnerability is fixed in Starlette version 0.47.2."
+  expected_source: "GHSA-2c2j-9gv5-cj73.json"
+
+- id: q2
+  question: "What type of vulnerability can occur when Starlette parses large multipart form files?"
+  expected_answer: "It can cause a denial-of-service condition by blocking the main event thread and preventing new connections."
+  expected_source: "GHSA-2c2j-9gv5-cj73.json"
+
+- id: q3
+  question: "Which package is affected by the vulnerability in GHSA-2cp2-2r3c-7p7r, and which version fixes it?"
+  expected_answer: "The affected package is hydra-core, and version 1.3.4 fixes the vulnerability."
+  expected_source: "GHSA-2cp2-2r3c-7p7r.json"
+
+- id: q4
+  question: "What can happen if an attacker controls the _target_ value passed to hydra.utils.instantiate()?"
+  expected_answer: "The attacker may be able to execute arbitrary code in the process using the configuration."
+  expected_source: "GHSA-2cp2-2r3c-7p7r.json"
+
+- id: q5
+  question: "What vulnerability affects Mailman Core, and which version fixes it?"
+  expected_answer: "Mailman Core is vulnerable to timing attacks through its REST API, and the vulnerability is fixed in version 3.3.5."
+  expected_source: "GHSA-2jg5-xgvv-4wq7.json"
