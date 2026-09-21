@@ -41,17 +41,13 @@ data260-4544/
 │   ├── validateplanner.py
 │   ├── verify-hw01.py
 │   ├── verify-hw02.py
-│   ├── verify-hw03.py
-│   ├── web_application/
-│   │   ├── __pycache__/
-│   │   ├── index.html
-│   │   ├── main.py
-│   │   ├── routers/
-│   │   ├── script.js
-│   │   ├── style.css
-│   │   ├── templates/
-│   │   └── temp.js
-│   └── workflow.py
+│   ├── workflow.py
+│   ├── reports/hw01/verification.json
+│   └── web_application/
+│       ├── index.html
+│       ├── main.py
+│       ├── script.js
+│       └── style.css
 ├── src/
 │   └── model_client.py
 ├── reports/
