@@ -1,0 +1,44 @@
+{
+  "question_id": "q2",
+  "technique": "Token",
+  "chunk_count": 3615,
+  "average_chunk_length": 542.6055325034578,
+  "retrieval_latency_ms": 36.89895800198428,
+  "query_dimension": 384,
+  "query_shape": [
+    384
+  ],
+  "document_vectors_shape": [
+    3,
+    384
+  ],
+  "results": [
+    {
+      "question_id": "q2",
+      "rank": 1,
+      "store_score": 0.5383060451480828,
+      "cosine_sim": 0.6789476970234126,
+      "chunk_len": 614,
+      "preview": "have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\\n\\n\\n### PoC\\nSee the discussion [here](https://github.com/enco",
+      "source_file": "GHSA-2c2j-9gv5-cj73.json"
+    },
+    {
+      "question_id": "q2",
+      "rank": 2,
+      "store_score": 0.4729217162292346,
+      "cosine_sim": 0.5795310973393201,
+      "chunk_len": 711,
+      "preview": "{\"schema_version\":\"1.9.0\",\"id\":\"GHSA-2c2j-9gv5-cj73\",\"published\":\"2025-07-21T19:34:23Z\",\"modified\":\"2026-09-10T03:50:25.704876348Z\",\"aliases\":[\"CVE-2025-54121\",",
+      "source_file": "GHSA-2c2j-9gv5-cj73.json"
+    },
+    {
+      "question_id": "q2",
+      "rank": 3,
+      "store_score": 0.4253395605254665,
+      "cosine_sim": 0.41048034128843985,
+      "chunk_len": 1041,
+      "preview": "malicious image URLs in user input.\\n\\n### Severity\\n**Low** - The vulnerability allows SSRF attacks but has limited impact due to:\\n- Responses are not returne",
+      "source_file": "GHSA-2g6r-c272-w58r.json"
+    }
+  ]
+}

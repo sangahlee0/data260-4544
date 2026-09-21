@@ -1,5 +1,5 @@
 # HW02 Reproducible Run Instructions
-Follow these steps to reproduce the experiment and verification script for HW01:
+Follow these steps to reproduce the experiment and verification script for HW02:
 
 **Needs:** Python 3.11/3.12, Ollama, pydantic, fastapi, uvicorn, Docker, AWS Account (optional for ECS deployment)
 

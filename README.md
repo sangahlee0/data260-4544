@@ -20,13 +20,22 @@ Model: qwen2.5:3b (switched from qwen3.8b due to hardware issues)
 ```text
 data260-4544/
 ├── code/
+│   ├── Dockerfile
+│   ├── RAG/
+│   │   ├── corpus/
+│   │   ├── corpus_manifest_create.py
+│   │   ├── pypi_vulnerabilities.zip
+│   │   ├── rag_pipeline.py
+│   │   └── summarize_results.py
 │   ├── agentgraph_demo.py
 │   ├── agents_demo.py
-│   ├── Dockerfile
 │   ├── hw1_client.py
 │   ├── hw2experiment_run.py
 │   ├── metric_helper.py
 │   ├── nodes.py
+│   ├── reports/
+│   │   └── hw01/
+│   │       └── verification.json
 │   ├── router.py
 │   ├── state.py
 │   ├── validateplanner.py
@@ -46,8 +55,8 @@ data260-4544/
 │   │   ├── AI_USE.md
 │   │   ├── METRICS.md
 │   │   ├── RUN_LOG.txt
-│   │   ├── cases/nondeterminism_input.json
-│   │   ├── raw/nondeterminism_results.json
+│   │   ├── cases/
+│   │   ├── raw/
 │   │   ├── report (2).pdf
 │   │   ├── reproducible_run_instructions
 │   │   └── verification.json
@@ -61,6 +70,15 @@ data260-4544/
 │   │   ├── LEE_HW2.pdf
 │   │   └── verification.json
 │   └── hw03/
+│       ├── AI_USE.md
+│       ├── METRICS.md
+│       ├── RUN_LOG.txt
+│       ├── SOURCES.md
+│       ├── questions.yaml
+│       ├── raw/
+│       ├── reproducible_run_instructions
+│       ├── Lee_HW3.pdf
+│       └── verification.json
 ├── AGENT.md
 ├── DOMAIN_SCHEMA.md
 ├── Makefile

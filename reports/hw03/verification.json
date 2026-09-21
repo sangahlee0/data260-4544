@@ -1,0 +1,30 @@
+{
+  "homework": 3,
+  "sid4": 4544,
+  "commit_hash": "96e40ab16333d7673ceee91b9b1092cc50267d20",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "techniques": [
+    "token",
+    "semantic",
+    "sentence_window"
+  ],
+  "checks": [
+    {
+      "check": "RAG pipeline imports with required functions",
+      "passed": true
+    },
+    {
+      "check": "Corpus manifest matches local corpus files",
+      "passed": true
+    },
+    {
+      "check": "Questions and expected source files are valid",
+      "passed": true
+    },
+    {
+      "check": "Five questions have three ranked retrieval results each",
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}

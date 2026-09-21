@@ -1,0 +1,44 @@
+{
+  "question_id": "q3",
+  "technique": "Semantic",
+  "chunk_count": 826,
+  "average_chunk_length": 1970.3801452784503,
+  "retrieval_latency_ms": 14.175874995999038,
+  "query_dimension": 384,
+  "query_shape": [
+    384
+  ],
+  "document_vectors_shape": [
+    3,
+    384
+  ],
+  "results": [
+    {
+      "question_id": "q3",
+      "rank": 1,
+      "store_score": 0.5194987575527116,
+      "cosine_sim": 0.4507363658825051,
+      "chunk_len": 3457,
+      "preview": "{\"schema_version\":\"1.9.0\",\"id\":\"GHSA-2h84-3crq-vgfj\",\"published\":\"2023-07-12T12:31:36Z\",\"modified\":\"2025-02-13T05:32:00.873550Z\",\"aliases\":[\"BIT-airflow-2023-35",
+      "source_file": "GHSA-2h84-3crq-vgfj.json"
+    },
+    {
+      "question_id": "q3",
+      "rank": 2,
+      "store_score": 0.5089483691427615,
+      "cosine_sim": 0.4067476270762379,
+      "chunk_len": 1301,
+      "preview": "{\"schema_version\":\"1.9.0\",\"id\":\"GHSA-2r6g-7r83-jg72\",\"published\":\"2024-08-30T23:37:36Z\",\"modified\":\"2024-08-30T23:37:36Z\",\"summary\":\"`spam` project on PyPI comp",
+      "source_file": "GHSA-2r6g-7r83-jg72.json"
+    },
+    {
+      "question_id": "q3",
+      "rank": 3,
+      "store_score": 0.4948378881463088,
+      "cosine_sim": 0.48596408800752394,
+      "chunk_len": 751,
+      "preview": "{\"schema_version\":\"1.9.0\",\"id\":\"GHSA-2cf3-g243-hhfx\",\"published\":\"2022-05-13T01:45:43Z\",\"modified\":\"2026-09-10T03:49:07.240284981Z\",\"aliases\":[\"CVE-2017-3590\",\"",
+      "source_file": "GHSA-2cf3-g243-hhfx.json"
+    }
+  ]
+}

@@ -5,8 +5,11 @@ from pydantic import BaseModel
 from typing import List
 import uvicorn
 from pathlib import Path
+from routers.auth import router as auth_router
+
 
 BASE_DIR = Path(__file__).resolve().parent
+# Create FastAPI app
 app = FastAPI(title="User Management API", version="1.0.0")
 
 # Pydantic models for request/response validation
@@ -40,11 +43,11 @@ vulnerabilities: List[Vulnerability] = [
 """
 # Empty list to store vulnerabilities
 vulnerabilities: List[Vulnerability] = []
-
+"""
 # Serve the main HTML page
 @app.get("/")
 async def read_root():
-    return FileResponse(BASE_DIR / "index.html")
+    return FileResponse(BASE_DIR / "index.html")"""
 
 # REST API Endpoints
 
@@ -55,7 +58,7 @@ from fastapi import Response
 async def get_vulnerabilities(response: Response, search: str | None = None):
     """Get all vulnerabilities - Returns JSON array of vulnerability objects"""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache" # making sure we don't use a chaced version of this response
+    response.headers["Pragma"] = "no-cache" # making sure we don't use a cached version of this response
     response.headers["Expires"] = "0"
 
     if search:
@@ -111,8 +114,32 @@ async def delete_vulnerability(vulnerability_id: int):
     print(f"Deleted vulnerability: {deleted_vulnerability}")
     return None
 
-# Mount static files directory for serving HTML/CSS/JS
-app.mount("/", StaticFiles(directory=BASE_DIR), name="static")
+# Add the vulnerabilities page
+@app.get("/vulnerabilities")
+async def vulnerabilities_page():
+    return FileResponse(BASE_DIR / "index.html")
+
+from starlette.middleware.sessions import SessionMiddleware
+import os
+
+# Secret key for session signing
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-secret-key")
+
+# Enable session support
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=SECRET_KEY,
+    https_only=True,
+    same_site="lax",
+    max_age=3600
+)
+
+# Register routes
+app.include_router(auth_router)
+
+
+# Mount static files directory for serving HTML/CSS/JS; changed from / so that it doens't rewrite others
+app.mount("/static", StaticFiles(directory=BASE_DIR), name="static")
 
 import webbrowser
 

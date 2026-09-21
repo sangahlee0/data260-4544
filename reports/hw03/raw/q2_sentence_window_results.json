@@ -1,0 +1,44 @@
+{
+  "question_id": "q2",
+  "technique": "Sentence-window",
+  "chunk_count": 13165,
+  "average_chunk_length": 123.62582605393088,
+  "retrieval_latency_ms": 113.60295899794437,
+  "query_dimension": 384,
+  "query_shape": [
+    384
+  ],
+  "document_vectors_shape": [
+    3,
+    384
+  ],
+  "results": [
+    {
+      "question_id": "q2",
+      "rank": 1,
+      "store_score": 0.5908648345397315,
+      "cosine_sim": 0.6781982637366131,
+      "chunk_len": 200,
+      "preview": "Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potentia",
+      "source_file": "GHSA-2hrw-hx67-34x6.json"
+    },
+    {
+      "question_id": "q2",
+      "rank": 2,
+      "store_score": 0.5401690231793944,
+      "cosine_sim": 0.5833420023184052,
+      "chunk_len": 146,
+      "preview": "Parsing large forms is already CPU intensive so the additional IO block doesn't slow down `starlette` that much on systems with modern HDDs/SSDs. ",
+      "source_file": "GHSA-2c2j-9gv5-cj73.json"
+    },
+    {
+      "question_id": "q2",
+      "rank": 3,
+      "store_score": 0.4729217162292346,
+      "cosine_sim": 0.5795310973393201,
+      "chunk_len": 582,
+      "preview": "{\"schema_version\":\"1.9.0\",\"id\":\"GHSA-2c2j-9gv5-cj73\",\"published\":\"2025-07-21T19:34:23Z\",\"modified\":\"2026-09-10T03:50:25.704876348Z\",\"aliases\":[\"CVE-2025-54121\",",
+      "source_file": "GHSA-2c2j-9gv5-cj73.json"
+    }
+  ]
+}
