@@ -1,6 +1,9 @@
 {
+  "question_id": "q1",
   "technique": "Token",
-  "retrieval_latency_ms": 29.090666997944936,
+  "chunk_count": 3615,
+  "average_chunk_length": 542.6055325034578,
+  "retrieval_latency_ms": 54.36808301601559,
   "query_dimension": 384,
   "query_shape": [
     384
@@ -11,25 +14,31 @@
   ],
   "results": [
     {
+      "question_id": "q1",
       "rank": 1,
-      "store_score": 0.5516597111612693,
-      "cosine_sim": 0.5603164490050474,
-      "chunk_len": 881,
-      "preview": "shall be to him then as our good wills, A sure destruction.  BRUTUS: So it must fall out To him or our authorities. For an end, We must suggest the people in wh"
+      "store_score": 0.5625244565719052,
+      "cosine_sim": 0.6697154428018294,
+      "chunk_len": 711,
+      "preview": "{\"schema_version\":\"1.9.0\",\"id\":\"GHSA-2c2j-9gv5-cj73\",\"published\":\"2025-07-21T19:34:23Z\",\"modified\":\"2026-09-10T03:50:25.704876348Z\",\"aliases\":[\"CVE-2025-54121\",",
+      "source_file": "GHSA-2c2j-9gv5-cj73.json"
     },
     {
+      "question_id": "q1",
       "rank": 2,
-      "store_score": 0.539966640323223,
-      "cosine_sim": 0.5238305395095562,
-      "chunk_len": 804,
-      "preview": "nor more attain'd than by A place below the first: for what miscarries Shall be the general's fault, though he perform To the utmost of a man, and giddy censure"
+      "store_score": 0.5623737183353302,
+      "cosine_sim": 0.6878632278255935,
+      "chunk_len": 614,
+      "preview": "have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\\n\\n\\n### PoC\\nSee the discussion [here](https://github.com/enco",
+      "source_file": "GHSA-2c2j-9gv5-cj73.json"
     },
     {
+      "question_id": "q1",
       "rank": 3,
-      "store_score": 0.5355699633732413,
-      "cosine_sim": 0.5538595196826529,
-      "chunk_len": 830,
-      "preview": "but they Upon their ancient malice will forget With the least cause these his new honours, which That he will give them make I as little question As he is proud"
+      "store_score": 0.44937151006071085,
+      "cosine_sim": 0.4005448322819567,
+      "chunk_len": 769,
+      "preview": "will block the main thread to roll the file over to disk. This blocks the event thread which means we can't accept new connections.\\n\\n### Details\\nPlease see t",
+      "source_file": "GHSA-2c2j-9gv5-cj73.json"
     }
   ]
 }

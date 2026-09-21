@@ -8,7 +8,7 @@ print(f"Saving files to: {RAW_DIR}")
 
 rows = []
 
-for path in RAW_DIR.glob("*.json"):
+for path in RAW_DIR.glob("*_results.json"):
     data = json.loads(path.read_text(encoding="utf-8"))
 
     for result in data["results"]:

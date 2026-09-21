@@ -16,7 +16,7 @@ import yaml
 BASE_DIR = Path(__file__).resolve().parent
 CORPUS_DIR = BASE_DIR / "corpus"
 RAW_DIR = BASE_DIR.parent.parent / "reports" / "hw03" / "raw"
-QUESTIONS_PATH = BASE_DIR / "questions.yaml"
+QUESTIONS_PATH = BASE_DIR.parent.parent / "reports" / "hw03" / "questions.yaml"
 
 # For moderately sized chunks without creating excessive duplication
 TOKEN_CHUNK_SIZE = 256
@@ -114,6 +114,13 @@ def retriever_helper(index, technique, query, k, embed_model, qid="q1"):
 
         doc_embeddings.append(doc_embedding)
 
+        source_file = result.node.metadata.get("file_name")
+
+
+        if source_file is None:
+            source_path = result.node.metadata.get("file_path")
+            source_file = Path(source_path).name if source_path else None
+
         # Compute cosine similarity
         cos_sim = float(np.dot(query_embedding, doc_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(doc_embedding)))        
 
@@ -122,7 +129,7 @@ def retriever_helper(index, technique, query, k, embed_model, qid="q1"):
         # A lower rank number means the result is more relevant and store_score is the similarity score provided by LlamaIndex
         # cos_sim is the cosine similarity calculated manually, and we also have chunk length and ~160 short text preview
         print(f"{rank:<8}{str(store_score):<15}{cos_sim:<15.4f}{len(text):<12}{text[:160].replace(chr(10), ' ')}")
-        saved_rows.append({"rank" : rank, "store_score" : store_score, "cosine_sim" : cos_sim, "chunk_len" : len(text), "preview" : text[:160].replace("\n", " ")})
+        saved_rows.append({"question_id": qid, "rank" : rank, "store_score" : store_score, "cosine_sim" : cos_sim, "chunk_len" : len(text), "preview" : text[:160].replace("\n", " "), "source_file": source_file})
 
     # Save one JSON file for this query and technique
     RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -132,7 +139,10 @@ def retriever_helper(index, technique, query, k, embed_model, qid="q1"):
 
     print(f"Shape of stacked doc vectors: {document_embeddings.shape}")
 
-    output = {"technique": technique, "retrieval_latency_ms": retrieval_latency_ms, "query_dimension": len(query_embedding), "query_shape": list(query_embedding.shape), "document_vectors_shape": list(document_embeddings.shape), "results": saved_rows}
+    all_chunk_lengths = [len(node.get_content()) for node in index.docstore.docs.values()]
+    chunk_count = len(all_chunk_lengths)
+    average_chunk_length = sum(all_chunk_lengths) / chunk_count
+    output = {"question_id": qid, "technique": technique, "chunk_count" : chunk_count, "average_chunk_length" : average_chunk_length, "retrieval_latency_ms": retrieval_latency_ms, "query_dimension": len(query_embedding), "query_shape": list(query_embedding.shape), "document_vectors_shape": list(document_embeddings.shape), "results": saved_rows}
 
     output_path = RAW_DIR / f"{qid}_{technique.lower().replace('-', '_')}_results.json"
     output_path.write_text(json.dumps(output, indent=2), encoding="utf-8")

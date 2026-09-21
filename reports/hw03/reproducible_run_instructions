@@ -1,0 +1,38 @@
+# HW03 Reproducible Run Instructions
+Follow these steps to reproduce the experiment and verification script for HW01:
+
+**Needs:** Python 3.11/3.12, Ollama, pydantic, fastapi, uvicorn, Docker, AWS Account (optional for ECS deployment)
+
+1. **Python Version:** Ensure you are using **Python 3.11 or 3.12** (avoid Python 3.13 due to NumPy/LangChain compatibility issues).
+2. **Environment Setup:** Ensure these are installed:
+   ```bash
+   pip install llama-index llama-index-embeddings-huggingface sentence-transformers faiss-cpu numpy pandas
+   ```
+
+3. **Use a virtual environment:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+4. **Run the Self-Check Verification Script:**
+   ```bash
+   make verify-hw03
+   ```
+
+5. **Run the RAG experiment and log output:**
+   ```bash
+   cd code/RAG
+   { date -u; python3 rag_pipeline.py; date -u; } 2>&1 | tee -a ../../reports/hw03/RUN_LOG.txt
+   ```
+
+6. **Generate the summary output:**
+   ```bash
+   cd code/RAG
+   python3 summarize_results.py
+   ```
+
+## Notes
+- The verification script checks the HW03 setup and output files.
+- The RAG pipeline writes a timestamped log to the HW03 results folder.
+- Run the commands from the project root or from the RAG directory as shown above.

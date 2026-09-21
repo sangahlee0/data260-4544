@@ -473,3 +473,810 @@ rank    store_score    cosine_sim     chunk_len   preview
 Shape of stacked doc vectors: (3, 384)
 Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_sentence_window_results.json
 Sun Sep 20 04:27:00 UTC 2026
+Sun Sep 20 20:18:03 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 114
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8854.18it/s]
+Token nodes created: 3615
+
+Semantic nodes created: 826
+
+Sentence-window nodes created: 13165
+
+First token node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First semantic node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First sentence-window node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk. 
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk.  This blocks the event thread which means we can't accept new connections.\n\n### Details\nPlease see this discussion for details: https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403.  In summary the following UploadFile code (copied from [here](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/datastructures.py#L436C5-L447C14)) has a minor bug.  Instead of just checking for `self._in_memory` we should also check if the additional bytes will cause a rollover.\n\n```python\n\n    @property\n    def _in_memory(self) -> bool:\n        # check for SpooledTemporaryFile._rolled\n        rolled_to_disk = getattr(self.file, \"_rolled\", True)\n        return not rolled_to_disk\n\n    async def write(self, data: bytes) -> None:\n        if self.size is not None:\n            self.size += len(data)\n\n        if self._in_memory:\n            self.file.write(data)\n        else:\n            await run_in_threadpool(self.file.write, data)\n```\n\nI have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403) for steps on how to reproduce.\n\n### Impact\nTo be honest, very low and not many users will be impacted. 
+Traceback (most recent call last):
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/RAG/rag_pipeline.py", line 185, in <module>
+    main()
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/RAG/rag_pipeline.py", line 169, in main
+    with open(QUESTIONS_PATH, "r", encoding="utf-8") as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/sangah/Desktop/Data260/data260-4544/code/RAG/questions.yaml'
+Sun Sep 20 20:20:41 UTC 2026
+Sun Sep 20 20:22:29 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 114
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9539.46it/s]
+Token nodes created: 3615
+
+Semantic nodes created: 826
+
+Sentence-window nodes created: 13165
+
+First token node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First semantic node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First sentence-window node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk. 
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk.  This blocks the event thread which means we can't accept new connections.\n\n### Details\nPlease see this discussion for details: https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403.  In summary the following UploadFile code (copied from [here](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/datastructures.py#L436C5-L447C14)) has a minor bug.  Instead of just checking for `self._in_memory` we should also check if the additional bytes will cause a rollover.\n\n```python\n\n    @property\n    def _in_memory(self) -> bool:\n        # check for SpooledTemporaryFile._rolled\n        rolled_to_disk = getattr(self.file, \"_rolled\", True)\n        return not rolled_to_disk\n\n    async def write(self, data: bytes) -> None:\n        if self.size is not None:\n            self.size += len(data)\n\n        if self._in_memory:\n            self.file.write(data)\n        else:\n            await run_in_threadpool(self.file.write, data)\n```\n\nI have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403) for steps on how to reproduce.\n\n### Impact\nTo be honest, very low and not many users will be impacted. 
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 39.94 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         711         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.56237371833533020.6879         614         have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/enco
+3       0.449371510060710850.4005         769         will block the main thread to roll the file over to disk. This blocks the event thread which means we can't accept new connections.\n\n### Details\nPlease see t
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 12.40 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         2070        {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.43797402679224070.3749         2540        The default Playwright crawl path that does not trigger a download is unaffected.\n\n### Impact\n\nArbitrary file write with attacker-controlled content as the 
+3       0.40113430749331350.3800         2288        {"schema_version":"1.9.0","id":"GHSA-2p78-8hh6-96xc","published":"2018-07-23T19:52:21Z","modified":"2024-09-20T17:25:31.971933Z","aliases":["CVE-2011-1157","PYS
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 124.62 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         582         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.55695842592518460.5787         146         Parsing large forms is already CPU intensive so the additional IO block doesn't slow down `starlette` that much on systems with modern HDDs/SSDs. 
+3       0.53960039630313970.5733         200         Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potentia
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 37.04 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.53830604514808280.6789         614         have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/enco
+2       0.47292171622923460.5795         711         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+3       0.42533956052546650.4105         1041        malicious image URLs in user input.\n\n### Severity\n**Low** - The vulnerability allows SSRF attacks but has limited impact due to:\n- Responses are not returne
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 12.16 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.47292171622923460.5795         2070        {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.37236987661912930.3649         940         {"schema_version":"1.9.0","id":"GHSA-2j5p-7p5m-cvqr","published":"2026-06-03T21:14:35Z","modified":"2026-07-20T21:46:42.760170110Z","aliases":["CVE-2026-44022",
+3       0.363153175195745970.2971         8809        Create any valid `agents.yaml`.\n\n3. Run:\n\n```bash\npraisonai agents.yaml\n```\n\n4. Observe:\n\n* `[PWNED]` is printed\n* `pwned.txt` is created\n* No warni
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 114.89 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.59086483453973150.6782         200         Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potentia
+2       0.54016902317939440.5833         146         Parsing large forms is already CPU intensive so the additional IO block doesn't slow down `starlette` that much on systems with modern HDDs/SSDs. 
+3       0.47292171622923460.5795         582         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 35.91 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57821688097218170.5677         218         ,"0.4.1rc2","0.4.1rc3"],"database_specific":{"last_known_affected_version_range":"<= 0.4.0","source":"https://github.com/github/advisory-database/blob/main/advi
+2       0.57778969103808290.5641         218         2.1","9.3.1"],"database_specific":{"last_known_affected_version_range":"<= 10.65.1","source":"https://github.com/github/advisory-database/blob/main/advisories/g
+3       0.57608092722535310.5966         217         ,{"fixed":"2.2.3"}]}],"versions":["2.2.0","2.2.1","2.2.2"],"database_specific":{"source":"https://github.com/github/advisory-database/blob/main/advisories/githu
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 12.35 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.51949875755271160.4507         3457        {"schema_version":"1.9.0","id":"GHSA-2h84-3crq-vgfj","published":"2023-07-12T12:31:36Z","modified":"2025-02-13T05:32:00.873550Z","aliases":["BIT-airflow-2023-35
+2       0.50894836914276150.4067         1301        {"schema_version":"1.9.0","id":"GHSA-2r6g-7r83-jg72","published":"2024-08-30T23:37:36Z","modified":"2024-08-30T23:37:36Z","summary":"`spam` project on PyPI comp
+3       0.49483788814630880.4860         751         {"schema_version":"1.9.0","id":"GHSA-2cf3-g243-hhfx","published":"2022-05-13T01:45:43Z","modified":"2026-09-10T03:49:07.240284981Z","aliases":["CVE-2017-3590","
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 152.09 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.54245899801068140.5685         82          This package version is vulnerable and has since been\npatched in 2.9.1-10.\n\n4. 
+2       0.52387766080430990.3985         56          This vulnerability appears to have been fixed in 17.5.0.
+3       0.51791580016454510.4373         268         It is a substantial security improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 d
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 40.02 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.53846751132870240.6624         889         attacker-controlled arguments.\n\nThis issue is the same general class of problem discussed by Unit 42 for\ndownstream AI/ML libraries such as NVIDIA NeMo, wher
+2       0.51281585000794530.6168         978         is not a network service. Exploitation requires a consuming application,\nlibrary, or user workflow to load attacker-controlled config, CLI overrides, or\nmodel
+3       0.50315334561691840.5760         660         improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 development line uses an allow
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 12.01 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.404581214978070150.5629         3398        {"schema_version":"1.9.0","id":"GHSA-2cp2-2r3c-7p7r","published":"2026-08-21T20:57:31Z","modified":"2026-09-10T12:25:59.118521669Z","aliases":["CVE-2026-68508",
+2       0.305172398828847060.3199         2066        So this only affects FastAPI when it parses Form data.\n\nCheers\n\n#### Impact\n\nAn attacker is able to cause a DoS on a FastApi server via a malicious Conten
+3       0.30388431129684250.4177         1769        They should validate `_target_` values\nagainst a trusted allowlist before instantiation.","affected":[{"package":{"name":"hydra-core","ecosystem":"PyPI","purl"
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 119.76 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.51304921789827840.6492         265         The\nblacklist is not present in the released `hydra-core` 1.3.3 package, so this\nissue should not be described as a bypass of a released 1.3.3 blacklist.\n\n#
+2       0.4792943151573720.5381         268         It is a substantial security improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 d
+3       0.46074463312426250.5673         473         A\nmalicious config can select a callable capable of executing code or commands and\nprovide attacker-controlled arguments.\n\nThis issue is the same general cl
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 36.80 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57085988266734930.6840         649         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.40391953730090120.4538         215         "https://github.com/pypa/advisory-database/tree/main/vulns/mailman/PYSEC-2023-22.yaml"},{"type":"PACKAGE","url":"https://gitlab.com/mailman/mailman"},{"type":"W
+3       0.399688849542959630.3580         458         or `AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N` (0.0 None) depending on the Confidentiality impact metric used.\n\nIn [Bugcrowd's vulnerability rating taxonomy](https:
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 13.53 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57086473543054440.6480         457         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.38370125245978250.4620         1773        The REST API is bound to localhost by default, limiting the ability for attackers to exploit this, but can optionally be made to listen on other interfaces.","a
+3       0.30283538658898280.3039         5965        We will also cherrypick this commit on TensorFlow 2.6.1, TensorFlow 2.5.2, and TensorFlow 2.4.4, as these are also affected and still in supported range.\n\n###
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 118.84 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.5762601121179180.7058         293         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.30765136615210540.3683         56          This vulnerability appears to have been fixed in 17.5.0.
+3       0.30270261025792190.3208         485         We will also cherrypick this commit on TensorFlow 2.5.1, TensorFlow 2.4.3, and TensorFlow 2.3.4, as these are also affected and still in supported range.\n\n###
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_sentence_window_results.json
+Sun Sep 20 20:25:06 UTC 2026
+Sun Sep 20 20:52:21 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 114
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 5618.59it/s]
+Token nodes created: 3615
+
+Semantic nodes created: 826
+
+Sentence-window nodes created: 13165
+
+First token node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First semantic node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First sentence-window node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk. 
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk.  This blocks the event thread which means we can't accept new connections.\n\n### Details\nPlease see this discussion for details: https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403.  In summary the following UploadFile code (copied from [here](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/datastructures.py#L436C5-L447C14)) has a minor bug.  Instead of just checking for `self._in_memory` we should also check if the additional bytes will cause a rollover.\n\n```python\n\n    @property\n    def _in_memory(self) -> bool:\n        # check for SpooledTemporaryFile._rolled\n        rolled_to_disk = getattr(self.file, \"_rolled\", True)\n        return not rolled_to_disk\n\n    async def write(self, data: bytes) -> None:\n        if self.size is not None:\n            self.size += len(data)\n\n        if self._in_memory:\n            self.file.write(data)\n        else:\n            await run_in_threadpool(self.file.write, data)\n```\n\nI have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403) for steps on how to reproduce.\n\n### Impact\nTo be honest, very low and not many users will be impacted. 
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 40.31 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         711         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.56237371833533020.6879         614         have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/enco
+3       0.449371510060710850.4005         769         will block the main thread to roll the file over to disk. This blocks the event thread which means we can't accept new connections.\n\n### Details\nPlease see t
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 12.34 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         2070        {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.43797402679224070.3749         2540        The default Playwright crawl path that does not trigger a download is unaffected.\n\n### Impact\n\nArbitrary file write with attacker-controlled content as the 
+3       0.40113430749331350.3800         2288        {"schema_version":"1.9.0","id":"GHSA-2p78-8hh6-96xc","published":"2018-07-23T19:52:21Z","modified":"2024-09-20T17:25:31.971933Z","aliases":["CVE-2011-1157","PYS
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 120.13 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         582         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.55695842592518460.5787         146         Parsing large forms is already CPU intensive so the additional IO block doesn't slow down `starlette` that much on systems with modern HDDs/SSDs. 
+3       0.53960039630313970.5733         200         Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potentia
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 35.15 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.53830604514808280.6789         614         have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/enco
+2       0.47292171622923460.5795         711         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+3       0.42533956052546650.4105         1041        malicious image URLs in user input.\n\n### Severity\n**Low** - The vulnerability allows SSRF attacks but has limited impact due to:\n- Responses are not returne
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 11.42 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.47292171622923460.5795         2070        {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.37236987661912930.3649         940         {"schema_version":"1.9.0","id":"GHSA-2j5p-7p5m-cvqr","published":"2026-06-03T21:14:35Z","modified":"2026-07-20T21:46:42.760170110Z","aliases":["CVE-2026-44022",
+3       0.363153175195745970.2971         8809        Create any valid `agents.yaml`.\n\n3. Run:\n\n```bash\npraisonai agents.yaml\n```\n\n4. Observe:\n\n* `[PWNED]` is printed\n* `pwned.txt` is created\n* No warni
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 114.13 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.59086483453973150.6782         200         Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potentia
+2       0.54016902317939440.5833         146         Parsing large forms is already CPU intensive so the additional IO block doesn't slow down `starlette` that much on systems with modern HDDs/SSDs. 
+3       0.47292171622923460.5795         582         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 35.36 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57821688097218170.5677         218         ,"0.4.1rc2","0.4.1rc3"],"database_specific":{"last_known_affected_version_range":"<= 0.4.0","source":"https://github.com/github/advisory-database/blob/main/advi
+2       0.57778969103808290.5641         218         2.1","9.3.1"],"database_specific":{"last_known_affected_version_range":"<= 10.65.1","source":"https://github.com/github/advisory-database/blob/main/advisories/g
+3       0.57608092722535310.5966         217         ,{"fixed":"2.2.3"}]}],"versions":["2.2.0","2.2.1","2.2.2"],"database_specific":{"source":"https://github.com/github/advisory-database/blob/main/advisories/githu
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 12.26 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.51949875755271160.4507         3457        {"schema_version":"1.9.0","id":"GHSA-2h84-3crq-vgfj","published":"2023-07-12T12:31:36Z","modified":"2025-02-13T05:32:00.873550Z","aliases":["BIT-airflow-2023-35
+2       0.50894836914276150.4067         1301        {"schema_version":"1.9.0","id":"GHSA-2r6g-7r83-jg72","published":"2024-08-30T23:37:36Z","modified":"2024-08-30T23:37:36Z","summary":"`spam` project on PyPI comp
+3       0.49483788814630880.4860         751         {"schema_version":"1.9.0","id":"GHSA-2cf3-g243-hhfx","published":"2022-05-13T01:45:43Z","modified":"2026-09-10T03:49:07.240284981Z","aliases":["CVE-2017-3590","
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 112.81 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.54245899801068140.5685         82          This package version is vulnerable and has since been\npatched in 2.9.1-10.\n\n4. 
+2       0.52387766080430990.3985         56          This vulnerability appears to have been fixed in 17.5.0.
+3       0.51791580016454510.4373         268         It is a substantial security improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 d
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 36.19 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.53846751132870240.6624         889         attacker-controlled arguments.\n\nThis issue is the same general class of problem discussed by Unit 42 for\ndownstream AI/ML libraries such as NVIDIA NeMo, wher
+2       0.51281585000794530.6168         978         is not a network service. Exploitation requires a consuming application,\nlibrary, or user workflow to load attacker-controlled config, CLI overrides, or\nmodel
+3       0.50315334561691840.5760         660         improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 development line uses an allow
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 11.58 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.404581214978070150.5629         3398        {"schema_version":"1.9.0","id":"GHSA-2cp2-2r3c-7p7r","published":"2026-08-21T20:57:31Z","modified":"2026-09-10T12:25:59.118521669Z","aliases":["CVE-2026-68508",
+2       0.305172398828847060.3199         2066        So this only affects FastAPI when it parses Form data.\n\nCheers\n\n#### Impact\n\nAn attacker is able to cause a DoS on a FastApi server via a malicious Conten
+3       0.30388431129684250.4177         1769        They should validate `_target_` values\nagainst a trusted allowlist before instantiation.","affected":[{"package":{"name":"hydra-core","ecosystem":"PyPI","purl"
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 114.04 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.51304921789827840.6492         265         The\nblacklist is not present in the released `hydra-core` 1.3.3 package, so this\nissue should not be described as a bypass of a released 1.3.3 blacklist.\n\n#
+2       0.4792943151573720.5381         268         It is a substantial security improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 d
+3       0.46074463312426250.5673         473         A\nmalicious config can select a callable capable of executing code or commands and\nprovide attacker-controlled arguments.\n\nThis issue is the same general cl
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 34.54 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57085988266734930.6840         649         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.40391953730090120.4538         215         "https://github.com/pypa/advisory-database/tree/main/vulns/mailman/PYSEC-2023-22.yaml"},{"type":"PACKAGE","url":"https://gitlab.com/mailman/mailman"},{"type":"W
+3       0.399688849542959630.3580         458         or `AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N` (0.0 None) depending on the Confidentiality impact metric used.\n\nIn [Bugcrowd's vulnerability rating taxonomy](https:
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 12.07 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57086473543054440.6480         457         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.38370125245978250.4620         1773        The REST API is bound to localhost by default, limiting the ability for attackers to exploit this, but can optionally be made to listen on other interfaces.","a
+3       0.30283538658898280.3039         5965        We will also cherrypick this commit on TensorFlow 2.6.1, TensorFlow 2.5.2, and TensorFlow 2.4.4, as these are also affected and still in supported range.\n\n###
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 113.48 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.5762601121179180.7058         293         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.30765136615210540.3683         56          This vulnerability appears to have been fixed in 17.5.0.
+3       0.30270261025792190.3208         485         We will also cherrypick this commit on TensorFlow 2.5.1, TensorFlow 2.4.3, and TensorFlow 2.3.4, as these are also affected and still in supported range.\n\n###
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_sentence_window_results.json
+Sun Sep 20 20:54:56 UTC 2026
+Sun Sep 20 21:10:03 UTC 2026
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 114
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8474.50it/s]
+Token nodes created: 3615
+
+Semantic nodes created: 826
+
+Sentence-window nodes created: 13165
+
+First token node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First semantic node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Su
+
+First sentence-window node:
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk. 
+{"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121","PYSEC-2026-1941"],"summary":"Starlette has possible denial-of-service vector when parsing large files in multipart forms","details":"### Summary\nWhen parsing a multi-part form with large files (greater than the [default max spool size](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/formparsers.py#L126)) `starlette` will block the main thread to roll the file over to disk.  This blocks the event thread which means we can't accept new connections.\n\n### Details\nPlease see this discussion for details: https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403.  In summary the following UploadFile code (copied from [here](https://github.com/encode/starlette/blob/fa5355442753f794965ae1af0f87f9fec1b9a3de/starlette/datastructures.py#L436C5-L447C14)) has a minor bug.  Instead of just checking for `self._in_memory` we should also check if the additional bytes will cause a rollover.\n\n```python\n\n    @property\n    def _in_memory(self) -> bool:\n        # check for SpooledTemporaryFile._rolled\n        rolled_to_disk = getattr(self.file, \"_rolled\", True)\n        return not rolled_to_disk\n\n    async def write(self, data: bytes) -> None:\n        if self.size is not None:\n            self.size += len(data)\n\n        if self._in_memory:\n            self.file.write(data)\n        else:\n            await run_in_threadpool(self.file.write, data)\n```\n\nI have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/encode/starlette/discussions/2927#discussioncomment-13721403) for steps on how to reproduce.\n\n### Impact\nTo be honest, very low and not many users will be impacted. 
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 54.37 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         711         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.56237371833533020.6879         614         have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/enco
+3       0.449371510060710850.4005         769         will block the main thread to roll the file over to disk. This blocks the event thread which means we can't accept new connections.\n\n### Details\nPlease see t
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 14.30 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         2070        {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.43797402679224070.3749         2540        The default Playwright crawl path that does not trigger a download is unaffected.\n\n### Impact\n\nArbitrary file write with attacker-controlled content as the 
+3       0.40113430749331350.3800         2288        {"schema_version":"1.9.0","id":"GHSA-2p78-8hh6-96xc","published":"2018-07-23T19:52:21Z","modified":"2024-09-20T17:25:31.971933Z","aliases":["CVE-2011-1157","PYS
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04992979 -0.01009785  0.00538796 -0.04496516 -0.01067686 -0.04447263
+ -0.08296429  0.05313409]
+Retrieval latency: 153.28 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.56252445657190520.6697         582         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.55695842592518460.5787         146         Parsing large forms is already CPU intensive so the additional IO block doesn't slow down `starlette` that much on systems with modern HDDs/SSDs. 
+3       0.53960039630313970.5733         200         Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potentia
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q1_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 36.90 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.53830604514808280.6789         614         have already created a PR which fixes the problem: https://github.com/encode/starlette/pull/2962\n\n\n### PoC\nSee the discussion [here](https://github.com/enco
+2       0.47292171622923460.5795         711         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+3       0.42533956052546650.4105         1041        malicious image URLs in user input.\n\n### Severity\n**Low** - The vulnerability allows SSRF attacks but has limited impact due to:\n- Responses are not returne
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 11.97 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.47292171622923460.5795         2070        {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+2       0.37236987661912930.3649         940         {"schema_version":"1.9.0","id":"GHSA-2j5p-7p5m-cvqr","published":"2026-06-03T21:14:35Z","modified":"2026-07-20T21:46:42.760170110Z","aliases":["CVE-2026-44022",
+3       0.363153175195745970.2971         8809        Create any valid `agents.yaml`.\n\n3. Run:\n\n```bash\npraisonai agents.yaml\n```\n\n4. Observe:\n\n* `[PWNED]` is printed\n* `pwned.txt` is created\n* No warni
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03064029 -0.03703545 -0.01676713 -0.01109952  0.00039027 -0.02544975
+ -0.11901794  0.07704788]
+Retrieval latency: 113.60 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.59086483453973150.6782         200         Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potentia
+2       0.54016902317939440.5833         146         Parsing large forms is already CPU intensive so the additional IO block doesn't slow down `starlette` that much on systems with modern HDDs/SSDs. 
+3       0.47292171622923460.5795         582         {"schema_version":"1.9.0","id":"GHSA-2c2j-9gv5-cj73","published":"2025-07-21T19:34:23Z","modified":"2026-09-10T03:50:25.704876348Z","aliases":["CVE-2025-54121",
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q2_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 36.91 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57821688097218170.5677         218         ,"0.4.1rc2","0.4.1rc3"],"database_specific":{"last_known_affected_version_range":"<= 0.4.0","source":"https://github.com/github/advisory-database/blob/main/advi
+2       0.57778969103808290.5641         218         2.1","9.3.1"],"database_specific":{"last_known_affected_version_range":"<= 10.65.1","source":"https://github.com/github/advisory-database/blob/main/advisories/g
+3       0.57608092722535310.5966         217         ,{"fixed":"2.2.3"}]}],"versions":["2.2.0","2.2.1","2.2.2"],"database_specific":{"source":"https://github.com/github/advisory-database/blob/main/advisories/githu
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 14.18 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.51949875755271160.4507         3457        {"schema_version":"1.9.0","id":"GHSA-2h84-3crq-vgfj","published":"2023-07-12T12:31:36Z","modified":"2025-02-13T05:32:00.873550Z","aliases":["BIT-airflow-2023-35
+2       0.50894836914276150.4067         1301        {"schema_version":"1.9.0","id":"GHSA-2r6g-7r83-jg72","published":"2024-08-30T23:37:36Z","modified":"2024-08-30T23:37:36Z","summary":"`spam` project on PyPI comp
+3       0.49483788814630880.4860         751         {"schema_version":"1.9.0","id":"GHSA-2cf3-g243-hhfx","published":"2022-05-13T01:45:43Z","modified":"2026-09-10T03:49:07.240284981Z","aliases":["CVE-2017-3590","
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.07894123 -0.01496105 -0.02770911 -0.04565971  0.02467831 -0.01994568
+ -0.0731907   0.04436368]
+Retrieval latency: 112.03 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.54245899801068140.5685         82          This package version is vulnerable and has since been\npatched in 2.9.1-10.\n\n4. 
+2       0.52387766080430990.3985         56          This vulnerability appears to have been fixed in 17.5.0.
+3       0.51791580016454510.4373         268         It is a substantial security improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 d
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q3_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 50.65 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.53846751132870240.6624         889         attacker-controlled arguments.\n\nThis issue is the same general class of problem discussed by Unit 42 for\ndownstream AI/ML libraries such as NVIDIA NeMo, wher
+2       0.51281585000794530.6168         978         is not a network service. Exploitation requires a consuming application,\nlibrary, or user workflow to load attacker-controlled config, CLI overrides, or\nmodel
+3       0.50315334561691840.5760         660         improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 development line uses an allow
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 14.01 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.404581214978070150.5629         3398        {"schema_version":"1.9.0","id":"GHSA-2cp2-2r3c-7p7r","published":"2026-08-21T20:57:31Z","modified":"2026-09-10T12:25:59.118521669Z","aliases":["CVE-2026-68508",
+2       0.305172398828847060.3199         2066        So this only affects FastAPI when it parses Form data.\n\nCheers\n\n#### Impact\n\nAn attacker is able to cause a DoS on a FastApi server via a malicious Conten
+3       0.30388431129684250.4177         1769        They should validate `_target_` values\nagainst a trusted allowlist before instantiation.","affected":[{"package":{"name":"hydra-core","ecosystem":"PyPI","purl"
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.04073485  0.01844178  0.00404942  0.05316284  0.04070772 -0.02307322
+  0.10110727 -0.00541195]
+Retrieval latency: 123.56 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.51304921789827840.6492         265         The\nblacklist is not present in the released `hydra-core` 1.3.3 package, so this\nissue should not be described as a bypass of a released 1.3.3 blacklist.\n\n#
+2       0.4792943151573720.5381         268         It is a substantial security improvement, and users remaining\non the 1.3 release line should upgrade to 1.3.4 or a newer version.\n\nThe unreleased Hydra 1.4 d
+3       0.46074463312426250.5673         473         A\nmalicious config can select a callable capable of executing code or commands and\nprovide attacker-controlled arguments.\n\nThis issue is the same general cl
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q4_sentence_window_results.json
+
+===========================================================================
+
+Technique: Token
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 39.89 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57085988266734930.6840         649         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.40391953730090120.4538         215         "https://github.com/pypa/advisory-database/tree/main/vulns/mailman/PYSEC-2023-22.yaml"},{"type":"PACKAGE","url":"https://gitlab.com/mailman/mailman"},{"type":"W
+3       0.399688849542959630.3580         458         or `AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N` (0.0 None) depending on the Confidentiality impact metric used.\n\nIn [Bugcrowd's vulnerability rating taxonomy](https:
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_token_results.json
+
+===========================================================================
+
+Technique: Semantic
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 14.99 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.57086473543054440.6480         457         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.38370125245978250.4620         1773        The REST API is bound to localhost by default, limiting the ability for attackers to exploit this, but can optionally be made to listen on other interfaces.","a
+3       0.30283538658898280.3039         5965        We will also cherrypick this commit on TensorFlow 2.6.1, TensorFlow 2.5.2, and TensorFlow 2.4.4, as these are also affected and still in supported range.\n\n###
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_semantic_results.json
+
+===========================================================================
+
+Technique: Sentence-window
+Query vector shape: (384,)
+Query dimension: 384
+First 8 values: [-0.03777622  0.02626774  0.02620483 -0.02083009  0.06008814 -0.0733517
+ -0.10075768  0.00642555]
+Retrieval latency: 131.36 ms
+rank    store_score    cosine_sim     chunk_len   preview
+------------------------------------------------------------
+1       0.5762601121179180.7058         293         {"schema_version":"1.9.0","id":"GHSA-2jg5-xgvv-4wq7","published":"2023-04-15T21:30:16Z","modified":"2026-02-22T22:56:10.942103Z","aliases":["CVE-2021-34337","PY
+2       0.30765136615210540.3683         56          This vulnerability appears to have been fixed in 17.5.0.
+3       0.30270261025792190.3208         485         We will also cherrypick this commit on TensorFlow 2.5.1, TensorFlow 2.4.3, and TensorFlow 2.3.4, as these are also affected and still in supported range.\n\n###
+Shape of stacked doc vectors: (3, 384)
+Saved results to: /Users/sangah/Desktop/Data260/data260-4544/reports/hw03/raw/q5_sentence_window_results.json
+Sun Sep 20 21:13:02 UTC 2026
