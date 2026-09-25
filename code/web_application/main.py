@@ -6,6 +6,7 @@ from typing import List
 import uvicorn
 from pathlib import Path
 from routers.auth import router as auth_router
+from fastapi.middleware.cors import CORSMiddleware
 
 
 BASE_DIR = Path(__file__).resolve().parent
