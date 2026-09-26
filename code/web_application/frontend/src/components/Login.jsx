@@ -13,7 +13,7 @@ export default function LoginBar({ auth, setAuth }) {
 
                 setAuth({ loggedIn: true, userId: data.user_id});
             } catch {
-                setAuth({ loggedIn: false, userId: null });
+                setAuth({ loggedIn: false, userId: null, email:null });
             }
         })();
     }, [setAuth]);
