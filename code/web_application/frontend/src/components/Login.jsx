@@ -11,7 +11,7 @@ export default function LoginBar({ auth, setAuth }) {
             try {
                 const data = await me();
 
-                setAuth({ loggedIn: true, userId: data.user_id });
+                setAuth({ loggedIn: true, userId: data.user_id});
             } catch {
                 setAuth({ loggedIn: false, userId: null });
             }
@@ -26,7 +26,7 @@ export default function LoginBar({ auth, setAuth }) {
         try {
             const res = await login(email, password);
 
-            setAuth({ loggedIn: true, userId: res.user_id });
+            setAuth({ loggedIn: true, userId: res.user_id, email:email });
             
             setEmail("");
             setPassword("");
@@ -40,7 +40,7 @@ export default function LoginBar({ auth, setAuth }) {
         try {
             await logout();
         } finally {
-            setAuth({ loggedIn: false, userId: null });
+            setAuth({ loggedIn: false, userId: null, email: null});
         }
     }
 
@@ -49,7 +49,7 @@ export default function LoginBar({ auth, setAuth }) {
             {auth.loggedIn ? (
                 <>
                     <div className="loginbar-text">
-                        ✅ Logged in as <b>User ID {auth.userId}</b>
+                        ✅ Logged in as <b>{auth.email}</b>
                     </div>
                     <button className="btn danger" onClick={handleLogout}>
                         Logout

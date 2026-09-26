@@ -6,27 +6,27 @@ const api = axios.create({
 });
 
 export async function fetchVulnerabilities() {
-  const res = await api.get("/users");
+  const res = await api.get("/api/vulnerabilities");
   return res.data;
 }
 
 export async function fetchVulnerabilityById(id) {
-  const res = await api.get(`/users/${id}`);
+  const res = await api.get(`/api/vulnerabilities/${id}`);
   return res.data;
 }
 
 export async function createVulnerability(payload) {
-  const res = await api.post("/users", payload);
+  const res = await api.post("/api/vulnerabilities", payload);
   return res.data;
 }
 
 export async function updateVulnerability(id, payload) {
-  const res = await api.put(`/users/${id}`, payload);
+  const res = await api.put(`/api/vulnerabilities/${id}`, payload);
   return res.data;
 }
 
 export async function deleteVulnerability(id) {
-  const res = await api.delete(`/users/${id}`);
+  const res = await api.delete(`/api/vulnerabilities/${id}`);
   return res.data;
 }
 

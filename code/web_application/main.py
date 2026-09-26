@@ -29,23 +29,23 @@ class Vulnerability(BaseModel):
     id: int
     package_name: str
     vulnerability_name: str
-    reporter_email: str
-    severity: str
-    issue_description: str
+    #reporter_email: str
+    #severity: str
+    #issue_description: str
 
 class VulnerabilityCreate(BaseModel):
     package_name: str
     vulnerability_name: str
-    reporter_email: str
-    severity: str
-    issue_description: str
+    #reporter_email: str
+    #severity: str
+    #issue_description: str
 
 class VulnerabilityUpdate(BaseModel):
     package_name: str
     vulnerability_name: str
-    reporter_email: str
-    severity: str
-    issue_description: str
+    #reporter_email: str
+    #severity: str
+    #issue_description: str
 """
 # In-memory vulnerability storage
 vulnerabilities: List[Vulnerability] = [
@@ -88,7 +88,9 @@ async def create_vulnerability(vulnerability_data: VulnerabilityCreate):
     
     # Generate new ID
     new_id = max([v.id for v in vulnerabilities], default=0) + 1
-    new_vulnerability = Vulnerability(id=new_id, package_name=vulnerability_data.package_name, vulnerability_name=vulnerability_data.vulnerability_name, reporter_email=vulnerability_data.reporter_email, severity=vulnerability_data.severity, issue_description=vulnerability_data.issue_description)
+    #new_vulnerability = Vulnerability(id=new_id, package_name=vulnerability_data.package_name, vulnerability_name=vulnerability_data.vulnerability_name, reporter_email=vulnerability_data.reporter_email, severity=vulnerability_data.severity, issue_description=vulnerability_data.issue_description)
+    new_vulnerability = Vulnerability(id=new_id, package_name=vulnerability_data.package_name, vulnerability_name=vulnerability_data.vulnerability_name)
+
     vulnerabilities.append(new_vulnerability)
     
     print(f"Created vulnerability: {new_vulnerability}")
@@ -107,9 +109,9 @@ async def update_record(vulnerability_id: int, vulnerability_data: Vulnerability
 
     vulnerability.package_name = vulnerability_data.package_name
     vulnerability.vulnerability_name = vulnerability_data.vulnerability_name
-    vulnerability.reporter_email = vulnerability_data.reporter_email
-    vulnerability.severity = vulnerability_data.severity
-    vulnerability.issue_description = vulnerability_data.issue_description
+    #vulnerability.reporter_email = vulnerability_data.reporter_email
+    #vulnerability.severity = vulnerability_data.severity
+    #vulnerability.issue_description = vulnerability_data.issue_description
     print(f"Updated vulnerability: {vulnerability}")
     return vulnerability
 
@@ -130,6 +132,21 @@ async def delete_vulnerability(vulnerability_id: int):
 @app.get("/vulnerabilities")
 async def vulnerabilities_page():
     return FileResponse(BASE_DIR / "index.html")
+
+
+@app.get("/api/vulnerabilities/{vulnerability_id}", response_model=Vulnerability)
+async def get_vulnerability_by_id(vulnerability_id: int):
+    vulnerability = next(
+        (v for v in vulnerabilities if v.id == vulnerability_id),
+        None
+    )
+    if not vulnerability:
+        raise HTTPException(
+            status_code=404,
+            detail="Vulnerability not found"
+        )
+
+    return vulnerability
 
 from starlette.middleware.sessions import SessionMiddleware
 import os
