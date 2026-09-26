@@ -5,13 +5,24 @@ from pydantic import BaseModel
 from typing import List
 import uvicorn
 from pathlib import Path
-from routers.auth import router as auth_router
+#from routers.auth import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
+from routers.api_auth import router as api_auth_router
 
 
 BASE_DIR = Path(__file__).resolve().parent
 # Create FastAPI app
 app = FastAPI(title="User Management API", version="1.0.0")
+
+# Allow React dev server
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Pydantic models for request/response validation
 class Vulnerability(BaseModel):
@@ -136,7 +147,7 @@ app.add_middleware(
 )
 
 # Register routes
-app.include_router(auth_router)
+app.include_router(api_auth_router)
 
 
 # Mount static files directory for serving HTML/CSS/JS; changed from / so that it doens't rewrite others
@@ -147,5 +158,5 @@ import webbrowser
 # Start the server
 if __name__ == "__main__":
     # Open the browser automatically
-    webbrowser.open("http://localhost:8044")
+    #webbrowser.open("http://localhost:8044")
     uvicorn.run(app, host="0.0.0.0", port=8044)
