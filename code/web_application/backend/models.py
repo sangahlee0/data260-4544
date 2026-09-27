@@ -26,3 +26,12 @@ class SessionToken(Base):
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     expires_at = Column(DateTime(timezone=True), nullable=False)
+
+
+# Create table related table for testing
+class VulnerabilityDescription(Base):
+    __tablename__ = "vulnerability_description"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    vulnerability_id = Column(Integer, ForeignKey("vulnerabilities.id", ondelete="CASCADE"), nullable=False)
+    description = Column(String(255), nullable=False)

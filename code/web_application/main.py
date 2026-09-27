@@ -50,10 +50,42 @@ def health():
 # CRUD
 # REST API Endpoints
 
-from fastapi import Response
-
 # Get all vulnerabilities 
-@app.get("/api/vulnerabilities", response_model=list[schema.VulnerabilityOut])
+@app.get("/api/vulnerabilities")
+def get_vulnerabilities(response: Response, search: str | None = None, page_size: int = 10, db: Session = Depends(get_db), _session=Depends(require_session)):
+    global sql_query_count
+    sql_query_count = 0
+
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+
+    # Get vulnerabilities
+    vulnerabilities = crud.get_vulnerabilities(db)
+
+    if search:
+        search = search.lower()
+        vulnerabilities = [ v for v in vulnerabilities if search in v.package_name.lower() or search in v.vulnerability_name.lower()]
+
+    # Limit results based on page size (10, 50, 200)
+    vulnerabilities = vulnerabilities[:page_size]
+
+    results = []
+    # Get the related description for each vulnerability
+    for vulnerability in vulnerabilities:
+        # Merge tables
+        descriptions = db.query(models.VulnerabilityDescription).filter(models.VulnerabilityDescription.vulnerability_id == vulnerability.id).all()
+
+        results.append({
+            "id": vulnerability.id,
+            "package_name": vulnerability.package_name,
+            "vulnerability_name": vulnerability.vulnerability_name,
+            "descriptions": [{"id": description.id, "description": description.description} for description in descriptions]
+            })
+    response.headers["X-Query-Count"] = str(sql_query_count)
+    return results
+
+'''@app.get("/api/vulnerabilities", response_model=list[schema.VulnerabilityOut])
 # Search can be a string or None; if omitted, it defaults to None
 def get_vulnerabilities(response: Response, search: str | None = None, db: Session = Depends(get_db), _session=Depends(require_session)):
     """Get all vulnerabilities - Returns JSON array of vulnerability objects"""
@@ -68,7 +100,7 @@ def get_vulnerabilities(response: Response, search: str | None = None, db: Sessi
         search = search.lower()
         # Return vulnerabilities where the search term is in package_name or vulnerability_name
         return [v for v in vulnerabilities if search in v.package_name.lower() or search in v.vulnerability_name.lower()]
-    return vulnerabilities
+    return vulnerabilities'''
 
 @app.post("/api/vulnerabilities", response_model=schema.VulnerabilityOut, status_code=201)
 def create_vulnerability(vulnerability_data: schema.VulnerabilityCreate, db: Session = Depends(get_db), _session=Depends(require_session)):
@@ -78,7 +110,7 @@ def create_vulnerability(vulnerability_data: schema.VulnerabilityCreate, db: Ses
     # Create vulnerabiity in MySQL
     return crud.create_vulnerability(db, vulnerability_data)
 
-# GET vulnerability using the ID
+# Update vulnerability using the ID
 @app.put("/api/vulnerabilities/{vulnerability_id}", response_model=schema.VulnerabilityOut)
 def update_record(vulnerability_id: int, payload: schema.VulnerabilityUpdate, db: Session = Depends(get_db), _session=Depends(require_session)):
     """Update an existing vulnerability - Accepts JSON with vulnerability details"""
@@ -119,6 +151,16 @@ def get_vulnerability_by_id(vulnerability_id: int, db:Session = Depends(get_db),
         )
 
     return vulnerability
+
+
+from sqlalchemy import event
+
+sql_query_count = 0
+
+@event.listens_for(engine, "before_cursor_execute")
+def track_query_counts(conn, cursor, statement, parameters, context, executemany):
+    global sql_query_count
+    sql_query_count += 1
 
 # from starlette.middleware.sessions import SessionMiddleware
 # import os
