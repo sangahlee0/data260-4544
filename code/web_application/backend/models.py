@@ -2,6 +2,14 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from .database import Base
 from sqlalchemy.sql import func
 
+# Domain Entity
+class Vulnerability(Base):
+    __tablename__= "vulnerabilities"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    package_name = Column(String(255), nullable=False)
+    vulnerability_name = Column(String(255), nullable=False)
+
 class User(Base):
     __tablename__ = "users"
 
