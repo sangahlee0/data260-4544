@@ -30,7 +30,7 @@ class ReactLoginReq(BaseModel):
 
 @router.post("/auth/login")
 def react_login(data: ReactLoginReq, response: Response, db: Session = Depends(get_db)):
-    # Find the user using email as the id
+    # Find the user using email
     user = crud.get_user_by_email(db, data.email)
 
     if not user:

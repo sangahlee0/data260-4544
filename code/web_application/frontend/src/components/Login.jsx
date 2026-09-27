@@ -11,7 +11,7 @@ export default function LoginBar({ auth, setAuth }) {
             try {
                 const data = await me();
 
-                setAuth({ loggedIn: true, userId: data.user_id});
+                setAuth({ loggedIn: true, userId: data.user_id, email: data.email});
             } catch {
                 setAuth({ loggedIn: false, userId: null, email:null });
             }
