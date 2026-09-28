@@ -1,0 +1,353 @@
+https://www.youtube.com/watch?v=M8RogoEDsQQ
+Prompt Engineering
+    Prompt Engineering— Deﬁnition
+Prompt engineering is the practice of designing the input text (and optional
+parameters) that steer an LLM’s behavior toward a specific goal. It focuses on what
+you provide the model: clear task framing, constraints, desired style, output format,
+and any evaluation cues.
+
+Prompt formula:
+Task + Constraints + Output Format (+ Hints / Examples)
+
+Why it matters:
+
+●    Improves output quality and reliability.
+●    Supports evaluation and safety (e.g., grounding, refusals, format control).
+●    Is inherently iterative—effective prompts usually require testing and refinement.
+                                                               3
+  Prompt = more than an instruction
+Common prompt components      What you’re optimizing
+Persona (role)                Accuracy (correctness)
+Instruction (task)            Faithfulness (use provided sources)
+Context (background)          Consistency (same prompt → same
+Format (JSON/bullets/table)   shape)
+Audience + tone               Safety & policy compliance
+Constraints (what to avoid)   Latency/cost (shorter prompts)
+Data (facts to use)           Maintainability (templated prompts)
+The Prompt (single instruction)
+A prompt contains just enough to perform one task.
+
+ Summarize this article in 3 bullet points, focusing on the
+ causes.
+
+Strengths: fast, minimal tokens.
+Limits: ambiguity, higher variance, no examples, no memory.
+
+
+
+
+                                              5
+Patterns You’ll Reuse Often
+● Role/Persona: “You are a tax law tutor…”
+● Explicit Format: “Return JSON: { 'claim': string, 'citations':
+  string[] }”
+● Constraints: word limits, tone, style, banned content
+● Decomposition: “List subproblems ﬁrst, then solve #1…”
+● Self‑check: “Validate answer against constraints; revise if
+   needed.”
+
+                                                 7
+  A practical prompt template
+Use this when reliability matters         Template
+Role: who the model is in this            SYSTEM: You are a helpful TA for an LLM
+interaction                               course.
+                                          TASK: Answer the question using ONLY the
+Task: what success looks like             provided notes.
+                                          CONSTRAINTS:
+Inputs: what data is provided             - If the notes don't contain the answer,
+                                          say: "Not in notes."
+Constraints: policies, scope, citations   - Keep the response ≤ 6 bullets.
+                                          FORMAT: bullets
+Output format: exact schema /
+headings                                  NOTES:
+                                          {context}
+Examples: few-shot for tricky cases
+                                          QUESTION:
+                                          {question}
+   Few-shot prompting (teach the pattern)
+Provide 1–3 high-quality examples     Example
+                                      User: Classify sentiment.
+of the desired behavior.              Text: "The update broke my workflow."
+                                      Answer (JSON):
+Examples are most helpful for: edge   {"sentiment":"negative","confidence":0.9}
+
+cases, tone/style, and strict         User: Classify sentiment.
+                                      Text: "It works, nothing special."
+formatting.                           Answer (JSON):
+                                      {"sentiment":"neutral","confidence":0.6}
+
+Avoid huge examples—use minimal,      User: Classify sentiment.
+                                      Text: "{text}"
+representative cases.                 Answer (JSON):
+
+If you need strict JSON, consider
+constrained decoding instead.
+  Structured output & constraints
+Specify a schema (JSON) or a rigid         Schema example
+format (headings).                         Return JSON ONLY:
+                                           {
+Prefer machine-checkable outputs for         "answer": string,
+pipelines (agents, RAG).                     "citations": [{"source": string,
+                                           "quote": string}],
+Combine with: temperature=0–0.2 for          "uncertainties": [string]
+stability.                                 }
+For strict validity: grammar-constrained
+sampling / function calling.
+Reasoning prompts (when tasks are multi-step)
+Chain-of-thought (CoT): encourage intermediate reasoning before final
+answer.
+Self-consistency: sample multiple reasoning paths → pick the most
+consistent result.
+Tree-of-thought: explicitly explore branches (search) for planning
+problems.
+Use carefully in production: you usually want *final answer + short
+justification*, not hidden reasoning.
+  LangChain: prompt templates + LangChain
+  Expression Language (LCEL)
+                                        Example
+Keep prompts version-controlled         from langchain_core.prompts import
+(templates, not ad-hoc strings).        ChatPromptTemplate
+                                        from langchain_openai import ChatOpenAI
+Separate: system instructions vs user   llm = ChatOpenAI(model="gpt-4o-mini",
+content.                                temperature=0)
+
+                                        prompt = ChatPromptTemplate.from_messages([
+Use output parsers (JSON) to reduce        ("system", "You are a concise tutor. Output
+downstream errors.                      JSON only."),
+                                           ("user", "Explain {topic} in 5 bullets.
+                                        Return JSON with keys: bullets.")
+                                        ])
+
+                                        chain = prompt | llm
+                                        result = chain.invoke({"topic": "KV cache"})
+ Context engineering
+What the model sees: retrieval, memory, tools,
+and token budgets
+ Context Engineering — Deﬁnition
+Context Engineering designs everything the model sees at
+inference time, not just the prompt: instructions, examples,
+retrieved documents, tools, memory/state, and control ﬂow.
+
+ Prompt Engineering = “what you say”
+ Context Engineering = “everything else the model sees”
+ (docs, tools, memory…)
+  Prompt vs Context Engineering
+Prompt engineering = “How      Context engineering = “What do
+do I ask?”                     I provide?”
+Instructions & constraints     RAG: retrieve the right docs
+Examples (few-shot)            Chunking + embeddings + ranking
+Output format                  Context
+Tone/persona                   compression/summarization
+Decoding params (temp/top_p)   Memory & conversation state
+                               Tool outputs + schemas
+                               Token budget management
+● Prompts (user instructions and system directives)
+● Retrieval (documents from RAG systems)
+● Tool calls (API responses and external data)
+● Memories (past conversations and learned preferences)
+● Few-shot examples (training demonstrations)
+● Structured outputs (format and schema instructions)
+  RAG: Overview & Architecture
+Deﬁnition: combine a parametric model with a
+non-parametric memory (retriever + index) so outputs can
+be grounded in external, up-to-date knowledge.
+Two stages: (1) Indexing (ingest → chunk → embed → store)
+and (2) Retrieval + generation (fetch top-k, then prompt an LLM).
+
+Why it helps: improves speciﬁcity and factuality vs.
+parametric-only models.
+https://pub.towardsai.net/the-7-building-blogs-of-a-retrieval-au
+gmented-generation-system-0a96ba82bb08
+RAG pipeline (typical)
+
+● Quality hinges on retrieval: wrong chunks → hallucinations.
+● Reranking and compression often help more than bigger
+  prompts.
+● Require citations to discourage unsupported claims.
+Better context: chunking, ranking, compression
+● Chunking: balance recall vs precision (e.g., 300–800 tokens,
+  with overlap).
+● Retrieval: start with k=5–20; tune per domain; use metadata
+  filters.
+● Reranking: improves precision (cross-encoder / LLM reranker).
+● Compression: summarize long docs, remove duplicates, keep
+  citations/anchors.
+● Token budgets: reserve space for the user query + instructions
+  + tool outputs.
+Memory & tool outputs are part of “context”
+Memory patterns                  Tool outputs
+
+Short-term: last N turns         Normalize tool results (JSON)
+Long-term: user prefs, profile   Summarize noisy logs
+Summarized conversation state    Store key facts + citations
+Task state (plan, checklist)     Don’t dump raw pages unless
+                                 needed
+RAG (Retrieval‑Augmented Generation) in 3
+Steps
+ 1. Retrieve top‑k passages for the query
+ 2. Construct a compact context pack (citations, snippets)
+ 3. Generate with grounding, refusing when insufﬁcient evidence
+
+Effect: fewer hallucinations, better factuality; tokens spent on
+relevant info.
+
+
+                                                  23
+ Measuring Impact (Rubric)
+● Accuracy (task‑speciﬁc)
+● Faithfulness (to given evidence)
+● Format compliance (schema, JSON)
+● Efﬁciency (tokens, latency)
+● Robustness (edge cases)
+● Repeatability (variance across runs)
+
+Track before/after when changing prompts or context kits.
+●   LangChain and LlamaIndex. Both frameworks are designed to handle
+    document ingestion, splitting, indexing, and chaining together steps for
+    seamless RAG workflows
+●   LlamaIndex → handle ingestion, indexing, & retrieval (its sweet spot for RAG).
+●   LangChain → handle orchestration/agents, prompts, and tool use around that
+    retriever.
+
+
+
+
+https://medium.com/@tam.tamanna18/langchain-vs-llamaindex-a-comprehensive-comparison-for-retrieval-augmented-generation-rag-0a
+dc119363fe
+●   LlamaIndex (formerly GPT Index)
+    ○   Specializes in data ingestion, indexing, and retrieval.
+    ○   Makes it easier to connect LLMs to your structured and unstructured data
+        sources (databases, PDFs, APIs, etc.).
+    ○   Provides retrieval-augmented generation (RAG) pipelines: you load data → index
+        it → query it with an LLM.
+●   LangChain
+    ○   Specializes in orchestration and chaining of LLM calls.
+    ○   Provides abstractions for prompts, tools, agents, memory, and workflows.
+    ○   Lets you combine LLMs with other software systems (search engines, APIs,
+        calculators, etc.) into multi-step reasoning chains.
+ LlamaIndex
+What it is: A framework for building Retrieval-Augmented apps:
+ingest data →
+create Nodes (chunks) → embed → store → retrieve (optionally
+generate later).
+Why Nodes matter: ﬁrst-class objects carrying text and metadata;
+produced by
+node parsers (splitters) and consumed by retrievers & indexes.
+Swappable parts: embedding models, vector stores
+(in-memory or FAISS/Qdrant/etc.), chunkers, retrievers.
+Chunking Techniques for RAG
+The LlamaIndex pipeline
+
+
+ Indexing is ofﬂine: chunk → embed → store.
+ Retrieval is online: embed query → similarity search →
+ return top-k with scores.
+
+
+
+
+                                              29
+SentenceSplitter
+Goal: keep sentences/paragraphs intact to preserve
+coherence; reduces “hanging sentence fragments.”
+You control: target chunk size and overlap; allows
+natural boundaries while staying near the size you set.
+When to use: narrative or expository text where meaning
+spans full sentences.
+
+
+                                          30
+TokenTextSplitter
+
+Goal: split by tokens (not characters) for precise control of model
+context limits. Trade-off: perfect budget control, but may split
+mid-sentence if needed to respect token count.
+
+When to use: strict LLM window budgets; mixed-length inputs.
+
+
+
+                                                  31
+SemanticSplitter
+Goal: choose breakpoints using embedding similarity between
+adjacent sentences → chunks are semantically coherent.
+
+Controls: look-ahead/buffer and threshold/percentile for when to
+split.
+When to use: long, topic-shifting paragraphs; noisy boundaries.
+
+
+
+                                               33
+RAG Quality Levers (retrieval side)
+Embeddings model: pick for domain/language; better sentence
+encoders improve top-k recall and margins (dimensionality ≠
+quality).
+
+Chunking strategy: sentence/recursive for coherence; token for strict
+budget;
+semantic for content-aware splits; hierarchies for multi-scale retrieval.
+Retriever settings: k, metric (cosine/dot/L2), MMR/diversity, and
+optional
+rerankers (cross-encoders) for higher precision.
+   Case study: reliable support assistant
+Goal: answer product questions
+                                            User
+with citations + safe refusals.
+Context: policy docs +                  Retriever
+troubleshooting guides + ticket
+history.                                    LLM
+
+Tools: search KB, lookup user
+                                            Tools
+account, create ticket.
+Constraints: never invent policy;       answer
+always cite; ask clarifying Qs when
+needed.
+  Testing & iteration (how you improve reliably)
+● Create a small “golden set” of questions with expected properties
+  (correct, cited, safe).
+● Measure: answer quality, citation faithfulness, refusal correctness,
+  latency, cost.
+● Add unit tests for: prompt formatting, schema validity, tool-call
+  parsing.
+● Log: retrieved chunks, final prompt, tool traces, and model
+  outputs (for debugging).
+● Iterate: fix retrieval first, then prompt, then decoding parameters.
+LangChain: simple RAG with LCEL
+ Minimal pattern
+ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+ from langchain_community.vectorstores import FAISS
+ from langchain_core.prompts import ChatPromptTemplate
+ from langchain_core.runnables import RunnablePassthrough
+
+ # 1) Build/store the index (offline)
+ db = FAISS.from_texts(docs, embedding=OpenAIEmbeddings())
+ retriever = db.as_retriever(search_kwargs={"k": 6})
+
+ # 2) Compose a RAG chain (online)
+ prompt = ChatPromptTemplate.from_messages([
+    ("system", "Answer using ONLY the context. Cite sources as [#]."),
+    ("user", "Context:\n{context}\n\nQuestion: {question}")
+ ])
+ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+ rag = {"context": retriever, "question": RunnablePassthrough()} | prompt | llm
+ rag.invoke("What is top_p?")
+LlamaIndex: query engine with citations
+ Typical pattern
+ from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+ from llama_index.core.node_parser import SentenceSplitter
+
+ docs = SimpleDirectoryReader("data/notes").load_data()
+ nodes = SentenceSplitter(chunk_size=512,
+ chunk_overlap=80).get_nodes_from_documents(docs)
+
+ index = VectorStoreIndex(nodes)
+ query_engine = index.as_query_engine(similarity_top_k=6)
+
+ response = query_engine.query("Explain temperature vs top_p.")
+ print(response.response)
+ print(response.get_formatted_sources())
+Questions?
+

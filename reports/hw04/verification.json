@@ -1,0 +1,43 @@
+{
+  "homework": 4,
+  "sid4": 4544,
+  "commit_hash": "11cdf171aae9113b3b015f023099532407cb13df",
+  "model": "qwen2.5:3b",
+  "configuration": {
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "chunk_size": 500,
+    "chunk_overlap": 50,
+    "top_k": 3,
+    "relevance_threshold": 0.3
+  },
+  "seed": 4544,
+  "verify_seed": 264544,
+  "port_base": 8044,
+  "checks": [
+    {
+      "check": "FastAPI backend responds on PORT_BASE 8044.",
+      "passed": true
+    },
+    {
+      "check": "Test user login succeeds.",
+      "passed": true
+    },
+    {
+      "check": "Naive vulnerability endpoint returns data successfully.",
+      "passed": true
+    },
+    {
+      "check": "Fixed vulnerability endpoint returns data successfully.",
+      "passed": true
+    },
+    {
+      "check": "questions.yaml exists for HW04.",
+      "passed": true
+    },
+    {
+      "check": "rag.py exists.",
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}

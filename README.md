@@ -23,6 +23,8 @@ data260-4544/
 │   ├── Dockerfile
 │   ├── RAG/
 │   │   ├── corpus/
+│   │   │   ├── *.json
+│   │   │   └── shakespeare.txt
 │   │   ├── corpus_manifest_create.py
 │   │   ├── pypi_vulnerabilities.zip
 │   │   ├── rag_pipeline.py
@@ -31,8 +33,10 @@ data260-4544/
 │   ├── agents_demo.py
 │   ├── hw1_client.py
 │   ├── hw2experiment_run.py
+│   ├── hw4_benchmark.py
 │   ├── metric_helper.py
 │   ├── nodes.py
+│   ├── rag.py
 │   ├── reports/
 │   │   └── hw01/
 │   │       └── verification.json
@@ -41,22 +45,61 @@ data260-4544/
 │   ├── validateplanner.py
 │   ├── verify-hw01.py
 │   ├── verify-hw02.py
+│   ├── verify-hw03.py
+│   ├── verify-hw04.py
 │   ├── workflow.py
-│   ├── reports/hw01/verification.json
 │   └── web_application/
 │       ├── index.html
 │       ├── main.py
+│       ├── routers/
+│       │   ├── api_auth.py
+│       │   └── auth.py
 │       ├── script.js
-│       └── style.css
-├── src/
-│   └── model_client.py
+│       ├── style.css
+│       ├── templates/
+│       │   ├── dashboard.html
+│       │   ├── home.html
+│       │   └── login.html
+│       ├── backend/
+│       │   ├── __init__.py
+│       │   ├── crud.py
+│       │   ├── database.py
+│       │   ├── models.py
+│       │   ├── schema.py
+│       │   ├── seed.py
+│       │   └── session_crud.py
+│       └── frontend/
+│           ├── index.html
+│           ├── package.json
+│           ├── package-lock.json
+│           ├── vite.config.js
+│           └── src/
+│               ├── api/usersApi.js
+│               ├── app.jsx
+│               ├── components/Login.jsx
+│               ├── main.jsx
+│               ├── pages/
+│               │   ├── createRecord.jsx
+│               │   ├── deleteRecord.jsx
+│               │   ├── Home.jsx
+│               │   └── updateRecord.jsx
+│               └── styles.css
+├── corpus/
+│   └── hw04/
+│       ├── source1.txt
+│       ├── source2.txt
+│       ├── source3.txt
+│       ├── source4.txt
+│       └── source5.txt
 ├── reports/
 │   ├── hw01/
 │   │   ├── AI_USE.md
 │   │   ├── METRICS.md
 │   │   ├── RUN_LOG.txt
 │   │   ├── cases/
+│   │   │   └── nondeterminism_input.json
 │   │   ├── raw/
+│   │   │   └── nondeterminism_output.json
 │   │   ├── report (2).pdf
 │   │   ├── reproducible_run_instructions
 │   │   └── verification.json
@@ -65,20 +108,39 @@ data260-4544/
 │   │   ├── METRICS.md
 │   │   ├── RUN_LOG.txt
 │   │   ├── cases/
+│   │   │   └── *.json
 │   │   ├── raw/
-│   │   ├── reproducible_run_instructions
+│   │   │   └── *.json
 │   │   ├── LEE_HW2.pdf
+│   │   ├── reproducible_run_instructions
 │   │   └── verification.json
-│   └── hw03/
+│   ├── hw03/
+│   │   ├── AI_USE.md
+│   │   ├── METRICS.md
+│   │   ├── RUN_LOG.txt
+│   │   ├── SOURCES.md
+│   │   ├── questions.yaml
+│   │   ├── raw/
+│   │   │   └── *.json
+│   │   ├── Lee_HW3.pdf
+│   │   ├── reproducible_run_instructions
+│   │   └── verification.json
+│   └── hw04/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
-│       ├── SOURCES.md
 │       ├── questions.yaml
 │       ├── raw/
+│       │   ├── benchmark_raw.csv
+│       │   └── rag_evaluation.json
+│       ├── Lee_HW4.pdf
 │       ├── reproducible_run_instructions
-│       ├── Lee_HW3.pdf
 │       └── verification.json
+├── src/
+│   └── model_client.py
+├── .gitignore
+├── .vscode/
+│   └── settings.json
 ├── AGENT.md
 ├── DOMAIN_SCHEMA.md
 ├── Makefile

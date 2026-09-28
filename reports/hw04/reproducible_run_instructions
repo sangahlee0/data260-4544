@@ -1,5 +1,5 @@
-# HW03 Reproducible Run Instructions
-Follow these steps to reproduce the experiment and verification script for HW03:
+# HW04 Reproducible Run Instructions
+Follow these steps to reproduce the experiment and verification script for HW04:
 
 **Needs:** Python 3.11/3.12, Ollama, pydantic, fastapi, uvicorn, Docker, AWS Account (optional for ECS deployment)
 
@@ -17,22 +17,21 @@ Follow these steps to reproduce the experiment and verification script for HW03:
 
 4. **Run the Self-Check Verification Script:**
    ```bash
-   make verify-hw03
+   make verify-hw04
    ```
 
-5. **Run the RAG experiment and log output:**
+5. **Start the FastAPI application:**
    ```bash
-   cd code/RAG
-   { date -u; python3 rag_pipeline.py; date -u; } 2>&1 | tee -a ../../reports/hw03/RUN_LOG.txt
+   cd code/web_application python3 main.py
    ```
 
-6. **Generate the summary output:**
+6. **Run the RAG experiment and log output:**
    ```bash
-   cd code/RAG
-   python3 summarize_results.py
+   cd code
+   { date -u; python3 rag.py; date -u; } 2>&1 | tee -a ../../reports/hw04/RUN_LOG.txt
    ```
 
+   
 ## Notes
-- The verification script checks the HW03 setup and output files.
-- The RAG pipeline writes a timestamped log to the HW03 results folder.
-- Run the commands from the project root or from the RAG directory as shown above.
+- The verification script checks the HW04 setup and output files.
+- The RAG evaluation output is saved under `reports/hw04/raw/`.
