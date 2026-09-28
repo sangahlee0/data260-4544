@@ -152,7 +152,7 @@ def context_rag(query, results):
         ]
 
     response = complete(messages)
-    return response
+    return response, unique_context
 
 
 # For Evaluation Part 4 Q6
@@ -216,12 +216,24 @@ def main():
 
         no_rag_result = no_rag(query)
         basic_rag_result = basic_rag(query, results)
-        context_rag_result = context_rag(query, results)
+        context_rag_result, filtered_rag_context = context_rag(query, results)
 
         correct_retrieval, retrieved_sources = eval_retrieval(question, results)
         no_rag_refusal = eval_refusal(question, no_rag_result["content"])
         basic_rag_refusal = eval_refusal(question, basic_rag_result["content"])
         context_rag_refusal = eval_refusal(question, context_rag_result["content"])
+
+        retrieved_chunks = [{
+            "source": r.node.metadata.get("file_name", "Unknown"),
+            "score": float(r.score) if r.score is not None else None,
+            "text": r.node.get_content()
+        } for r in results]
+
+        filtered_chunks = [{
+                "source": r.node.metadata.get("file_name", "Unknown"),
+                "score": float(r.score) if r.score is not None else None,
+                "text": r.node.get_content()
+        } for r in filtered_rag_context]
 
         eval_results.append({
             "question_id": qid,
@@ -240,18 +252,25 @@ def main():
             "correct_answer": None,
             "grounded": None,
             "refused_when_needed": basic_rag_refusal,
+            "retrieved_chunks": retrieved_chunks,
             "retrieved_sources": retrieved_sources,
             "answer": basic_rag_result["content"],
         })
 
         eval_results.append({
             "question_id": qid,
-            "configuration": "Context-Engineer RAG",
+            "configuration": "Context-Engineered RAG",
             "correct_retrieval": correct_retrieval,
             "correct_answer": None,
             "grounded": None,
             "refused_when_needed": context_rag_refusal,
+
+            # Original retrieval
+            "retrieved_chunks": retrieved_chunks,
             "retrieved_sources": retrieved_sources,
+
+            # After filtered
+            "filtered_context_chunks": filtered_chunks,
             "answer": context_rag_result["content"],
         })
 
@@ -290,7 +309,15 @@ def main():
         print("\n----- Context-Engineered RAG Answer: -----")
         print(context_result["content"])"""
 
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
 
+    evaluation_path = RAW_DIR / "rag_evaluation.json"
+
+    evaluation_path.write_text(
+        json.dumps(eval_results, indent=2),
+        encoding="utf-8"
+    )
+    print(f"\nSaved evaluation results to: {evaluation_path}")
 if __name__ == "__main__":
     main()
 

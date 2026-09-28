@@ -8,3 +8,6 @@ verify-hw02:
 
 verify-hw03:
 	cd code && python3 verify-hw03.py
+
+verify-hw04:
+	cd code && python3 verify-hw04.py
