@@ -89,7 +89,7 @@ def no_rag(query):
     response = complete(messages)
     return response
 
-# Basic RAG - top 3 chunks in prompt
+# Basic RAG 
 def basic_rag(query, results):
     context = "\n\n".join(result.node.get_content() for result in results)
 
@@ -101,6 +101,7 @@ def basic_rag(query, results):
     response = complete(messages)
     return response
 
+RELEVANCE_THRESHOLD = 0.3
 
 # Context-engineered RAG
 def context_rag(query, results):
@@ -108,22 +109,27 @@ def context_rag(query, results):
     seen_context = set()
     for r in results:
         text = r.node.get_content()
+
+
+        # Drop irrelevant chunks using the threshold
+        if r.score is not None and r.score < RELEVANCE_THRESHOLD:
+            print(f"Dropped low-relevance chunk with score: {r.score:.4f}")
+            continue
+
         # Don't include duplicate chunks
         new_text = " ".join(text.lower().split())
         if new_text in seen_context:
+            print("Dropped duplicate")
             continue
 
         seen_context.add(new_text)
         unique_context.append(r)
 
-
-    # Remove irrelevant chunks
-
-
+    print(f"Number of context chunks that were kept: {len(unique_context)}/{len(results)}")
 
     context_info = []
     # Order and label survivors with their sources
-    for i, r in enumerate(results, start=1):
+    for i, r in enumerate(unique_context, start=1):
         source = r.node.metadata.get("file_name","Unknown")
         text = r.node.get_content()
         
@@ -149,6 +155,38 @@ def context_rag(query, results):
     return response
 
 
+# For Evaluation Part 4 Q6
+REFUSAL_TEXT = "I cannot answer this question from the provided documents"
+
+def eval_retrieval(query, results):
+    expected_sources = query.get("expected_sources", [])
+
+    retrieved_sources = [
+        r.node.metadata.get("file_name", "Unknown")
+        for r in results
+    ]
+
+    if not expected_sources:
+        return False, retrieved_sources
+
+    correct_retrieval = all(
+        source in retrieved_sources
+        for source in expected_sources
+    )
+
+    return correct_retrieval, retrieved_sources
+
+
+def eval_refusal(query, answer):
+    should_refuse = query["type"] in ["not_in_documents","unrelated",]
+
+    if should_refuse:
+        return REFUSAL_TEXT in answer
+
+    return not REFUSAL_TEXT in answer
+
+
+
 def main():
     documents = load_documents()
     embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
@@ -164,8 +202,9 @@ def main():
         questions = yaml.safe_load(file)
 
 
+    eval_results = []
 
-    # Run every question through all three techniques (token, semantic, retriever)
+    # Run question for each configuration
     for question in questions:
         qid = question["id"]
         query = question["question"]
@@ -179,6 +218,43 @@ def main():
         basic_rag_result = basic_rag(query, results)
         context_rag_result = context_rag(query, results)
 
+        correct_retrieval, retrieved_sources = eval_retrieval(question, results)
+        no_rag_refusal = eval_refusal(question, no_rag_result["content"])
+        basic_rag_refusal = eval_refusal(question, basic_rag_result["content"])
+        context_rag_refusal = eval_refusal(question, context_rag_result["content"])
+
+        eval_results.append({
+            "question_id": qid,
+            "configuration": "No RAG",
+            "correct_retrieval": None,
+            "correct_answer": None,
+            "grounded": None,
+            "refused_when_needed": no_rag_refusal,
+            "answer": no_rag_result["content"],
+        })
+
+        eval_results.append({
+            "question_id": qid,
+            "configuration": "Basic RAG",
+            "correct_retrieval": correct_retrieval,
+            "correct_answer": None,
+            "grounded": None,
+            "refused_when_needed": basic_rag_refusal,
+            "retrieved_sources": retrieved_sources,
+            "answer": basic_rag_result["content"],
+        })
+
+        eval_results.append({
+            "question_id": qid,
+            "configuration": "Context-Engineer RAG",
+            "correct_retrieval": correct_retrieval,
+            "correct_answer": None,
+            "grounded": None,
+            "refused_when_needed": context_rag_refusal,
+            "retrieved_sources": retrieved_sources,
+            "answer": context_rag_result["content"],
+        })
+
         # Print the values
         print("\n--- NO RAG ---")
         print(no_rag_result["content"])
@@ -188,6 +264,32 @@ def main():
 
         print("\n--- CONTEXT-ENGINEERED RAG ---")
         print(context_rag_result["content"])
+
+    ## Chosen question (Q3) for Part 4 Q5
+    """chosen_question = questions[2]
+    qid = chosen_question["id"]
+    query = chosen_question["question"]
+
+    print("\n" + "=" * 60)
+    print("PART 4; SWEEP CONTEXT SIZE")
+    print(f"Question: {qid}: {query}")
+
+    for k in [1, 3, 5]:
+        print("\n" + "-" * 60)
+        print(f"k value: {k}")
+
+        results = retriever_helper(index, query, k=k)
+
+        #BasicRag and ContextEngRag
+        basic_result = basic_rag(query, results)
+        context_result = context_rag(query, results)
+
+        print("\n----- Basic RAG Answer: -----")
+        print(basic_result["content"])
+
+        print("\n----- Context-Engineered RAG Answer: -----")
+        print(context_result["content"])"""
+
 
 if __name__ == "__main__":
     main()
