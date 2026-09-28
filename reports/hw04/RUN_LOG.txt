@@ -1,0 +1,1529 @@
+Traceback (most recent call last):
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 335, in _query
+    conn.query(q)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 581, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 857, in _read_query_result
+    result.read()
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 1290, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 810, in _read_packet
+    packet.raise_for_error()
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+pymysql.err.ProgrammingError: (1146, "Table 's4544_rel.vulnerability_description' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/web_application/backend/seed.py", line 87, in <module>
+    seed_data()
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/web_application/backend/seed.py", line 72, in seed_data
+    db.commit()
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2035, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1316, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1290, in _prepare_impl
+    self.session.flush()
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4353, in flush
+    self._flush(objects)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4488, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4449, in _flush
+    flush_context.execute()
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/cursors.py", line 335, in _query
+    conn.query(q)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 581, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 857, in _read_query_result
+    result.read()
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 1290, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/connections.py", line 810, in _read_packet
+    packet.raise_for_error()
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/pymysql/err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+sqlalchemy.exc.ProgrammingError: (pymysql.err.ProgrammingError) (1146, "Table 's4544_rel.vulnerability_description' doesn't exist")
+[SQL: INSERT INTO vulnerability_description (vulnerability_id, description) VALUES (%(vulnerability_id)s, %(description)s)]
+[parameters: {'vulnerability_id': 1136, 'description': 'Affects older package versions'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+There was an error while seeding (pymysql.err.ProgrammingError) (1146, "Table 's4544_rel.vulnerability_description' doesn't exist")
+[SQL: INSERT INTO vulnerability_description (vulnerability_id, description) VALUES (%(vulnerability_id)s, %(description)s)]
+[parameters: {'vulnerability_id': 1136, 'description': 'Affects older package versions'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Finished generating 5000 vulnerabilities.
+Finished generating 200 vulnerability descriptions.
+Finished generating 5000 vulnerabilities.
+Finished generating 200 vulnerability descriptions.
+
+
+==================== HW4 PART 3 - Q4 NAIVE N+1 BENCHMARK ====================
+
+Successfully logged in
+
+Page size: 10
+Queries/request: 11
+p50: 33.33 ms
+p95: 35.68 ms
+p99: 51.40 ms
+
+Page size: 50
+Queries/request: 51
+p50: 39.94 ms
+p95: 42.55 ms
+p99: 43.55 ms
+
+Page size: 200
+Queries/request: 201
+p50: 57.55 ms
+p95: 61.30 ms
+p99: 62.92 ms
+========================================
+Successfully logged in
+
+Page size: 10
+Queries/request: 11
+p50: 34.15 ms
+p95: 38.15 ms
+p99: 44.39 ms
+
+Page size: 50
+Queries/request: 51
+p50: 38.99 ms
+p95: 42.38 ms
+p99: 43.75 ms
+
+Page size: 200
+Queries/request: 201
+p50: 57.84 ms
+p95: 62.93 ms
+p99: 64.29 ms
+
+Page size: 10
+Queries/request: 11
+p50: 35.38 ms
+p95: 43.79 ms
+p99: 83.55 ms
+
+Page size: 50
+Queries/request: 51
+p50: 41.30 ms
+p95: 44.41 ms
+p99: 44.89 ms
+
+Page size: 200
+Queries/request: 201
+p50: 62.67 ms
+p95: 67.57 ms
+p99: 69.63 ms
+========================================
+Successfully logged in
+
+Version: naive
+
+Page size: 10
+Queries/request: 11
+p50: 33.42 ms
+p95: 37.53 ms
+p99: 48.78 ms
+
+Version: naive
+
+Page size: 50
+Queries/request: 51
+p50: 40.34 ms
+p95: 43.42 ms
+p99: 43.96 ms
+
+Version: naive
+
+Page size: 200
+Queries/request: 201
+p50: 60.35 ms
+p95: 79.50 ms
+p99: 81.43 ms
+
+Version: fixed
+
+Page size: 10
+Queries/request: 11
+p50: 33.75 ms
+p95: 40.60 ms
+p99: 40.92 ms
+
+Version: fixed
+
+Page size: 50
+Queries/request: 51
+p50: 41.17 ms
+p95: 47.31 ms
+p99: 49.91 ms
+
+Version: fixed
+
+Page size: 200
+Queries/request: 201
+p50: 58.35 ms
+p95: 76.02 ms
+p99: 98.62 ms
+========================================
+Successfully logged in
+
+Version: naive
+
+Page size: 10
+Queries/request: 11
+p50: 34.46 ms
+p95: 40.07 ms
+p99: 51.08 ms
+
+Version: naive
+
+Page size: 50
+Queries/request: 51
+p50: 39.74 ms
+p95: 43.36 ms
+p99: 44.34 ms
+
+Version: naive
+
+Page size: 200
+Queries/request: 201
+p50: 58.09 ms
+p95: 61.47 ms
+p99: 63.87 ms
+
+Version: fixed
+
+Page size: 10
+Queries/request: 2
+p50: 1.61 ms
+p95: 1.81 ms
+p99: 2.85 ms
+
+Version: fixed
+
+Page size: 50
+Queries/request: 2
+p50: 2.10 ms
+p95: 2.21 ms
+p99: 2.31 ms
+
+Version: fixed
+
+Page size: 200
+Queries/request: 2
+p50: 4.12 ms
+p95: 4.54 ms
+p99: 12.23 ms
+========================================
+Successfully logged in
+
+Version: naive
+
+Page size: 10
+Queries/request: 11
+p50: 33.73 ms
+p95: 37.90 ms
+p99: 40.33 ms
+
+Version: naive
+
+Page size: 50
+Queries/request: 51
+p50: 39.42 ms
+p95: 43.42 ms
+p99: 44.25 ms
+
+Version: naive
+
+Page size: 200
+Queries/request: 201
+p50: 57.87 ms
+p95: 64.37 ms
+p99: 75.98 ms
+
+Version: fixed
+
+Page size: 10
+Queries/request: 2
+p50: 1.84 ms
+p95: 2.09 ms
+p99: 2.22 ms
+
+Version: fixed
+
+Page size: 50
+Queries/request: 2
+p50: 2.34 ms
+p95: 2.72 ms
+p99: 2.75 ms
+
+Version: fixed
+
+Page size: 200
+Queries/request: 2
+p50: 5.39 ms
+p95: 8.90 ms
+p99: 21.63 ms
+
+The data saved in a csv found in '../reports/hw04/raw.'
+========================================
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/rag.py", line 14, in <module>
+    from model_client import complete
+ModuleNotFoundError: No module named 'model_client'
+========================================
+Traceback (most recent call last):
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/rag.py", line 193, in <module>
+    main()
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/rag.py", line 153, in main
+    documents = load_documents()
+                ^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/rag.py", line 29, in load_documents
+    documents = SimpleDirectoryReader(input_dir=str(CORPUS_DIR)).load_data()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/llama_index/core/readers/file/base.py", line 295, in __init__
+    raise ValueError(f"Directory {input_dir} does not exist.")
+ValueError: Directory /Users/sangah/Desktop/Data260/data260-4544/corpus/hw04 does not exist.
+========================================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 5
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9535.88it/s]
+Chunks created: 16244
+------------------------------------------------------------
+q1: What is a session and what is its purpose?
+Retrieval latency: 620.09 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.2904192184650074
+Preview: EPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEP
+
+Rank: 2
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.2904192184650074
+Preview: EPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEP
+
+Rank: 3
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.2904192184650074
+Preview: PEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPE
+Traceback (most recent call last):
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/rag.py", line 193, in <module>
+    main()
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/rag.py", line 178, in main
+    no_rag_result = no_rag(query)
+                    ^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/rag.py", line 89, in no_rag
+    response = complete(messages)
+               ^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/data260-4544/src/model_client.py", line 12, in complete
+    response = chat(model=MODEL_NAME, messages=messages, think=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/ollama/_client.py", line 387, in chat
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/ollama/_client.py", line 199, in _request
+    return cls(**self._request_raw(*args, **kwargs).json())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sangah/Desktop/Data260/venv/lib/python3.12/site-packages/ollama/_client.py", line 145, in _request_raw
+    raise ConnectionError(CONNECTION_ERROR_MESSAGE) from None
+ConnectionError: Failed to connect to Ollama. Please check that Ollama is downloaded, running and accessible. https://ollama.com/download
+========================================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 5
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 6056.46it/s]
+Chunks created: 16244
+------------------------------------------------------------
+q1: What is a session and what is its purpose?
+Retrieval latency: 446.80 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.2904192184650074
+Preview: PEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPE
+
+Rank: 2
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.2904192184650074
+Preview: EPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEP
+
+Rank: 3
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.2904192184650074
+Preview: PEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPE
+
+--- NO RAG ---
+A session is a mechanism used in web applications to maintain temporary state between client requests. It allows the application to keep track of user-specific data, such as the user's preferences, activities, or the progress of a transaction, across multiple requests from the same user. Sessions are crucial for applications that require more than just stateless HTTP connections, as they enable applications to provide a more consistent and personalized user experience.
+
+Here are some key points about sessions:
+
+1. **State Management**: In a stateless system like HTTP, each request from a client to a server is independent and doesn't have access to the state of previous requests. Sessions help manage this state and allow for more complex interactions.
+
+2. **User Identification**: Sessions can be used to identify the user by storing a session ID or user ID, which uniquely identifies the user across requests.
+
+3. **State Persistence**: Session data is stored on the server, and its contents are accessible to the server through this session ID. This allows the server to maintain state and track the user's activity over multiple requests.
+
+4. **Session Expiry**: Sessions can be configured to expire after a certain period of inactivity, which helps in managing server resources and preventing session hijacking.
+
+5. **Session Hijacking**: To prevent unauthorized access to a session, many systems use session tokens that are securely exchanged between the client and the server. This prevents session theft where a malicious user can hijack an existing session.
+
+6. **Security**: In addition to being used to manage user state, sessions can also be used to handle security-related tasks such as tracking user authentication.
+
+7. **Session Fixation**: This is a security issue where an attacker might provide a session ID to a user, allowing the attacker to impersonate the user. This can be mitigated by having the server generate session IDs rather than accepting them from the client.
+
+8. **Session Management in Different Technologies**: Sessions can be implemented in various technologies such as cookies, URL rewriting, database-based storage, or a combination of these methods.
+
+9. **Session IDs**: In many cases, a session ID is generated and sent to the user in a cookie. This ID is used to identify the session on the server side.
+
+Sessions are a critical component for enhancing user experience and functionality in web applications. However, their use should be balanced with considerations of security and privacy to ensure that user data is handled properly.
+
+--- BASIC RAG ---
+In the context provided, there is no specific information about sessions or their purposes. It appears to be an incomplete or corrupted text snippet. 
+
+To answer your query: A session in the context of computing often refers to a client-server communication context that lasts for a period of time. The primary purpose of a session is to maintain the context of a user's interaction with a website or application. This allows the server to recognize a user as they navigate between pages or interact with various features of the application. Sessions are typically used for functionalities such as tracking user navigation, maintaining login status, and storing user-specific information temporarily.
+
+For more detailed information, you might want to refer to a general resource on session management in web applications or databases.
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.
+------------------------------------------------------------
+q2: How does FastAPI session management work, including where session data is stored and how SessionMiddleware handles the session cookie?
+Retrieval latency: 1597.56 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.4335090554385258
+Preview: PEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPE
+
+Rank: 2
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.4335090554385258
+Preview: PEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPE
+
+Rank: 3
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.4335090554385258
+Preview: EPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEP
+
+--- NO RAG ---
+FastAPI's session management is designed to be flexible and can integrate with various session backends to store session data. One of the most common ways to handle sessions in FastAPI is by using FastAPI's built-in `SessionMiddleware` middleware, which is part of the `fastapi-session` package. This middleware is designed to handle session cookies and ensure that session data is securely stored and transmitted between the client and server.
+
+### Where Session Data is Stored
+
+Session data can be stored in several different ways, and the choice of storage can depend on the specific needs and constraints of the application. Here are a few common storage options:
+
+1. **In Memory**: This is the simplest and fastest option. Session data is stored directly in memory, but it is only useful for small applications or testing environments because it can't persist across server restarts.
+
+2. **File System**: Session data is saved to files on the server's file system. This is suitable for applications that need to persist session data across restarts but can't exceed the available storage space.
+
+3. **Databases**: Using a database to store session data is a good option for applications with more complex requirements, such as maintaining sessions over multiple servers or handling a large number of sessions. Popular databases that can be used for this purpose include PostgreSQL, MySQL, and SQLite.
+
+4. **Redis**: Redis is a popular choice for session management because it can be easily distributed across multiple servers and is highly scalable. It is also very fast, providing low latency and high throughput.
+
+### FastAPI SessionMiddleware Handling of Session Cookies
+
+FastAPI's `SessionMiddleware` simplifies the process of handling session cookies by providing a consistent and secure way to manage session state. Here's a high-level overview of how `SessionMiddleware` handles session cookies:
+
+1. **Setting and Retrieving Session Cookies**:
+   - When a request is made to the server, `SessionMiddleware` intercepts the request and adds a session cookie to the response if the session ID is not already present in the request headers. The cookie typically has an `httponly` flag to prevent client-side JavaScript from accessing it and is set to expire after a certain period or be deleted manually.
+   - If the session cookie is not found in the request headers, `SessionMiddleware` uses the session ID provided by the session store (such as the file system or database) to retrieve the session data and sets the session cookie in the response headers.
+
+2. **Session Expiry and Reauthentication**:
+   - If the session data in the session store has expired, `SessionMiddleware` will invalidate the session and redirect the user to the login page. FastAPI allows you to define custom routes and middleware to handle session expiry and reauthentication, ensuring that users can reauthenticate securely and without exposing sensitive session data.
+
+3. **Secure Session Handling**:
+   - By default, `SessionMiddleware` uses secure and httponly flags for the session cookie to ensure that it is not accessible from client-side scripts and that it is only transmitted over HTTPS. This helps to prevent session hijacking attacks.
+
+4. **Integration with Session Backends**:
+   - `SessionMiddleware` works seamlessly with various session backends, such as those provided by FastAPI's `fastapi-session` package. This package provides plugins for common session storage options like file system, database, and Redis, making it easy to switch between different storage mechanisms without changing the core application logic.
+
+### Example of Configuring Session Middleware
+
+Here is an example of how you might configure the `SessionMiddleware` with the `redis` session backend:
+
+```python
+from fastapi import FastAPI, Request
+from fastapi_session import SessionMiddleware
+from fastapi_session.redis_backend import RedisBackend
+
+app = FastAPI()
+
+app.on_startup.append(lambda: SessionMiddleware(app, backend=RedisBackend()))
+
+@app.get("/")
+def read_root(request: Request):
+    session = request.session
+    if "user_id" not in session:
+        return {"message": "Please log in."}
+    return {"message": f"Welcome back, user {session['user_id']}"}
+```
+
+In this example, `SessionMiddleware` is initialized with a `RedisBackend`, which handles the storage of session data in a Redis database. The middleware is set up to start on application startup, ensuring that sessions are available when the application begins serving requests.
+
+By leveraging the `SessionMiddleware` and FastAPI's `fastapi-session` package, developers can easily implement secure and flexible session management in their FastAPI applications, without needing to manage session cookies or session storage manually.
+
+--- BASIC RAG ---
+I apologize for the confusion, but the context you've provided does not include any information about FastAPI session management. The context you shared appears to be binary data, not text, and thus cannot be interpreted as the expected documentation or information about FastAPI session management.
+
+To answer your query about how FastAPI session management works, I can provide a general overview based on FastAPI's implementation:
+
+FastAPI uses the built-in session management provided by FastAPI's `Depends` mechanism, which integrates with Starlette's built-in session middleware. Here’s how it works:
+
+1. **Session Middleware**: FastAPI internally uses Starlette's `StarletteMiddleware` to handle session-related tasks. This middleware is part of the Starlette framework and takes care of managing session cookies.
+
+2. **Cookie Handling**: When a user logs in, a session cookie is set in the user’s browser. This cookie contains a session ID. FastAPI uses this session ID to associate the user with their session data stored in the server.
+
+3. **Session ID Retrieval**: FastAPI's session management retrieves the session ID from the cookie. It uses the `StarletteSessionMiddleware` to read the session ID from the request headers (typically a cookie named `sessionid` or `token` depending on the configuration).
+
+4. **Session Data Retrieval**: Once the session ID is retrieved, FastAPI can look up the user's session data in a secure way. This data is usually stored in a database or in memory, depending on the application's requirements.
+
+5. **Session Middleware Handling**: The `StarletteSessionMiddleware` checks if the session ID is valid by looking it up in the session store. If the session is valid, it uses the session ID to retrieve the session data. If the session is invalid (e.g., the session has timed out, or the session ID does not match any data in the store), FastAPI will not be able to retrieve the session data and will typically respond with an error.
+
+For more detailed information, including the exact location where session data is stored (e.g., in a database, in memory, or a file) and how session cookies are handled, you would need to look into the specific configuration and implementation details of the FastAPI and Starlette application, or consult the FastAPI and Starlette documentation.
+
+If you can provide more context or information about the specific FastAPI application you're working with, I can offer more detailed insights.
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.
+------------------------------------------------------------
+q3: What is the difference between prompt engineering and context engineering?
+Retrieval latency: 1859.91 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: 03-Prompt-Context-Eng.pdf
+Score: 0.2533038708315656
+Preview: 
+
+Rank: 2
+Source: 03-Prompt-Context-Eng.pdf
+Score: 0.2533038708315656
+Preview: 
+
+Rank: 3
+Source: 03-Prompt-Context-Eng.pdf
+Score: 0.2533038708315656
+Preview: 
+
+--- NO RAG ---
+Prompt engineering and context engineering are related but distinct concepts, especially within the context of natural language processing (NLP) and conversational AI. While they both aim to influence the behavior and output of AI systems, they do so in different ways and for different purposes.
+
+### Prompt Engineering
+Prompt engineering is the process of creating prompts for a system, such as a language model or AI assistant, to guide or influence the system's output in a specific direction. Prompts are inputs that the system receives and uses to generate a response. In essence, prompt engineering is about crafting the input to the AI system in a way that directs the system's output.
+
+Key points about prompt engineering:
+- **Purpose**: To shape the type of output generated by the system.
+- **Focus**: On the structure, format, and content of the prompt.
+- **Example**: Crafting a prompt to guide a language model to generate a summary of a text or to answer a specific question.
+
+### Context Engineering
+Context engineering, on the other hand, is the process of building the necessary context for the AI system to understand and respond appropriately to the prompt or user input. This involves creating a comprehensive understanding of the environment, the user, and the domain in which the AI system operates.
+
+Key points about context engineering:
+- **Purpose**: To ensure the AI system has all the necessary information to make appropriate decisions.
+- **Focus**: On the setup and configuration of the system and its environment.
+- **Example**: Ensuring that a language model is provided with relevant background information, data, or domain-specific knowledge to generate accurate and relevant responses.
+
+### Key Differences
+
+1. **Objective**: Prompt engineering focuses on the input to the system, while context engineering focuses on the setup and context of the system.
+2. **Scope**: Prompt engineering deals with the specific input to the AI system, whereas context engineering involves the broader setup, including data, environment, and domain knowledge.
+3. **Impact**: Proper prompt engineering can significantly influence the output quality, while context engineering ensures that the system has the necessary background to make informed decisions.
+
+### Relationship
+While prompt engineering and context engineering are distinct, they are often interdependent. Effective prompt engineering requires a deep understanding of the system's capabilities and context, as well as the nuances of the problem domain. Similarly, context engineering can benefit from thoughtful prompting to ensure the system is fully equipped to generate accurate and relevant responses.
+
+In summary, prompt engineering is about crafting the input to the system to guide its response, while context engineering is about ensuring the system has the necessary context to understand and respond effectively.
+
+--- BASIC RAG ---
+I apologize for any confusion, but the context you've provided appears to be binary data rather than a coherent text. There is no information about prompt engineering or context engineering within the provided context.
+
+Prompt engineering typically refers to the process of fine-tuning or optimizing the input (prompt) given to a model to achieve a desired output or effect. It involves adjusting the structure, content, or style of the input to influence the model's response.
+
+Context engineering, on the other hand, is not a standard term in the context of AI or machine learning. It could potentially refer to the process of designing or manipulating the context (environment, background, or setting) in which a system operates, which could be relevant in various fields like psychology or game development. However, it doesn't have a standardized meaning in the context of AI systems.
+
+Could you please provide more context or clarify which specific context you are referring to? I'd be happy to provide more accurate information based on that.
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.
+------------------------------------------------------------
+q4: How is state maintained?
+Retrieval latency: 2903.50 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: 03.ReactJS_MySQL_Prompt_RAG.pptx.pdf
+Score: 0.07310182566818531
+Preview: j?!>& _* K< `[/~B|M nUu	 x7_!(( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( (?g*?4?}{|7z)at3֏ۤ=23_ C i @U ?^ U C i @U ?^ U C i @U ?^ U C i @U ?^ U C i @U ?^ U C i @U ?^ U C i @U ?^ U C i @U 
+
+Rank: 2
+Source: 01-Rest_FastAPI_Agent_v3.pptx.pdf
+Score: 0.06532607635050106
+Preview: 69.75
+312.84
+640.16064
+336.84
+]
+/Border
+[
+0
+0
+0
+]
+/A
+<<
+/Type
+/Action
+/S
+/URI
+/URI
+(http://java.sun.com/developer/technicalArticles/WebServices/restful/)
+>>
+>>
+<<
+/Type
+/Annot
+/Subtype
+/Link
+/Rect
+[
+69.75
+256.84003
+571.7295
+280.84003
+]
+/Border
+[
+0
+0
+0
+]
+/A
+<<
+/Type
+/Action
+/S
+/URI
+/URI
+(http://en.wi
+
+Rank: 3
+Source: 03.ReactJS_MySQL_Prompt_RAG.pptx.pdf
+Score: 0.06498291985814926
+Preview: #.I  (sHO JU
+<k]#Ǉu_7}̷)72fd~W ?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo T?^ U uTW+  9xo 
+
+--- NO RAG ---
+State maintenance is a fundamental concept in computer science, especially in areas like databases, web applications, and distributed systems. It involves tracking and storing information about the current state of an application, system, or network. Here are some ways state is maintained:
+
+1. **Databases**: Databases use tables, indexes, and other data structures to store and maintain state. They use transactions to ensure data consistency and integrity, and they provide mechanisms like queries and stored procedures to manipulate the stored state.
+
+2. **Session Management in Web Applications**: In web applications, sessions are used to maintain user state. A session is a temporary, server-side storage that holds information about a user's browsing session. The session ID is typically stored in a cookie, and the state is stored on the server side.
+
+3. **Web Storage**: Browsers provide web storage APIs (localStorage and sessionStorage) for maintaining state. Unlike session storage, local storage persists even after the user closes the browser.
+
+4. **Cookies**: HTTP cookies are small pieces of data that websites use to store and transfer information across a single browser session.
+
+5. **Server-Side State**: In web applications, server-side state can be maintained using variables in the server-side programming language (like variables in Python, PHP, Ruby, etc.), databases, or any in-memory data structures. This state can be shared between multiple requests.
+
+6. **Distributed Systems**: In distributed systems, state is often stored in a database or shared memory. Distributed systems may use consensus algorithms like Paxos or Raft to ensure that multiple nodes agree on the state.
+
+7. **Message Passing**: In distributed systems, state is maintained by passing messages between processes or nodes. This is common in actor models and message-driven architectures.
+
+8. **Persistent State**: In some systems, state is stored in a persistent medium such as hard drives, SSDs, or even external services like databases or caches, to ensure that the state persists even if the system restarts or the process is terminated.
+
+Each of these methods has its own advantages and limitations, and the choice of method depends on the specific requirements of the system, such as performance, scalability, and security.
+
+--- BASIC RAG ---
+In web services, the state of a session or a transaction is typically maintained using various mechanisms, such as cookies, URL rewriting, or HTTP headers. The specific mechanism used can vary depending on the design of the application and the standards it adheres to, such as REST (Representational State Transfer).
+
+In RESTful services, which is a style of web service design, state is often maintained using URL parameters and query strings. Each subsequent request to the server includes these parameters in the URL, which the server can use to understand the current state of the session or transaction.
+
+For example, a user might make several requests over the course of a session, and each request includes information about the user's session state in the URL. When the server receives a request, it can check the URL to determine the user's current session state and proceed accordingly.
+
+However, to ensure security, cookies might also be used to store state information that is specific to a user. Cookies are small pieces of data that are sent from the server to the client's browser, which can be used to identify the user and maintain state information.
+
+Overall, RESTful services promote statelessness, which means that the server doesn't need to remember the state of a client's session from one request to another. Instead, it relies on the client to manage and forward session state where necessary. This can be achieved through URLs, cookies, or other mechanisms, as long as the client continues to send the necessary state information with each request.
+
+For specific implementations and details, it's important to consult the documentation for the particular web service or API being used.
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.
+------------------------------------------------------------
+q5: What is the default network port used by PostgreSQL?
+Retrieval latency: 1152.83 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: 00-Introduction.pptx.pdf
+Score: 0.16164428608397838
+Preview: DE *j(3_toYEy3-i&p.pzdus^ S1[>>f(E<S"WGW#2^uyxoN9G
+$
+(xWC o2Ǐ~|i}Kë_O*Gڸ%AAmk@ndk9x#.1-|=eѢ2F,IP}vPFP~OmbHE"c`Mk5{=cO&)G\
+
+Rank: 2
+Source: 00-Introduction.pptx.pdf
+Score: 0.16041844294598784
+Preview: L_?Gǎ :?< +Cɋy(b i |=dg |QGZL_?GOQs#?Ώ:?b i |<"fÙty |VOQ <{6F <(GdUe6loEtQV%QLAEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPEPES ) QE QE QE QE QE QE QE QE QE QE
+
+Rank: 3
+Source: 00-Introduction.pptx.pdf
+Score: 0.15892825249686007
+Preview: QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE QE 
+
+--- NO RAG ---
+The default network port used by PostgreSQL is 5432.
+
+--- BASIC RAG ---
+The default network port used by PostgreSQL is 5432. However, the information provided in the given context does not contain details about PostgreSQL or any network ports. The context appears to be a jumbled set of characters without any relevant information to answer the query about PostgreSQL's default network port.
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.
+------------------------------------------------------------
+q6: How can one survive the desert?
+Retrieval latency: 2292.59 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.23421031594522707
+Preview: >i >]   
+ 4}?	E |
+>i >]   
+ 4}?	E |
+>i >]   
+ 4}?	E |
+>i >]  ǎRAbtUZϴ_vȂ1QFz]eyqf+X#<41i[Gkn@&S劲ER ( ( ( ( ( ( ( ( ( ( +炵{X%fcʺz('ñtfFDYv` 9ZQ@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@
+
+Rank: 2
+Source: 02-Session FastAPI.LLM Intro.pptx.pdf
+Score: 0.2235004431960117
+Preview: [WPYZMuu2Co
+$O MFk'6{-.-=*]f+xzIF=W3*/y?\
+ K\6SZe팭y%#%@q[)nt%MRH`zp}(]SׅZOio.٥Ӿ3OxK6s!~PX(xG\|";k5[ob^i/-(=|PqE&k񧈗]>D&Bb ʆRÒ3ȧb?||/ܦtS\K1ʒ0:~#ހ|=jYw+3F8F= f|O6O\24"B¨z|D|S.h6.)_P_YE35j<1jw
+oo$\!#f==(|E>ArId	l6`PLG{%hL@;Yqq \Ï]r7>
+
+Rank: 3
+Source: 00-Introduction.pptx.pdf
+Score: 0.22226757937976394
+Preview: r@'PE QE QE W3^ںj|kWa/멭 "ЬA?WW~DwF?g5Y ֍zG~G$&QEjHQE QE QE QE QE QE QE QEY/S2<-};^Q!{v]%s~noNFL!CI@Q@Q@Q@Q@Q@Q@Q@Q@Q@ai7Z4(-uh|bP/ʷkJѢF=ڼOHXQ@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@aB֮9/2@N{a+ruΗ+ u4D9fs@Q@Q@Q@Q@Q
+
+--- NO RAG ---
+Surviving in the desert requires a combination of physical, mental, and practical strategies. Here are some key points to consider:
+
+### Physical Preparation
+1. **Hydration**: Water is essential. It is important to drink water regularly, ideally at least every 2 hours if conditions permit, even if you don't feel thirsty. Carry plenty of water in a water bottle or hydration bladder. If you have the means, a camel or camel-like vehicle can also be used to transport water.
+
+2. **Proper Clothing**: Wear loose, light-colored, and light-weight clothing. Light colors reflect heat better, while loose clothing allows air to circulate and prevents overheating. Also, wear a hat to protect your head and use a scarf or bandana to cover your face and eyes. Avoid wearing dark or tight clothing, as these can trap heat.
+
+3. **Food**: Bring enough food that doesn't require cooking. Carry non-perishable foods like nuts, dried fruits, energy bars, and salt tablets. Avoid salty foods as they can lead to dehydration.
+
+4. **Sleeping Bag**: Use a sleeping bag or a blanket if you're camping. These can help retain body heat and reduce the risk of hypothermia.
+
+### Mental and Psychological Preparation
+1. **Rest**: Take frequent rests, especially when you feel tired. Stopping for rest can be a lifesaving measure, especially if you have any medical conditions.
+
+2. **Stay Alert**: Keep your senses sharp. Listen for sounds like distant running water, watch for signs of a breeze or shadow, and be aware of your surroundings to avoid dangerous situations.
+
+3. **Planning**: Always have a plan. Know your destination, how far you need to go, and what you need to do in case of unexpected situations. Avoid going into the desert unprepared.
+
+### Practical Survival Skills
+1. **Navigation**: Knowing basic navigation skills can be crucial. Use the sun to determine direction, and learn how to navigate using stars, the horizon, or a map and compass.
+
+2. **First Aid**: Carry a basic first aid kit with essential medicines and bandages.
+
+3. **Communication**: If you are in a vehicle, keep your GPS or mobile phone charged and in a waterproof container. If you are on foot, make sure your whistle is waterproof and easily accessible. In some areas, consider carrying a satellite communication device.
+
+### Environment Awareness
+1. **Wind and Dust**: Be aware of wind direction, especially during dust storms, as they can obscure landmarks and cause a significant loss of water vapor.
+
+2. **Heat and Shade**: Avoid direct sunlight, especially during the hottest part of the day. Find shade whenever possible and keep a lookout for natural shelters like caves or rocky outcrops.
+
+### Dehydration and Heat Stroke
+- **Symptoms of dehydration**: Look for signs of fatigue, confusion, dry mouth, and dizziness. Drink water if you are not sure of your hydration status.
+- **Heat Stroke**: If you start to feel very hot, dizzy, or confused, it may be a sign of heat exhaustion or heat stroke. Move to a cooler place, and if you can't cool yourself, seek medical assistance.
+
+### Communication and Assistance
+- **Determine Your Location**: Use any means to determine your location, such as landmarks or GPS, and keep track of the direction you were traveling.
+
+In summary, survival in the desert requires careful planning, proper preparation, and the ability to recognize signs of potential danger. Always stay aware of the environment and your body's needs, and take breaks when needed.
+
+--- BASIC RAG ---
+Surviving the desert requires careful planning and preparation due to the harsh conditions and limited resources found in such environments. Here are some key strategies for surviving in the desert:
+
+1. Stay Hydrated:
+   - Drink plenty of water, even if you don't feel thirsty. Avoid sugary drinks or alcohol, as they can cause dehydration.
+   - Look for water sources like springs, wells, or rivers. Use a mirror or reflective object to signal for help from a distance.
+   - Desalination techniques can be used to turn seawater or other salty water into drinking water.
+
+2. Find Shade:
+   - Use natural features like rocks or vegetation to protect yourself from the intense heat.
+   - Cover up as much as possible, using clothing, a scarf, or a tarp to stay cool.
+
+3. Stay Cool:
+   - Avoid high temperatures by planning activities for early morning or late evening.
+   - Use a tarp or tent to create a shaded area where you can rest.
+   - Wear light-colored, loose clothing to reduce heat absorption.
+
+4. Find Shelter:
+   - If possible, seek shelter in a cave, under a rock overhang, or in a dry streambed.
+   - A simple shelter can be made using branches, foliage, and a tarp.
+
+5. Navigate:
+   - Use a compass to find direction.
+   - Know the terrain and use a map if available.
+
+6. Eat:
+   - Consume high-energy foods such as nuts, dried fruits, and energy bars.
+   - Avoid eating fatty or spicy foods, as they can dehydrate you faster.
+
+7. Know the Warning Signs of Heat-Related Illness:
+   - Symptoms can include dizziness, nausea, confusion, and in severe cases, heat stroke, which can be life-threatening.
+   - Recognize signs like dark urine, excessive sweating, and a fast heartbeat.
+
+8. Communication:
+   - Always let someone know your planned route and expected return time.
+   - Carry a satellite communicator or a cellular phone if available, and ensure it is fully charged.
+
+9. Avoid Overexertion:
+   - Don't engage in strenuous activity during the hottest part of the day.
+   - Take regular rest breaks in shaded or cool areas.
+
+10. Use Mirrors and Reflector Devices:
+    - Reflect sunlight back at yourself to create shade.
+    - Use a silvered or reflective object to signal for help if you need assistance.
+
+Remember, the key to survival in the desert is preparation, knowing your surroundings, and knowing when and where to seek shelter. Always be cautious and prepared for emergencies.
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.
+========================================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Documents loaded: 5
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8911.72it/s]
+Chunks created: 121
+------------------------------------------------------------
+q1: What is a session and what is its purpose?
+Retrieval latency: 8.22 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: source3.txt
+Score: 0.6443353103421877
+Preview: What is a Session?
+Definition: A session is a logical conversation between a
+web server and a web browser that spans multiple
+requests and responses.
+● Purpose: To maintain stateful information about a user
+   or client across multiple interactions.
+● Example: Storing user login details, shopping ca
+
+Rank: 2
+Source: source1.txt
+Score: 0.3640313302702955
+Preview: Writer
+Agent → drafts final report
+
+
+
+                                                                                          1
+                                                                                          3
+Memory that matters
+Short-term: Keeps track of the last few turns of context,
+
+Rank: 3
+Source: source5.txt
+Score: 0.3549826563473293
+Preview: Database
+   Browser/API            Route             Model              Driver
+
+
+
+
+            Most web apps create a short-lived session for each request.
+
+
+
+                                                                                      14
+Summary
+
+
+
+                                 Session
+
+--- NO RAG ---
+A session is a mechanism that enables web applications to maintain user state across multiple HTTP requests. Unlike the traditional client-server model where each request and response are separate and isolated, session management allows a web application to keep track of user activity over a period of time, facilitating the creation of a more interactive and personalized user experience.
+
+### Purpose of a Session:
+1. **Tracking User Activity:** Sessions allow a website to keep track of user interactions and data across different pages. For example, a shopping cart in an e-commerce website can be updated without requiring the user to refresh the page.
+
+2. **State Management:** Sessions help in managing the state of a user's interaction. This state can include information like the user's shopping cart contents, user preferences, or any other details that change as the user interacts with the site.
+
+3. **Securing Access:** Sessions often include user authentication information. When a user logs in, their session is initialized with their authentication information, and any subsequent requests from that session can verify the user's identity without requiring them to log in again.
+
+4. **Enhancing User Experience:** Sessions allow for the saving of data that needs to be accessed across multiple requests, such as the user's preferences, basket contents, or completed orders.
+
+### How Sessions Work:
+- **Session Start:** When a user requests a page on a website, the server can start a session for that user. This usually involves creating a unique session ID, such as a randomly generated string, which is then stored in the user's browser (usually in a cookie or as part of the URL) and sent back to the server with each subsequent request.
+
+- **Session Data Storage:** The session data (including the session ID) is stored on the server. This data can include various types of information such as user details, shopping cart contents, session expiration time, etc.
+
+- **Session Management:** The server uses the session ID to retrieve and manage the session data. This enables the server to recognize the user and maintain their session state.
+
+### Security Considerations:
+While sessions provide a great way to manage user state, they also introduce security risks. Sessions are vulnerable to attacks like session hijacking and session fixation. To mitigate these risks, it's important to use secure sessions, manage session IDs appropriately, and ensure that session data is encrypted.
+
+Sessions are a fundamental part of web application design, allowing for a richer and more interactive user experience while also enabling the application to securely keep track of user interactions and preferences.
+
+--- BASIC RAG ---
+A session in the context of web applications is a logical conversation that persists between a web server and a web browser across multiple requests and responses. Its primary purpose is to maintain stateful information about a user or client, allowing the server to keep track of user activities, preferences, and other data across these interactions.
+
+### Key Points:
+
+- **Purpose**: To maintain stateful information about a user or client across multiple interactions.
+- **Example**: Storing user login details, shopping cart contents, or user preferences.
+- **Usage**: Session management is crucial for maintaining user state and data across multiple requests in a web application.
+- **User Authentication**: Sessions are used to maintain user login status across pages.
+- **State Preservation**: Sessions allow tracking user activities.
+- **Security Handling**: Effective session management is important for security, such as managing sessions efficiently.
+
+### Techniques:
+
+- **Using Cookies**: Sessions can be implemented using cookies to store session data.
+- **Using Session IDs Stored on the Server**: Sessions can be implemented without cookies, relying on session IDs stored on the server.
+- **Token-Based Authentication (JWT)**: JSON Web Tokens can be used for secure session management.
+
+### Implementation in FastAPI:
+
+- **Built-in Support**: FastAPI comes with built-in signed-cookie session support (cookie-based sessions).
+- **Redis-backed Sessions**: Sessions can be stored in Redis (or other databases) with session IDs stored in cookies.
+- **Authentication Ecosystems**: Libraries like `fastapi-users` can be used alongside sessions for authentication flows and utilities.
+
+### Key Concepts:
+
+- **Session ID**: A unique identifier assigned to each session.
+- **Session Store**: Where session data is stored (e.g., Redis, MongoDB, SQL databases).
+- **User Authentication**: Sessions are used to maintain user login status.
+- **State Preservation**: Tracking user activities.
+- **Security Handling**: Effective session management is crucial for security.
+
+### Summary:
+
+A session in web applications is a mechanism to store stateful information across multiple requests. Its primary purpose is to maintain user state and data, allowing the server to track activities, preferences, and other information. Session management techniques include cookie-based sessions, server-side sessions, and token-based authentication. In FastAPI, session management is often implemented using built-in support and can be stored in databases like Redis. Effective session management is crucial for maintaining security and user experience.
+
+--- CONTEXT-ENGINEERED RAG ---
+A session is a logical conversation between a web server and a web browser that spans multiple requests and responses. Its primary purpose is to maintain stateful information about a user or client across multiple interactions, such as storing user login details, shopping cart contents, or user preferences.
+------------------------------------------------------------
+q2: How does FastAPI session management work, including where session data is stored and how SessionMiddleware handles the session cookie?
+Retrieval latency: 1317.26 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: source3.txt
+Score: 0.7555674636460087
+Preview: What is a Session?
+Definition: A session is a logical conversation between a
+web server and a web browser that spans multiple
+requests and responses.
+● Purpose: To maintain stateful information about a user
+   or client across multiple interactions.
+● Example: Storing user login details, shopping ca
+
+Rank: 2
+Source: source2.txt
+Score: 0.4868977682229895
+Preview: the agent, not just the user
+●     Give each agent its own credential with least privilege — a read-only
+       ● research agent should not be able to POST.
+●     401 vs 403: 401 = we do not know who you are. 403 = we do, and you may not.
+●     Never pass secrets in the URL — they land in logs, hist
+
+Rank: 3
+Source: source2.txt
+Score: 0.4684233019484038
+Preview: 4
+                      -c6634a094eb1
+ Web APIs: HTTP → REST → FastAPI
+
+Goal: design RESTful resources and implement
+them cleanly in FastAPI
+
+We’ll connect: methods → URIs → representations → status
+codes → validation → auth
+                  HTTP: https://en.wikipedia.org/wiki/HTTP
+HTTP stands fo
+
+--- NO RAG ---
+FastAPI, like many web frameworks, often requires a way to store and retrieve user information across multiple requests, which is where session management comes in. Session management allows a server to track a user's state over multiple HTTP requests, such as remembering a user's login status or storing user preferences. In the context of FastAPI, this state is typically managed through a session middleware, which can be implemented using Flask's `flask-session` or a similar package, or a session store directly integrated with FastAPI.
+
+### Where Session Data is Stored
+
+The storage of session data can be handled in several ways, but the two most common methods are:
+
+1. **Session Middleware with Store**: In this approach, FastAPI utilizes a middleware to manage the session. The session middleware is responsible for creating, reading, and writing session data to a store. FastAPI's built-in session management can be used by integrating a session store (such as `flask-session`), which can then store session data in various places, including in-memory storage, databases, or even external services like Redis or Memcached.
+
+2. **In-Memory Storage**: For simplicity and for development environments, session data can be stored in-memory within the FastAPI application itself. This means that the middleware will handle session creation, reading, and writing directly to a dictionary or similar data structure. However, in a production environment, this method is not recommended due to the potential memory leak and data loss issues.
+
+### Session Middleware Handling the Session Cookie
+
+FastAPI's session middleware typically involves the following steps to handle session data and cookies:
+
+1. **Session Creation**: When a user first logs in or initializes a session, the session middleware creates a new session record, often in an in-memory dictionary. This record contains the session ID (also known as a session cookie) and the session data. The session data may include information such as authentication tokens, user preferences, and session expiration timestamps.
+
+2. **Session ID Generation**: The session middleware generates a unique session ID for the user. This session ID is then stored in a session cookie. The cookie is usually marked as a session cookie, indicating that it should be sent back to the server in subsequent requests, allowing the server to recognize the user and their session state.
+
+3. **Session Data Storage**: The session data (stored in the session ID) is stored in the session store. The specific store used can vary and is chosen based on the application's needs, such as a file system, database, or a distributed cache like Redis.
+
+4. **Cookie Handling**: The session middleware is responsible for setting the session cookie in the HTTP response headers. The middleware will also handle the request headers, ensuring that the session cookie is included in requests that involve the session data. This ensures that subsequent requests from the client can be authenticated and that the server knows the session state.
+
+5. **Session Management Logic**: During each request, the middleware checks the session cookie to determine if the client is authenticated and what session data should be associated with that request. The middleware will then read the session data from the store and merge it with any session data that was created in the current request.
+
+6. **Session Expiry and Cleanup**: If the session data exceeds a certain expiration time, the middleware may manage session expiry and cleanup. For in-memory storage, this would involve deleting the session record. In other stores, this might involve expiring the session in the store and possibly cleaning up old entries.
+
+### Conclusion
+
+To summarize, FastAPI's session middleware handles session data by creating and managing a session ID that is stored in a cookie. The session middleware reads and writes session data to a session store (which can be in-memory, file-based, database-based, or a distributed cache). The session cookie is included in all responses, and the middleware ensures that session data is correctly managed across requests to maintain user sessions. The specific implementation details of how session data is stored and how the middleware interacts with the session cookie can vary based on the chosen session store and the specific configuration of the FastAPI application.
+
+--- BASIC RAG ---
+In FastAPI, session management is crucial for maintaining stateful information about users across multiple interactions. When users interact with a FastAPI application, session management ensures that user-specific data can be maintained and accessed across different requests, which is essential for applications requiring user sessions, such as login status, shopping cart contents, or user preferences.
+
+FastAPI provides built-in support for sessions through the `starlette.middleware.sessions.SessionMiddleware`. This middleware is part of the `starlette` library, which FastAPI is built upon. The `SessionMiddleware` works by signing session cookies, ensuring that they are secure and can be used to maintain session state without exposing session data in the URL or through other means.
+
+Here's a breakdown of how FastAPI session management works:
+
+1. **Storing Session Data**: Session data is stored on the server. This storage could be in Redis, a database, or any other backend that supports session storage. For example, if you choose to use Redis-backed sessions, the session data is stored in Redis, and only a session ID is stored in the cookie.
+
+2. **Session ID Generation and Handling**: When a user makes a request, FastAPI's `SessionMiddleware` generates a session ID and signs it. This session ID is then placed in the session cookie that is sent back to the user's browser. The middleware can also handle the session ID on the server side, allowing for seamless authentication and session management.
+
+3. **Authentication and Security**: FastAPI's `SessionMiddleware` can be configured to handle authentication. For instance, if a user logs in, the session middleware can be configured to create a session for the authenticated user and store the session data. On subsequent requests, the middleware checks the session cookie to verify the user's authentication status. This process is secure because the session cookie is signed and can only be verified by the server.
+
+4. **Handling Request and Response Cycles**: During the request and response cycles, FastAPI’s `SessionMiddleware` ensures that sessions are handled correctly. It manages session creation, retrieval, and destruction. It also handles the signing and verifying of session cookies, ensuring that only authenticated users can access their session data.
+
+Here’s a simplified example of how you might set up session management in FastAPI using `starlette.middleware.sessions.SessionMiddleware`:
+
+```python
+from fastapi import FastAPI, HTTPException
+from starlette.middleware.sessions import SessionMiddleware
+
+app = FastAPI()
+
+# Integrate the session middleware
+app.add_middleware(SessionMiddleware, secret_key="your_secret_key_here")
+
+# Route example
+@app.get("/users/{user_id}/books/{book_id}")
+async def read_user_book(user_id: int, book_id: int, session: dict = Depends(SessionMiddleware)):
+    # Access session data here (e.g., user ID, preferences, etc.)
+    return {"user_id": user_id, "book_id": book_id}
+```
+
+In the route above, the `SessionMiddleware` is used to pass the session data (`session: dict = Depends(SessionMiddleware)`) to the route function. This allows the route function to access the session data that was automatically set by the middleware.
+
+Overall, FastAPI’s `SessionMiddleware` simplifies session management by handling the complexities of managing session cookies securely and integrating session data into your application in a seamless manner.
+
+--- CONTEXT-ENGINEERED RAG ---
+FastAPI session management includes handling session cookies and storing session data. SessionMiddleware, which is a built-in support for signed-cookie sessions in FastAPI, utilizes cookies for session management. This middleware supports session-based authentication and state management across multiple requests. SessionMiddleware in FastAPI works by storing the session ID in a cookie, which is sent by the browser with each request. 
+
+Session data is not stored directly in the cookie but is stored server-side in a session store. For example, using Redis as a session store, only the session ID is stored in the cookie, and the actual session data is stored in the Redis server. 
+
+SessionMiddleware supports signing the session cookie using the `itsdangerous` library, which means that the session cookie can be protected against tampering. When the middleware receives a request, it checks if the session cookie is valid and extracts the session ID from the cookie. It then retrieves the session data from the session store using the session ID and attaches the session data to the request. 
+
+In summary, FastAPI's SessionMiddleware manages session cookies, ensuring that session data is securely stored and can be accessed across multiple requests without directly storing session data in the cookie itself.
+------------------------------------------------------------
+q3: What is the difference between prompt engineering and context engineering?
+Retrieval latency: 1333.98 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: source5.txt
+Score: 0.598405640903579
+Preview: right.
+ Context engineering
+What the model sees: retrieval, memory, tools,
+and token budgets
+ Context Engineering — Deﬁnition
+Context Engineering designs everything the model sees at inference
+time, not just the prompt: instructions, examples, retrieved
+documents, tools, memory/state, and control 
+
+Rank: 2
+Source: source4.txt
+Score: 0.534029676824473
+Preview: https://www.youtube.com/watch?v=M8RogoEDsQQ
+Prompt Engineering
+    Prompt Engineering— Deﬁnition
+Prompt engineering is the practice of designing the input text (and optional
+parameters) that steer an LLM’s behavior toward a specific goal. It focuses on what
+you provide the model: clear task framin
+
+Rank: 3
+Source: source5.txt
+Score: 0.48638368979432245
+Preview: code work with database data
+                             as objects.
+     Next topic: relationships, joins, migrations with Alembic, and FastAPI dependency injection.
+
+
+
+
+                                                                                                    16
+Prompt Engineering
+    
+
+--- NO RAG ---
+Prompt engineering and context engineering are related but distinct concepts in the field of natural language processing and machine learning. Let's break down each of these concepts to understand their differences:
+
+### Prompt Engineering
+Prompt engineering refers to the process of designing and creating prompts for a model to encourage a desired response. A prompt is a text that a user or model (often a conversational AI) uses to trigger a response from a machine learning model. The goal of prompt engineering is to guide the model in a way that enhances the quality of the response or aligns it with the user's intent.
+
+Key aspects of prompt engineering include:
+- **Tailoring the Prompt**: Adjusting the prompt to better fit the specific needs or context of the task.
+- **Encouraging Desired Responses**: Designing prompts that encourage the model to produce more coherent, relevant, or nuanced responses.
+- **Handling Context and Ambiguity**: Ensuring that the prompt provides enough context or cues to help the model understand the task or the user's intent.
+
+### Context Engineering
+Context engineering, on the other hand, is the process of creating or managing the context within which a model operates. Context typically refers to the environment, environment variables, or any other data that can influence how a model interprets and responds to a prompt.
+
+Key aspects of context engineering include:
+- **Providing Context**: Supplying the model with relevant information or data that can help it understand the prompt and generate more accurate responses.
+- **Managing Multiple Contexts**: When dealing with multi-modal or complex tasks, it might involve managing multiple sources of context to ensure a holistic understanding of the prompt.
+- **Managing Ambiguity and Ambiguity Resolution**: Helping to resolve ambiguities that might arise due to incomplete or ambiguous information.
+
+### Differences
+While both prompt engineering and context engineering are crucial for improving the performance of machine learning models, they address different aspects:
+
+- **Focus**: Prompt engineering focuses on how the model is being guided or prompted to produce a desired response, while context engineering focuses on providing the model with the necessary information to understand and respond appropriately.
+- **Implementation**: Prompt engineering typically involves crafting the prompt itself, whereas context engineering might involve providing additional information or context to the model in the form of data or environment variables.
+- **Scope**: Prompt engineering is often more focused on the interaction between the user, model, and prompt, whereas context engineering can be more broadly applied to ensure that the model has the right information to perform its task.
+
+In summary, prompt engineering is about crafting the instructions or prompts given to the model to achieve the desired output, while context engineering is about providing the necessary information or environment in which the model operates to make its responses more accurate and relevant.
+
+--- BASIC RAG ---
+Prompt engineering and context engineering are both important aspects of how a language model processes and generates responses, but they focus on different elements:
+
+1. **Prompt Engineering**:
+   - **Focus**: How to ask the model the right questions (instructions, constraints, output format, etc.).
+   - **Strengths**: Allows for faster processing and uses fewer tokens, reducing latency.
+   - **Limits**: Can introduce ambiguity, has higher variability, lacks examples, and does not incorporate memory.
+
+2. **Context Engineering**:
+   - **Focus**: What to give the model to think with (retrieved documents, memory/state, tools, etc.).
+   - **Strengths**: Provides the model with the necessary information to generate more accurate, consistent, and grounded responses.
+   - **Limits**: Can be resource-intensive, may require more tokens, and can lead to over-inclusion of information.
+
+In summary, prompt engineering is about the initial input and instructions, while context engineering is about the additional information that enriches the model's thinking and output.
+
+--- CONTEXT-ENGINEERED RAG ---
+Prompt engineering and context engineering are two aspects of designing and providing inputs to a model, with distinct focuses and applications. Here are the differences summarized in three points:
+
+- **Prompt Engineering** is the practice of designing the input text (and optional parameters) that steer an LLM's behavior toward a specific goal. It focuses on what you provide the model: clear task framing, constraints, desired style, and output format. 
+
+- **Context Engineering**, on the other hand, designs everything the model sees at inference time, encompassing instructions, examples, retrieved documents, tools, memory, and state, as well as control flow and token budgets.
+
+- **Strengths of Prompt Engineering** include being fast and requiring minimal tokens, but it has limitations such as ambiguity, higher variance, and lack of examples and memory. Context Engineering addresses these by providing a broader, more contextual input.
+
+These distinctions highlight how each engineering practice serves different purposes in the broader context of model input design.
+------------------------------------------------------------
+q4: How is state maintained?
+Retrieval latency: 2855.61 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: source5.txt
+Score: 0.4828319690979744
+Preview: shouldComponentUpdate(nextProps, nextState)
+      -   This hook is called before a component is re-rendered and allows you to control if the
+          re-rendering should occur.
+https://medium.com/@aaaaaaaaasg/life-cycle-hooks-in-react-9f1690bcd91b
+Redux
+• Redux is a state container for JavaScript
+
+Rank: 2
+Source: source5.txt
+Score: 0.41153466289292767
+Preview: Uses observable instead of
+  dirty checking to detect change
+
+• AngularJS uses dirty checking that
+  runs in a cycle after a specified time,
+  Checking the whole model
+  reduces the performance
+  and thus makes the application
+  slow.
+React: 50% better performance
+
+
+
+
+                              
+
+Rank: 3
+Source: source5.txt
+Score: 0.35585576082216563
+Preview: modern React favors functional components with hooks for
+ •   Easier unit testing with consistent results   cleaner, more efficient development.
+4. Better Performance
+ •   No class overhead, reducing memory usage
+ •   Optimized by React’s rendering process
+Structure of React Component
+● State      
+
+--- NO RAG ---
+State maintenance refers to the process of keeping track of the current status of a system, application, or process. This is crucial for the proper functioning of systems, as it allows them to remember and use information from previous operations to make better decisions or to achieve specific goals. Here are some common ways state is maintained:
+
+1. **Databases**: Databases are a fundamental tool for managing state. They store and retrieve data, allowing applications to maintain their state across different operations or sessions.
+
+2. **Sessions**: In web applications, sessions are used to maintain state across multiple requests. Each session is an object that stores data that can be accessed by various web pages during a user's session with the web application.
+
+3. **Cookies**: Cookies are used by web applications to store small amounts of data on the client's machine. This data can be used to maintain user-specific state, such as a user's session, preferences, and other user-specific settings.
+
+4. **Server State**: In some systems, the server might maintain state directly, often in memory or in an in-memory database. This is useful for applications where state is not shared across different requests.
+
+5. **Message Queues and Topics**: In distributed systems, message queues and topics (part of message-driven middleware) are used to maintain state. For example, a producer can send a message to a queue, and a consumer can process the message, thus maintaining state.
+
+6. **Caches**: Caches are used to store frequently accessed data in memory so that it can be accessed quickly and efficiently, reducing the need for expensive database queries or I/O operations.
+
+7. **Local Storage and Session Storage**: Similar to cookies but used in web applications, these are used to store data in the browser that can be accessed by web pages. They are different from cookies because they are not sent with every request and are cleared when the session ends.
+
+8. **Context Objects**: In some programming paradigms, like in web development with frameworks like Express.js or Django, the context object (often a part of request objects) is used to maintain state throughout the lifecycle of an HTTP request.
+
+9. **Session Management**: In web applications, session management is crucial for maintaining user-specific state, such as user authentication, shopping carts, and session IDs.
+
+10. **Stateless Services**: In systems where state is not shared between requests, state is often maintained on the client side, which is often the case in stateless web services or microservices that communicate over HTTP.
+
+The choice of how to maintain state depends on the specific requirements of the system, such as the need for scalability, security, performance, and complexity. Each of these methods has its own advantages and limitations, and the best approach often depends on the specific context and needs of the application.
+
+--- BASIC RAG ---
+In modern React, state is maintained within functional components using React hooks, specifically the `useState` hook. Here's how state is handled in a functional component with the `useState` hook:
+
+1. **Declaration of State**: You declare a state using the `useState` hook. The `useState` hook returns an array where the first element is the initial state value, and the second element is a function that allows you to update the state.
+
+2. **Usage**: Inside the functional component, you can use the state in a number of ways. For instance, you can use the initial state value to render components and use the `setState` function to update the state.
+
+Here's a detailed example:
+
+```jsx
+import { useState } from "react";
+
+function Counter() {
+  // Declare state
+  const [count, setCount] = useState(0);
+
+  // Function to handle state update
+  const handleIncrease = () => {
+    setCount(count + 1);  // Increment the state by 1
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleIncrease}>Increase</button>
+    </div>
+  );
+}
+```
+
+### Explanation:
+- **`useState(0)`**: Initializes the `count` state to 0.
+- **`setCount(count + 1)`**: Updates the `count` state by incrementing it by 1 each time the button is clicked.
+
+### Key Points:
+- **React Hooks**: Introduced in React 16.8, hooks allow you to use state and other React features in functional components.
+- **`useState`**: A hook that returns the current state and a function to update it.
+- **Functional Components**: Functional components are cleaner and can be easier to test compared to class components.
+
+In summary, state in functional components is managed using the `useState` hook, where you declare initial state values and update them using the provided `setCount` function. This approach is more concise and leverages the power of hooks to manage state in a functional way.
+
+--- CONTEXT-ENGINEERED RAG ---
+According to the provided context, state in functional components (using hooks) in modern React can be maintained through the `useState` hook. This hook allows the functional component to manage state. For example, the context provides the following code snippet for a functional component using the `useState` hook:
+
+```javascript
+import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
+  );
+}
+```
+
+In this example, `useState(0)` initializes the state `count` with an initial value of 0, and `setCount(count + 1)` is a function used to update the state. This method of state management is considered more efficient and provides better performance compared to traditional class component state management.
+------------------------------------------------------------
+q5: What is the default network port used by PostgreSQL?
+Retrieval latency: 1066.18 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: source5.txt
+Score: 0.4197095714288825
+Preview: / Postgres
+    looks like                      data
+
+
+
+
+    Beginner shortcut: Model = table blueprint, Session = work area, Engine = database connection
+
+
+
+
+                                                                                                        5
+Engine: connection to the database
+
+
+Rank: 2
+Source: source5.txt
+Score: 0.2995825239441905
+Preview: Column
+
+
+
+                     Example: Student class ↔ students table
+
+
+                                                                   4
+The three core pieces
+
+
+
+
+      Model                       Session                                                 Database
+                                
+
+Rank: 3
+Source: source5.txt
+Score: 0.20472133819747038
+Preview: Database
+   Browser/API            Route             Model              Driver
+
+
+
+
+            Most web apps create a short-lived session for each request.
+
+
+
+                                                                                      14
+Summary
+
+
+
+                                 Session
+
+--- NO RAG ---
+The default network port used by PostgreSQL is 5432. This is the port on which PostgreSQL listens for incoming TCP/IP connections.
+
+--- BASIC RAG ---
+The default network port used by PostgreSQL is typically 5432. However, this can be changed by the system administrator during installation or configuration. If you need to check the current port PostgreSQL is using, you can typically do so by running the command `netstat -tuln | grep :5432` on a Unix-based system or `telnet localhost 5432` on a Windows system, assuming PostgreSQL is running and listening on port 5432. 
+
+If you need further assistance with PostgreSQL, such as connecting to it or managing its settings, feel free to ask!
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.
+------------------------------------------------------------
+q6: How can one survive the desert?
+Retrieval latency: 529.40 ms
+------------------------------------------------------------
+
+Rank: 1
+Source: source2.txt
+Score: 0.18968201128070478
+Preview: GET                PUT             DELETE
+Resource       (Create)         (Read)            (Update)          (Delete)
+
+
+             Create a new      Return all     Replace all tasks     Delete all
+  /tasks
+                 task           tasks          with new tasks.       tasks
+
+              C
+
+Rank: 2
+Source: source1.txt
+Score: 0.17381678928628447
+Preview: 49
+Docker vs. Virtual Machine
+
+
+
+
+                             50
+            Docker Features
+•  fast and elegant isolation framework
+•Inexpensive
+
+•Low CPU/memory overhead
+
+•Fast boot/shutdown
+
+•Cross cloud infrastructure
+
+
+
+
+                                          51
+Docker container
+       
+
+Rank: 3
+Source: source2.txt
+Score: 0.16047682530857585
+Preview: ● How it works: Use Depends() to “inject” the return value of a dependency
+    function into your path operation.
+ ● Why it matters:
+     ○ Reusable logic (auth, DB, validation) across routes
+     ○ Cleaner endpoints (separate concerns)
+     ○ Testable (override dependencies in tests)
+     ○ Support
+
+--- NO RAG ---
+Surviving in the desert requires a combination of knowledge, skills, and proper preparation. Here are some key steps and tips to help you survive in a desert environment:
+
+1. **Plan Your Journey**: 
+   - Always have a clear plan before entering the desert. Know your destination, the route, and the time you plan to start.
+   - Inform someone about your route and expected return time. This can be your family, friends, or a reliable authority.
+
+2. **Stay Hydrated**:
+   - Water is the most critical resource in a desert. Carry enough water for your journey. In hot conditions, a person can lose up to 2 liters of water per hour just by walking.
+   - Stay hydrated by drinking water regularly, even if you don’t feel thirsty. Avoid drinking unfiltered water from natural sources as they can be contaminated.
+   - If you have access to shade, try to stay there as much as possible to conserve water.
+
+3. **Stay Cool**:
+   - High desert temperatures can lead to dehydration and heat exhaustion. Dress appropriately in light-colored, loose clothing to minimize heat absorption.
+   - Try to avoid the hottest part of the day (usually between 11 AM and 3 PM) to minimize exposure to extreme heat.
+   - Use a shade or seek shelter when possible to reduce your body temperature.
+
+4. **Food and Nutrition**:
+   - Pack a light, high-energy food that is easy to carry and digest. Examples include nuts, dried fruits, and energy bars.
+   - Keep food and water away from direct sunlight to maintain their quality and temperature.
+
+5. **Navigation**:
+   - Carry a map, compass, and GPS device. If possible, take a satellite phone or other means of communication to alert for help in case of emergencies.
+   - In a desert, navigation can be challenging. Stick to well-defined paths and avoid risky decision-making in unfamiliar areas.
+
+6. **Emergency Preparedness**:
+   - Carry a first aid kit with essential items like band-aids, antiseptic wipes, and painkillers.
+   - Keep a basic first aid manual or online resources accessible.
+   - Know basic survival skills, such as how to start a fire, make a makeshift shelter, and locate sources of water.
+
+7. **Communication**:
+   - Carry a whistle to signal for help. It's effective in making noise over long distances.
+   - Know local emergency numbers and the location of the nearest medical facilities.
+
+8. **Environmental Awareness**:
+   - Understand basic desert ecology and the local wildlife conditions.
+   - Watch for signs of wildlife or water sources, but avoid getting too close to animals, as they may be dangerous.
+
+9. **Medical Considerations**:
+   - Carry basic medications such as anti-diarrheal tablets and painkillers.
+   - Stay up to date with recommended vaccinations and consider getting any necessary travel health insurance.
+
+10. **Patience and Patience**:
+    - Dehydration and exhaustion can set in quickly. Try to remain calm and take it one step at a time.
+
+Always prioritize safety and preparation over impulse decisions. The harsh conditions of the desert can quickly turn dangerous, so always be prepared for the worst-case scenario.
+
+--- BASIC RAG ---
+Surviving the desert requires careful preparation and knowledge of the environment. Here are some tips to help you survive in a desert:
+
+1. **Hydration**: The most critical factor is staying hydrated. Carry plenty of water with you. If you don't have access to a water source, finding shade during the hottest part of the day is crucial to prevent dehydration and heat exhaustion.
+
+2. **Sun Protection**: Wear a wide-brimmed hat, sunglasses, and use sunscreen to protect your skin from the harsh sun. The sun's rays can be very strong and cause severe sunburn, which can lead to heat exhaustion.
+
+3. **Clothing**: Wear loose, lightweight, and light-colored clothing to help reflect the sun's rays and protect you from the hot sand. Cover as much skin as possible with long sleeves and pants to reduce heat exposure.
+
+4. **Food**: Carry enough food that won't spoil quickly. Water and energy-rich foods like nuts, fruits, and jerky can help keep your energy levels up.
+
+5. **Rest**: Try to rest often to avoid dehydration and heat exhaustion. The sun's intensity can be very high, so it's important to take breaks from walking and moving around, especially during the hottest part of the day.
+
+6. **Ventilation**: If possible, find shaded areas or areas with ventilation. This can help regulate your body temperature.
+
+7. **Emergency Supplies**: Carry emergency supplies such as a first aid kit, a basic survival kit (compass, map, whistle, fire starter, etc.), and any necessary medication.
+
+8. **Navigation**: Know how to navigate your way through the desert. Use a map, compass, or GPS if available. Learning how to read the stars or other natural landmarks can also be helpful.
+
+9. **Avoid Nighttime**: While the desert can be scorching hot during the day, it can also be extremely cold and dark at night. It's important to avoid nighttime travel unless absolutely necessary.
+
+10. **Stay Alert**: Keep an eye on the environment for any signs of distress, such as a change in weather, animals, or natural resources.
+
+11. **Communication**: If you're planning a trip to the desert, consider carrying a satellite phone or other communication device, in case of emergencies.
+
+12. **Stay Positive**: Maintain a positive mindset. Desert survival can be mentally challenging, so keeping your spirits up can make a big difference.
+
+By following these tips, you can significantly improve your chances of surviving a desert environment. Always prioritize safety and plan accordingly for any trip to a desert area.
+
+--- CONTEXT-ENGINEERED RAG ---
+I cannot answer this question from the provided documents.

@@ -1,0 +1,956 @@
+1
+Coming 4 weeks are critical for success in the course
+
+• You are learning HTML, HTTP, JavaScript, React,
+  REST, FastAPI, Agentic AI A2A, MCP, LLM, etc
+• make sure to code every day
+
+
+
+
+                                                        2
+ JavaScript arrow functions: useful, but not a drop-in
+ replacement
+Where arrows shine
+
+Use them for short callbacks that do not need their own this.
+items.map(x => x.id)
+fetch(url).then(r => r.json())
+
+Where regular functions are safer
+
+Use function when the caller, object, constructor, or framework must control
+context.
+
+button.addEventListener('click', function () {
+  this.disabled = true;
+});
+
+Rule of thumb: use arrow functions when you want a short function
+and you do not need your own this, arguments, or constructor
+behavior. Use traditional function syntax when those behaviors
+matter.
+                                                                               3
+Agentic AI: Distributed Microservices
+              with kafka
+
+
+
+
+                      https://kai-waehner.medium.com/agentic-ai-using-apache-kafk
+                      a-as-event-broker-with-the-agent2agent-protocol-a2a-and-mcp
+                                                                                    4
+                      -c6634a094eb1
+ Web APIs: HTTP → REST → FastAPI
+
+Goal: design RESTful resources and implement
+them cleanly in FastAPI
+
+We’ll connect: methods → URIs → representations → status
+codes → validation → auth
+                  HTTP: https://en.wikipedia.org/wiki/HTTP
+HTTP stands for "Hypertext Transfer Protocol" and is the primary protocol used
+to transfer data across the web, essentially deﬁning the rules for how web
+browsers and servers communicate with each other to display web pages and
+access online content.
+  • Client-server model:
+     HTTP operates on a client-server model where a client (like a web browser)
+     sends a request to a server, which then responds with the requested data.
+  • Stateless protocol:
+     each request is independent, Messages have headers + optional body
+     Status codes communicate outcome (2xx/4xx/5xx)
+  • Data transfer:
+     HTTP is used to transfer various types of data like text, images, videos,
+     and application data.
+  • Request-response cycle:
+     The basic interaction involves a client
+     sending an HTTP request to a server,
+     which then sends an HTTP response
+     containing the requested data.
+
+                                                                                  6
+                     Rest Standards
+Method
+Meaning + key property
+GET
+Read a resource (safe, cacheable)
+POST
+Create/submit (not idempotent)
+PUT
+Create/replace at known URI (idempotent)
+DELETE
+Remove resource (idempotent-ish)
+
+
+
+
+                                           7
+                  GET Method
+• GET is used to request data from a specified resource.
+• GET requests can be cached
+• GET requests remain in the browser history
+• GET requests can be bookmarked
+• GET Avoid for sensitive data
+• GET requests have length restrictions
+Properties: safe ✅ idempotent ✅ cacheable ✅
+• Common status codes: 200 OK, 304 Not Modified,
+  404 Not Found
+
+
+                                                       8
+                 POST Method
+• The data sent to the server with POST is stored in
+  the request body of the HTTP request.
+• POST requests are not cached
+• POST requests do not remain in the browser
+  history
+• POST requests cannot be bookmarked
+• Properties: safe ❌ idempotent ❌ cacheable ❌
+• Common status codes: 201 Created, 200 OK, 400
+  Bad Request, 409 Conflict
+
+
+                                                       9
+                 PUT Method
+• PUT is used to send data to a server to
+  create/update a resource.
+• Create or replace a resource at a known URI.
+• Calling the same PUT multiple times results in
+  the same final state.
+• Properties: safe❌idempotent ✅cacheable
+  ❌
+• Common status codes: 200 OK, 204 No
+  Content, 400 Bad Request, 404 Not Found
+
+
+                                                   10
+               DELETE Method
+
+• Delete the specified resource.
+• Repeated deletes should not change the final
+  state (if already deleted).
+• Properties: safe ❌ idempotent ✅
+  cacheable ❌
+• Common status codes: 204 No Content, 404
+  Not Found
+
+
+
+
+                                             11
+       Responding to various HTTP methods
+
+                POST             GET                PUT             DELETE
+Resource       (Create)         (Read)            (Update)          (Delete)
+
+
+             Create a new      Return all     Replace all tasks     Delete all
+  /tasks
+                 task           tasks          with new tasks.       tasks
+
+              Create a task                   Update this task if
+                                Return a                            Delete this
+/tasks/123   inside another                    exist or create a
+                              specific task                           task.
+                  task.                           new one.
+
+
+
+
+                                                                            12
+                    HTTP - Response Codes
+
+Server sends response code for every client request. This communicates to
+clients what happened to the their request (Pass, fail, error etc).
+Response code for each type of request
+Range (From         Status code         Method   Comments.
+client perspective)
+
+1XX (100 - 199)     * - Informational   *        Request is accepted and is in progress
+
+2xx (200 - 299) -   200 - OK            GET      Request is served.
+Success
+
+                    201 - Created       POST /   Whenever a server create new
+                                        PUT      resource on client's request
+
+                    202 - Accepted      *        Server accepted the requested but will
+                                                 be processed later.
+
+                    204 - No            PUT      Server performed the request but has
+                    Content                      no data to return.
+
+
+                                                                                      13
+                      HTTP - Response Codes
+
+Range (From client   Status code       Method   Comments.
+perspective)
+
+
+3XX - Redirection    301 - Permanently GET      Server redirects client to the new URL of
+                     moved                      the same resource.
+
+4xx (400 - 499) -    400 - Bad         *        Client has used either wrong URL or
+Client Side          Request.                   parameters, or provided insufficient data
+Problem                                         in the request.
+
+                     401 -             *        Client is unauthorized to make this
+                     Unauthorized.              request. (May be client have passed
+                                                wrong credentials)
+
+                     404 - Not Found   GET      The request resource cannot be found.
+
+
+
+5xx (500 - 599) -    500 - internal    *        Server has encountered some exception
+Server Side          server error.              while serving the request.
+Problem                                                                             14
+REST
+
+
+
+
+       15
+              What is REST?
+• Representational State Transfer
+• Style of Software Architecture for WWW
+• Based on Client and Server
+• Request and Response are built on transfer of
+  “representation” or “resources”
+• Uses HTTP protocol
+
+
+
+                                                  16
+                   Resources
+• Are just Concepts
+• Located by URIs
+• URIs tell client that there’s a concept somewhere
+• Client then asks for specific representation of the
+  concept from the representations the server makes
+  available
+• Resource is any entity that you may want to expose
+  and that can be named. Typically, Each entity in
+  ER-Diagram can be thought of as a resource.
+• E.g Webpage is a representation of a resource
+                           contd..
+
+
+                                                        17
+           REST guidelines (principles)
+2 URI's per resource.
+  1. Listing (collection) - /v1/tasks
+  2. Detail - /v1/tasks/{id}
+
+Use nouns instead of verbs to name resources.So, instead of saying
+/v1/getAllTasks, we should say /v1/tasks.
+This means, we need to revise all our URIs to follow rest principles.
+
+Prefer plurals over singular:/tasks over /task.
+
+
+For associations: /resource/{id}/resourceIn our case, we may have
+/user/8908/tasks, to get all the tasks for a user.
+
+
+
+
+                                                                        18
+                  RESTful Web Services
+• Representational State Transfer (REST)
+   • Roy Fielding, 2000 (doctoral dissertation)
+       –   Examination of the Internet as a stateless service of near-limitless expansion model
+           with a simple but effective information delivery system
+
+
+• Key concepts
+– Resources - source of information
+– Consistent access to all resources
+   •   As in interface and communication – Not content or function
+– Stateless protocol
+– Hypermedia – links in the information to other data
+  (connectedness)
+
+
+                                                                                                  19
+                 Example
+Consider a Book store which has enabled a
+Web Service for book ordering.
+It should enable customers to
+◦ Get a list of books
+◦ Get detailed information on each book
+◦ Submit a order to purchase it
+
+                       contd..
+
+
+
+
+                                            20
+                           Get books list
+• Client uses following URL to get books list
+   http://www.bookstore.com/books
+- The server returns
+<?xml version="1.0"?>
+<b:Books xmlns:p="http://www.Books-store.com"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+ <Book id="00345" xlink:href="http://www.Books-store.com/Books/00345"/>
+<Book id="00346" xlink:href="http://www.Books-store.com/Books/00346"/>
+<Book id="00347" xlink:href="http://www.Books-store.com/Books/00347"/>
+<Book id="00348" xlink:href="http://www.Books-store.com/Books/00348"/>
+</p:Books>
+                                      contd..
+
+
+
+                                                                          21
+Get detailed information on each book
+• The client then uses one of the book id and traverses to that
+   resource.
+• The client uses
+http://www.bookstore.com/books/00346
+The Server responds with
+<?xml version="1.0"?>
+<p:Book xmlns:b="http://www.Books-store.com"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+    <Book-ID>00345</Book-ID>
+  <Name>Harry Potter</Name>
+  <Description>This boos is written by JK Rowling</Description>
+ <Specification xlink:href="http://www.Books-store.com/books/00346/readings"/>
+   <UnitCost currency="USD">20.0</UnitCost>
+    <Quantity>10</Quantity>
+</b:Book>
+                                                 contd..
+
+
+
+                                                                                 22
+          Creating a RESTful service
+Steps                                                          Top
+  1.    Define the domain and data
+  2.    Organize the data in to groups
+  3.    Create URI to resource mapping
+  4.    Define the representations to the client              Down
+           (XML, HTML, CSS, …)
+  5.    Link data across resources (connectedness or hypermedia)
+  6.    Create use cases to map events/usage
+  7.    Plan for things going wrong
+
+
+
+
+                                 RESTful Web Services, Richardson & Ruby
+                                                                           23
+       When is it appropriate?
+• The web services are completely stateless
+• Caching infrastructure can be leveraged for
+  performance
+• The service producer and consumer have
+  mutual understanding of context and content
+  being passed e.g NetFlix Api
+• Bandwidth is a constraint
+
+
+                                                24
+What else can we expect from proper REST
+                  APIs?
+ Pagination:
+ Return subset of all the data present in DB. User must be able to tell you get
+ me next 20 records after 60.
+
+ This can be achieved by adding offset and limit parameters to our GET APIs.
+ ex. /v1/tasks?offset=60&limit=20
+
+ Multiple Representation Formats:
+ Server must return the data in more than one format (XML, JSON etc).
+
+ For client to specify what format the server should reply, ACCEPT http
+ request header needs to be set. Ex. ACCEPT : Application/xml.
+
+ For server to specify what format is being used in the response format,
+ Content-Type http response header needs to be set.
+ Ex. Content-Type : Application/xml.
+                                                                               25
+What else can we expect from proper REST
+                  APIs?
+
+Filtering based on parameters:
+Filtering acts as a WHERE clause in SQL statement. To get all tasks whose
+completion date is 1sy May 2013.
+
+ex. /v1/tasks?completion-date=2013-05-01
+
+Ordering:
+This play a role of OrderBy clause in SQL statement. To get all the tasks
+sorted by priority.
+
+ex. /v1/tasks?order_by=priority - Sorts in ascending order of priority.
+   /v1/tasks?order_by=-priority - Sorts in descending order of priority.
+
+
+
+                                                                            26
+Web Application Architecture {MVC}
+
+Presentation Layer   Takes care of Content Representation. (HTML5, CSS3).
+
+
+
+ Business Layer      Computational Logic on data using language libraries.
+
+
+
+Data Access Layer    Access data from DB using RAW SQL queries or an ORM
+ (SQL or ORM)
+
+
+
+
+      DB              Data Storage System (SQLite, MySQL, ORACLE).
+
+
+
+
+                                                                             27
+                               References
+•   Roy Fielding, 2000 (doctoral dissertation)
+     – http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm
+
+
+• http://java.sun.com/developer/technicalArticles/WebServices/restful/
+
+• http://en.wikipedia.org/wiki/Representational_State_Transfer
+
+• http://www.devx.com/DevX/Article/8155
+
+• http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
+
+• Rest Api https://restfulapi.net/resource-naming/
+
+
+                                                                           28
+From REST design → FastAPI
+     implementation
+
+
+
+
+                             29
+What is FastAPI?
+
+
+
+
+                   30
+            Evolution of web
+Web has evolved from
+
+ Static websites (90’s)
+
+ Dynamic web applications (AJAX) (early
+ 2000’s)
+
+ Real time web applications (notifications)
+                                              31
+     Traditional multi threaded server
+
+t1                           T1
+
+
+
+t2                           T1      T2
+
+
+
+
+t3                           T1     T2     T3
+
+      User refresh 3 times
+
+
+                                  Server
+
+                                                32
+Traditional (Blocking) Thread Model
+
+
+
+
+                                      33
+      Why blocking hurts (I/O wait)
+Most web time is waiting on I/O (DB, network, disk).
+Blocking ties up a worker while waiting → lower
+throughput.
+Goal: keep workers busy doing useful work.
+
+
+
+
+                                                       34
+Event Loop Example
+
+
+
+
+                     37
+FastAPI Dependency Injection (DI)
+What it is: A way to declare what an endpoint needs (auth, DB session, config, shared
+params) and have FastAPI automatically provide it per request.
+ ● How it works: Use Depends() to “inject” the return value of a dependency
+    function into your path operation.
+ ● Why it matters:
+     ○ Reusable logic (auth, DB, validation) across routes
+     ○ Cleaner endpoints (separate concerns)
+     ○ Testable (override dependencies in tests)
+     ○ Supports dependency graphs (dependencies can depend on other
+         dependencies)
+
+●   Cleanup support: Dependencies can use yield for setup + teardown (e.g.,
+    open/close DB session).
+●   Two common patterns:
+
+     ○   Inject as a parameter: user = Depends(get_current_user)
+     ○   Run as a route requirement:
+         dependencies=[Depends(require_admin)]                                   42
+Securing an agent-callable API
+Your endpoint is a tool an agent can call — treat every request as untrusted.
+●     Auth is the canonical dependency: declare it once, apply it to any route.
+●     API key — simplest. Client sends a header; a dependency verifies it.
+    def require_key(x_api_key: str = Header(...)):
+        if x_api_key not in ALLOWED:
+            raise HTTPException(status_code=401, detail="Invalid key")
+        return x_api_key
+    @app.post("/summarize", dependencies=[Depends(require_key)])
+●     OAuth2 bearer — for user identity. OAuth2PasswordBearer(tokenUrl="token"),
+       ● then Depends(oauth2_scheme) gives you the token to decode and verify.
+
+Scope the agent, not just the user
+●     Give each agent its own credential with least privilege — a read-only
+       ● research agent should not be able to POST.
+●     401 vs 403: 401 = we do not know who you are. 403 = we do, and you may not.
+●     Never pass secrets in the URL — they land in logs, history and referrers
+       ● (see the GET guidance earlier). Put them in headers.
+FastAPI is the web framework. Uvicorn is the ASGI server that runs it.
+It is ASGI server implementation
+References for learning FastAPI
+●    FastAPI Tutorial (User Guide) — step-by-step, covers most features and patterns.
+●    FastAPI Security Tutorial (OAuth2) — password flow, bearer tokens, common auth
+     building blocks.
+ ● FastAPI Community Hub — entry page pointing to docs/resources/ecosystem.
+ ● FastAPI GitHub repo — examples, discussions, release notes.
+Starlette (important for cookies/middleware/sessions in FastAPI)
+ ● Starlette Middleware docs — how middleware works under the hood (FastAPI uses
+     this).
+ ● Starlette Intro / dependencies — includes note that SessionMiddleware relies on
+     itsdangerous.
+Practical tutorials (hands-on examples)
+ ● Real Python: FastAPI example app — great walkthrough with real API patterns and
+     testing mindset.
+ ● FastAPI Interactive (hands-on, browser-based) — interactive lessons you can run
+     while learning.
+Server-side sessions (if you want Redis-backed sessions)
+ ● starlette-session (PyPI) — a library providing server-side session backends (e.g.,
+     Redis).
+
+                                                                                50
+Agentic Behavior & Agent-
+to-Agent (A2A) Interactions
+  What "agentic" really means
+Simple idea: a loop of
+Plan → Do → Check → Adjust/Act (think PDCA).
+It’s a continuous improvement cycle first developed by W. Edwards Deming, widely
+used in engineering, management, learning, and problem-solving.
+ ● Plan – Decide what you want to do and how.
+ ● Do – Execute the plan (try it out).
+ ● Check – Review the results (did it work as expected?).
+ ● Adjust (or Act) – Make changes to improve, then repeat.
+
+
+Example: Article Summarization
+ ● Plan: Outline key points you want in the summary.
+ ● Do: Fetch and summarize the article.
+ ● Check: Is the summary concise and accurate?
+ ● Adjust: Shorten text, add references.
+    → Repeat loop until the summary is sharp.
+ Behavior 1 — Reason + Act (ReAct)
+LLMs think (reason) and use tools (act) in steps.
+Think of why GPT suddenly decides to browse the web even if
+you don’t have an explicitly you need to do that. ‘What is
+Apple’s stock price today?’
+Why it works: reasoning guides which tool to call; tools bring
+real data back.
+How LLMs Think & Act
+● Reasoning (Think): LLMs break down a problem
+  step by step.
+● Acting (Do): They decide which tool to use (e.g.,
+  web search, database, calculator, API).
+● Loop: Reasoning guides which tool to call → Tool
+  brings back real data → LLM uses it to refine the
+  answer.
+     LangChain:
+     ttps://python.langchain.com/docs/introduction/
+LangChain is a framework for developing applications powered by large language
+models (LLMs). Think of LangChain as the application-building layer around the
+language model.
+
+LangChain simplifies every stage of the LLM application lifecycle:
+
+●    Development: Build your applications using LangChain's open-source components
+     and third-party integrations. Use LangGraph to build stateful agents with first-class
+     streaming and human-in-the-loop support.
+●    Productionization: Use LangSmith to inspect, monitor and evaluate your
+     applications, so that you can continuously optimize and deploy with confidence.
+●    Deployment: Turn your LangGraph applications into production-ready APIs and
+     Assistants with LangGraph Platform.
+
+
+    LangChain: build.
+    LangGraph: orchestrate.
+    LangSmith: observe and evaluate.
+    Deployment platform: run it in production.
+  Tool Calling in LangChain
+  https://python.langchain.com/docs/concepts/tool_calling/
+Key concepts
+1. Tool Creation: Use the @tool decorator to create a tool. A tool is an association
+     between a function and its schema. @tool def search_products(min_price: float,
+     max_price: float, category: str):
+2. Tool Binding: The tool needs to be connected to a model that supports tool calling.
+     This gives the model awareness of the tool and the associated input schema
+     required by the tool. llm_with_tools = llm.bind_tools([search_products])
+3. Tool Calling: When appropriate, the model can decide to call a tool and ensure its
+     response conforms to the tool's input schema.
+4.   Tool Execution: The tool can be executed using the arguments provided by the
+     model.
+llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0) #for deterministic output
+llm_with_tools = llm.bind_tools([get_datetime])
+
+Conversation where the model MUST use the tool for the date (not guess)
+messages = [
+    SystemMessage(content="Always call get_datetime for any date/time info."),
+    HumanMessage(content=(
+        "Create a short note that includes today's date in both Asia/Kolkata and
+        America/Los_Angeles, " "then add one friendly sentence."
+    )),
+]
+ai = llm_with_tools.invoke(messages)
+tool_calls = ai.additional_kwargs.get("tool_calls", []) or []
+
+# If the model only called one timezone, we can nudge it with another turn:
+if len(tool_calls) < 2:
+    # Ask it explicitly to also fetch the second timezone (teaches multi-call)
+    messages += [ai, HumanMessage(content="Also get the time in America/Los_Angeles.")]
+    ai = llm_with_tools.invoke(messages)
+    tool_calls = ai.additional_kwargs.get("tool_calls", []) or []
+#Execution
+tool_results = []
+for call in tool_calls:
+    args = json.loads(call["function"]["arguments"] or "{}")
+    tool_results.append(ToolMessage(
+        tool_call_id=call["id"],
+        name=call["function"]["name"],
+        content=json.dumps(get_datetime.invoke(args))
+    ))
+
+final = llm_with_tools.invoke(messages + [ai] + tool_results)
+print(final.content)
+
+
+
+
+     Tool Calling: https://python.langchain.com/docs/concepts/tool_calling/
+Output
+
+
+   Note:
+- Today's date in Asia/Kolkata is August 29, 2025 (Friday) at
+  02:13.
+- Today's date in America/Los_Angeles is August 28, 2025
+  (Thursday) at 13:43.
+
+Have a wonderful day filled with joy and laughter!
+Behavior 2 — Memory & Reection
+● Agents don’t just act — they remember past experiences, evaluate
+   what worked, and self-critique before giving the next reply.
+● This creates a feedback loop:
+    Store → Evaluate → Improve → Repeat
+● Memory + Reflection helps agents adapt across interactions → not just
+   reactive, but adaptive and improving.
+Example: Writing Assistant
+● Store: Keeps track that the last draft was too long.
+● Evaluate: “Feedback said it needed to be concise.”
+● Improve: Produces a shorter, tighter draft next time.
+Memory & Reection — pick the right
+store (what to use, when)
+Agents need memory to recall, reflect, and improve.
+Different vector stores are suited for different use cases:
+Semantic / RAG (similarity search): Core idea: Store text → retrieve by
+meaning, not keywords.
+
+● FAISS (local, Python lib): best for small datasets, single machine, fast
+    prototyping.
+●   Chroma (local/server): good for quick dev projects; minimal ops.
+●   PGVector (Postgres extension): Mix vectors + SQL filters/joins together;
+    Great when metadata matters. Example: Search documents by both
+    content + date tags.
+●   Qdrant / Milvus (self-hosted): Scalable, high-QPS vector search on your
+    own infra.
+●   Weaviate / Pinecone (managed): production scale without ops;
+    pay-as-you-go. Example: SaaS chatbot serving thousands of customers.
+    PGVector
+metadata in PGVector usually refers to extra fields stored alongside
+embeddings that you can filter or join on using SQL. Examples of Metadata for
+PGVector: Document Metadata, title, author, source_url, Time Metadata
+created_at, updated_at, year
+
+With PGVector you can do:
+SELECT content
+FROM documents
+WHERE topic = 'AI' AND created_at > '2024-01-01'
+ORDER BY embedding <-> query_embedding
+LIMIT 5;
+
+Query: "Explain REST APIs"
+query_embedding → [0.07, -0.22, 0.91, …]
+Database finds chunks with embeddings close to it, e.g.:"REST allows communication via
+HTTP methods"
+
+This combines semantic similarity with structured filters — super powerful for
+metadata-heavy RAG.
+When to use a Vector DB
+Semantic Recall
+ ● You need to find text by meaning, not just exact keywords.
+ ● Example: Query: “cheap flights” → Matches “low-cost airfare”.
+
+Re-ranking / Hybrid Search
+● Combine keyword search (lexical) + semantic search (vectors) for
+    better accuracy.
+● Example: Search for “Python data analysis” → Lexical hits + semantic
+    matches from tutorials.
+
+Metadata Filters
+● Filter results with structured fields like author, date, tags.
+● Example: “Find research papers about AI published after 2022.”
+  Graph / Entity memory (relationships)
+Graph / Entity Memory (relationships)
+ ● Tools: Neo4j, AWS Neptune, TigerGraph
+ ● RDF triple stores (GraphDB (ontotext)): when ontologies & reasoning are needed.
+ ● Use When:
+    ○ You need to traverse multi-hop relationships: “User → Project → Constraint”
+    ○ Answer questions like “Who connects to what, and why?”
+ ● Example:
+    ○ Find all developers working on projects that depend on Database X.
+
+Full-text / Hybrid Search
+ ● Tools: Elasticsearch, OpenSearch
+ ● What they offer:
+      ○ Keyword + BM25 ranking, Aggregations & filters (facets), Hybrid search (KNN +
+          lexical)
+ ● Use When:
+      ○ You need log analytics, dashboards, or combining keyword + semantic search.
+
+Key Idea:
+ ● Graph DBs = best when relationships matter.
+ ● Full-text / Hybrid Search = best when keywords, filters, and aggregations are
+Behavior #3 — Delegation
+
+
+Break work across specialized agents (Example: planner,
+researcher, coder).
+A2A — what is Agent-to-Agent?
+
+
+Agents message each other to solve tasks, sometimes with a
+supervisor or a group chat manager deciding who speaks next.
+
+A2A = agents collaborating like a team.
+They pass messages, share results, and build on each other’s
+work.
+MCP vs A2A — two protocols, two jobs
+MCP (Model Context Protocol) — how an agent reaches its tools and data
+●   An open standard for exposing tools, resources and prompts to an LLM app.
+●   The agent asks a server: what can I call, and how? One agent, many capabilities.
+●   Your FastAPI service is exactly this surface — typed inputs, validated bodies,
+     ● an OpenAPI schema the model can read before it calls anything.
+
+A2A (Agent-to-Agent) — how an agent reaches its peers
+●   A protocol for agents to advertise skills, delegate a task and return a result.
+●   The agent asks another agent: can you take this? Many agents, one goal.
+●   The ping-pong and supervisor patterns on the next slides are A2A.
+
+They compose, they do not compete
+●   A single agent typically uses MCP downward to its tools and A2A sideways
+     ● to its peers — the supervisor delegates over A2A, each worker calls tools over MCP.
+●   Rule of thumb: MCP answers "what can I use?" — A2A answers "who can help me?"
+A2A — ping-pong (to & fro context passing)
+What Happens:
+1. Agent A → sends a message with context.
+2. Agent B → replies, adds reasoning or output.
+3. The chat history/summary is shared back so both agents see the updated
+     state.
+4. Repeat this back-and-forth until a stop rule is met (e.g., task complete or max
+     turns).
+Example: Debugging a Function
+ ● Agent A (Coder): “Here’s the function, but it throws an error.”
+ ● Agent B (Reviewer): “The issue is a missing import. Add import os.”
+ ● Agent A: Updates code, posts new version.
+ ● Agent B: Runs tests again, confirms fix.
+ ● Stop when Reviewer approves
+Key Idea
+Ping-pong = agents pass context back and forth, each improving or correcting,
+until the goal is reached.
+Minimal Example
+A2A Ping-Pong (Fibonacci Task) : Goal: “Write Python to compute the 10th
+Fibonacci number.”
+
+Turn 1 — Analyst (A): “Plan: Use recursion or iteration. Keep it simple with a loop.”
+→ Sends plan to Coder (B).
+Turn 2 — Coder (B): “Wrote a loop version. Code runs but missing print statement.”
+→ Returns code sketch + status.
+Turn 3 — Analyst (A): “Context summary: last turn = loop works, missing print.
+TODO: add print.” → Suggests fix.
+Turn 4 — Coder (B): “Updated code. Now prints the 10th Fibonacci number = 55.”
+→ Reports success.
+Carry Context Each Turn: Summarize what changed + open TODOs → keeps loop
+efficient.
+Stop Rule:
+ ● End when Coder outputs final working code
+ ● Or max 6 turns to prevent infinite ping-pong.
+
+Ping-Pong A2A = goal → back-and-forth refinement → stop when done.
+A2A with graphs — LangGraph supervisor
+pattern
+ ●   Agents are graph nodes (Planner, Researcher, Coder, Reviewer).
+ ●   A Supervisor LLM is a routing node: it reads current state and decides the next node.
+ ●   Edges encode possible next hops; the graph executes step-by-step until a stop rule.
+
+
+What state does the next agent see?
+You choose the state model. Two common patterns:
+1) Pass messages (chat-style state) State: messages[] (running conversation) + optional
+scratchpad.
+ ● Next agent sees: the latest summarized transcript (or last N turns) plus any role tags.
+ ● Pros: Natural, debuggable, model-agnostic.
+ ● Cons: Token growth; you must summarize/trim.
+2) Pass tool args / structured fields (form-style state)
+ ●   State: typed fields the next agent needs (e.g., papers[], summaries[],
+     endpoint_spec).
+ ●   Next agent sees: only the fields needed; not the whole chat.
+ ●   Pros: Compact, deterministic, great for long pipelines.
+ ●   Cons: Less conversational flexibility; you must design the schema.
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0) parser =
+StrOutputParser()
+
+#   Prompts
+researcher_prompt =
+    ChatPromptTemplate.from_messages([
+    ("system",
+     "You are a precise researcher. Extract 3-5 concise facts relevant to the
+     user's goal. "
+     "Use short bullets only. No preamble, no summary."), ("human",
+    "Goal: {goal}\n\nReturn only bullet facts.")
+])
+
+writer_prompt = ChatPromptTemplate.from_messages([
+    ("system",
+     "You are a clear, concise technical writer. Using the provided facts, "
+     "write a 3–4 sentence summary for a technical audience. End with
+    one caution."),
+    ("human", "Goal: {goal}\n\nFacts:\n{facts}\n\nWrite the final
+    summary.")
+])
+Output
+=== TRACE (who said what) ===
+01 [22:04:37] [USER ] (goal)
+    Goal: summarize agent-to-agent (A2A) interactions
+02 [22:04:37] [SUPERVISOR ] (route)
+    Routing to researcher (facts first).
+03 [22:04:38] [RESEARCHER ] (facts)
+    - A2A interactions involve direct communication between autonomous agents
+    without human intervention.
+-   These interactions can enhance efficiency in tasks such as data sharing,
+    decision-making, and resource allocation.
+-   A2A communication protocols often utilize standards like MQTT or CoAP for
+    lightweight messaging.
+- Security in A2A interactions is critical, often implemented through encryption and
+  authentication mechanisms.
+- A2A systems are commonly used in IoT applications, robotics, and distributed AI
+  networks.
+  Output (Continued)
+04 [22:04:38] [SUPERVISOR ] (route)
+   Facts gathered; routing to writer.
+
+05 [22:04:40] [WRITER] (final)
+    Agent-to-agent (A2A) interactions facilitate direct
+   communication between autonomous agents,
+   enhancing efficiency in tasks such as data sharing,
+
+   decision-making, and resource allocation.
+   These interactions typically employ
+   lightweight messaging protocols like MQTT or
+   CoAP,
+   while prioritizing security through encryption and authentication mechanisms.
+   A2A systems are prevalent in IoT applications, robotics, and distributed AI
+   networks. Caution should be
+    exercised regarding potential vulnerabilities in security implementations, as they can
+    expose systems to risks.
+Guardrails for agent behavior & A2A chats
+Add programmable guardrails between app code and the LLM.
+Similar to a single agent situation: topic control, jailbreak detection, PII redaction.
+Topic control / policy gates
+ ●   Allowlist: “Only answer about course topics: HTML, REST, FastAPI…”
+ ●   Denylist: Block “malware creation,” “grading policy leaks,” etc.
+Jailbreak & prompt-injection detection
+ ●   Classifier/regex on inputs: flag “ignore previous instructions,” “system override,” etc.
+ ●   If flagged → route to safe reply or human review.
+PII detection & redaction
+ ●   Detect emails, phone #s, SSNs; replace with [REDACTED].
+ ●   Example: Before an agent posts to group chat, scrub PII.
+A2A specifics
+ ●   Supervisor uses guardrails to decide who speaks next (route only to allowed nodes).
+ ●   Ping-pong chats: run both directions through guardrails (A→B and B→A).
+●    Shared state/blackboard: scrub PII on write; enforce TTL, size limits, and field schema.
+Guardrails sits between your app and the LLM.
+DENY = {"passwords", "credit card"}
+def allow(user_msg: str) -> bool:
+    return not any(bad in user_msg.lower() for bad in DENY)
+
+msg = "Can you store my credit card?"
+print("Blocked" if not allow(msg) else "Allowed")
+Evaluate A2A behavior
+1) Traces (who spoke, when, why)
+ ●   Log per hop: {ts, speaker, input_hash, output_hash, tools_used, reason}
+ ●   Reason strings: short “why I acted” notes (route decisions, tool choices).
+ ●   Example row:
+     12:01:04 | Supervisor -> Coder | reason="needs code for /summarize"
+2) Success criteria
+ ●   Task finished? Stop rule met (status=done, artifact produced, tests pass)
+ ●   Tool errors? Rate, types, retries, backoffs
+ ●   Loops avoided? Max turns not exceeded; no oscillation (A↔B→A↔B with no state change)
+ ●   Latency & cost: per-agent, per-tool, per-episode budgets
+3) Unit tests for agents (role fixtures, a fixture = predefined setup or data used for
+repeatable tests)
+ ●   check: pass ﬁxtures through each role?
+ ●   Planner: given a goal fixture, returns ordered steps with acceptance criteria
+ ●   Researcher: given a query fixture, returns sources + citations (schema-validated)
+ ●   Coder: given a spec fixture, returns runnable code + tests
+ ●   Reviewer: given outputs, returns pass/fail + actionable diffs
+ ●   Tip: run these headless (no other agents), then in integration with the graph.
+4) Spot-check ReAct (reasoning ↔ action alignment)
+ ●   Check: did reasoning justify the action?
+ ●   Red flags: “I’ll browse” with no freshness need; calling Python for trivial math; hallucinated sources.
+ ●   Pass example:
+     Reason: “Stock price requested for today → knowledge may be stale → browse web.”
+     Action: web.search(ticker); Evidence logged; Answer cites fetched data.
+ the multi-agent system preferred over the single-agent system
+
+
+
+
+One agent, powered by an LLM, analyzes survey responses for sentiment and nuances, detecting
+elements like frustration or satisfaction.
+Another agent, specialized in crafting dynamic queries, generates follow-up questions aligned with the
+detected sentiment, user profile, and product feature.
+For instance, if frustration about a product feature is identified, the follow-up might delve deeper into
+the specific pain point that applies to the user profile.
+

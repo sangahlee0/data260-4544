@@ -1,0 +1,981 @@
+Modern web application
+    development
+Web evolution
+• Web has evolved from simple static pages to complex
+ real time pages
+MVC
+Server side MVC and Client side MVC
+Single Page Application (SPA) vs MPA
+• SPA interacts with the user by
+  dynamically rewriting the current
+  page rather than loading entire new
+  pages from a server
+• appropriate resources are dynamically
+  loaded and added to the page as
+  necessary, usually in response to user
+  actions
+• SPA needs a Client-side routing that
+  allows you to navigate around a web
+  page
+• SPA offers native application like
+  experience
+Single Page Application
+• Advantage
+   • Single Page Apps are smooth and fast.
+   • They are easier to develop, deploy and debug.
+   • Can be transited to mobile apps by reusing the same backend code.
+• Disadvantages
+   • SPAs perform poor on the search engine. But now, with isomorphic
+     rendering/server-side rendering even SPAs can be optimized for search engine
+     too.
+   • They are less secure compared to traditional multi-page apps because of its
+     cross-site scripting.
+SPA and Client side framework
+• Framework can manage large, complex application
+• Client-side frameworks
+• React, AngularJS, Backbone, Ember, ExtJS, Knockout, MetroJS, Vue.JS, etc.
+• React
+   • UI building library developed by Facebook
+   • Using Virtual Dom for Dom manipulation
+   • Create the new concepts such as Flux
+• AngularJS
+   • All-in-one web application framework developed by Google
+   • Data binding, Directive, Routing, Security etc
+Your Project: Web Architecture
++ Micro Services Architecture
+You will build this architecture
+ with MERN Stack and
+measure them
+Problems with old technology
+                             Model   Controller   View
+• MVC does not scale
+• Typical MVC architecture
+Problems with old technology (Contd)
+• Complexity of two-way data binding
+• Bad UX from using "cascading updates" of DOM tree
+• A lot of data on a page changing over time
+• Complexity of Facebook's UI architecture
+    Client-side frameworks
+• ReactJS https://facebook.github.io/react/
+• https://reactjs.org/
+• Javascript library for building user interfaces
+• Components (collection of HTML, CSS, JS) are the building blocks of React
+
+
+
+• React is a JavaScript framework that focuses on declarative syntax and virtualization of DOM.
+• It is an open-source Javascript library Developed by Meta in 2013.
+• It provides a declarative and efficient way to create interactive UI components.
+• It allows building more reusable and maintainable UI components with ease.
+
+•
+ Key concepts
+ ●   JSX: A syntax extension that allows writing HTML-like code within JavaScript. It makes UI development more readable
+     and easier to manage in React.
+ ●   Components: The building blocks of a React application. Components are reusable, independent, and can be either
+     functional or class-based.
+ ●   Props: Read-only data passed from parent components to child components, allowing for dynamic and customizable
+     content
+ ●   State: An internal data store within a component. When the state changes, the component re-renders to reﬂect the
+     updates.
+ ●   Unidirectional data ﬂow: Data in React ﬂows in a single direction, from parent to child components, ensuring
+     predictable and maintainable state management.
+ ●   Virtual DOM: A lightweight copy of the actual DOM that React uses to eﬃciently update the UI. It minimizes direct
+     manipulations of the real DOM, improving performance.
+ ●   Hooks: Built-in functions that allow functional components to use state and other React features without needing class components.
+     Examples include useState and useEffect.
+ ●   React Router: A library that enables navigation and routing in React applications, allowing users to move between
+     different views or pages without full-page reloads.
+
+React's popularity stems from its eﬃciency, reusability, and the large ecosystem of tools and libraries built around it. It is
+widely used in web development for creating interactive and dynamic user experiences.
+2015
+   Who uses React?
+
+     https://jaydevs.com/top-companies-
+     using-react-js/
+
+
+There are too many companies using React JS
+to list them all here, so instead we’re going to
+cover the top 30 companies that use React JS.
+We’ll then detail what React components they
+use and the benefit it has for their web and
+mobile application development.
+Why use React?
+• Easy to read and understand views
+• Concept of components is the future of web development
+• If your page uses a lot of fast-updating data or real-time data, React
+  is the way to go
+Data Mutation is problem
+• When data changes, refresh
+• When data changes,
+  React re-renders the component
+• But Stateful Browser DOM
+• Reacts builds new virtual DOM subtrees
+• Computes the minimal set of DOM mutations and puts them in a
+  queue and Batch executes all updates
+
+
+
+                                                            Source: Facebook
+   ReactJS
+• Virtual DOM. Keeping state of DOM is hard
+• Efficient diff algorithm
+• Batched update operations
+• Efficient update of sub tree only
+• Uses observable instead of
+  dirty checking to detect change
+
+• AngularJS uses dirty checking that
+  runs in a cycle after a specified time,
+  Checking the whole model
+  reduces the performance
+  and thus makes the application
+  slow.
+React: 50% better performance
+
+
+
+
+                                Source: Facebook
+   Two-way vs. Unidirectional data flow
+• In two-way data binding
+   • The view is updated when the state changes, and vice versa.
+   • For example, when you change a model in AngularJS, the view automatically reflects
+     the changes.
+   • It can lead to cascading updates and changing one model may trigger more updates.
+   • View        State
+• Unidirectional data flow
+   • Mutation of data is done via actions. So, new data always enters into the store through
+     actions.
+   • View components subscribe to the stores and automatically re-render themselves
+     using the new data. So, the data flow looks like this :
+
+
+
+
+                                                                             Source: Facebook
+React
+● State Management
+   ○   State management is a critical aspect of building complex
+       web applications.
+   ○   ReactJS provides several options for managing state
+       Eﬃciently within its ecosystem.
+   ○   Various ways of State Management:
+        ■   Local Component State
+            ●   useState
+        ■   Context API
+        ■   Redux
+                                             Functional Components (Recommended)
+What is a React component?
+                                              ●    A simple JavaScript function that returns JSX.
+                                              ●    Can use Hooks (useState, useEffect, etc.)
+- ReactJS follows a component-based                to manage state and lifecycle.
+architecture, where UI are composed of        ●    More concise and easier to understand.
+reusable building blocks called              🔹 Example: Functional Component with Props &
+components.                                  State
+- A React component is a JavaScript          import { useState } from "react";
+function or class that returns a JSX
+(JavaScript XML) representation of the UI.   function Greeting({ name }) {
+                                              const [message, setMessage] =
+- It encapsulates the UI logic and state,    useState("Welcome!");
+making it reusable and modular.
+                                               return (
+- React supports two ways of declaring a         <div>
+component-                                        <h1>Hello, {name}!</h1>
+                                                  <p>{message}</p>
+- Class Components (old)                          <button onClick={() => setMessage("Have a great
+                                             day!")}>Click Me</button>
+- Functional Components (new)                    </div>
+                                               );
+                                             }
+
+                                             export default Greeting;
+Why Functional Components are Preferred Over Class
+Components in React?
+1. Simplicity & Readability                        5. Hooks
+ •   Cleaner, easier to read & write                •   useState, useEffect, and custom hooks bring powerful
+ •   No need for this or complex class-based            features
+     syntax                                         •   Enables state management in functional components
+2. Reusability & Modularity                        6. Conciseness & Maintainability
+ •   Small, composable functions improve code       •   Less code, fewer bugs
+     maintainability                                •   Simplifies state & lifecycle management
+ •   Encourages better separation of concerns
+3. Improved Testability
+                                                   Class Components Still Exist: Useful in legacy codebases, but
+ •   Pure functions ensure predictable output      modern React favors functional components with hooks for
+ •   Easier unit testing with consistent results   cleaner, more efficient development.
+4. Better Performance
+ •   No class overhead, reducing memory usage
+ •   Optimized by React’s rendering process
+Structure of React Component
+● State                                     State in Functional Components (Modern Approach
+                                            using Hooks)
+   ○   State represents mutable data that
+       belongs to a component. Unlike       import { useState } from "react";
+       props, state can change over time,   function Counter() {
+       triggering a re-render of the         const [count, setCount] = useState(0);
+
+       component.                               return (
+                                                  <div>
+   ○   Functional components can also              <p>Count: {count}</p>
+                                                   <button onClick={() => setCount(count + 1)}>Increase</button>
+       have state using React hooks like          </div>
+                                                );
+       useState.                            }
+
+                                            export default Counter;
+                                            Using CSS Classes (Recommended for maintainability)
+Structure of React Component
+                                            import "./styles.css";
+
+                                            function StyledComponent() {
+                                              return <h1 className="heading">Hello, World!</h1>;
+●   Styling                                 }
+    ○ Styling can be applied to React
+                                            export default StyledComponent;
+       components using CSS
+       classes, inline styles, or       CSS-in-JS (Styled Components) allow writing CSS directly inside JavaScript files
+
+       CSS-in-JS libraries.
+                                        import styled from "styled-components";
+    ○ CSS classes can be added
+                                        const StyledButton = styled.button`
+       using the className attribute      background-color: blue;
+                                          color: white;
+       in JSX.                            padding: 10px;
+    ○ Inline styles can be applied        border-radius: 5px;
+                                        `;
+       using the style attribute in
+                                        function App() {
+       JSX.                               return <StyledButton>Click Me</StyledButton>;
+                                        }
+
+                                        export default App;
+  Component Life Cycle
+● React components have a life cycle consisting of different phases and methods that are executed at sp
+   ○ The mounting phase is when a new component is
+       created and inserted into the DOM.
+   ○ The updating phase is when the component updates
+       or re-renders. This reaction is triggered when the
+       props are updated or when the state is updated.
+   ○ The last phase within a component's lifecycle is the
+       unmounting phase, when the component is removed
+       from the DOM.
+Life Cycle Hooks
+-   componentDidMount()
+      -   This hook is called after a component is mounted (rendered for the ﬁrst time) in the DOM.
+-   componentDidUpdate(prevProps, prevState)
+      -   This hook is called after a component is updated and re-rendered in response to changes in
+          props or state.
+-   componentWillUnmount()
+      -   This hook is called just before a component is unmounted and removed from the DOM.
+-   shouldComponentUpdate(nextProps, nextState)
+      -   This hook is called before a component is re-rendered and allows you to control if the
+          re-rendering should occur.
+https://medium.com/@aaaaaaaaasg/life-cycle-hooks-in-react-9f1690bcd91b
+Redux
+• Redux is a state container for JavaScript apps,
+  often called a Redux store. It stores the whole
+  state of the app in an immutable object tree.
+• Actions: Actions are how the application interacts
+  with the store. The application sends an action
+  with some attached data. These actions are then
+  handled by a so-called reducer.
+• Store: This structure stores the complete state of
+  our application. Given only the content of the
+  store, the application should be able to save and
+  recover the current state of the application
+• Reducer: The Reducer is a function that takes the
+  current state and an action and transforms it to a
+  new state.
+  Redux
+• The state is read-only: The state of the application can only be changed via
+  actions. This is very useful for debugging since the changing state flow is
+  much more clear.
+• The Redux store API is tiny and has only four methods:
+   • store.getState()—Returns the current state object tree.
+   • store.dispatch(action) - Dispatch an action to change the state.
+   • store.subscribe(listener) - Listen to changes in the state tree.
+   • store.replaceReducer(nextReducer) - Replaces the current reducer with another.
+     This method is used in advanced use cases such as code splitting
+
+
+   Simple Redux Tutorial: https://appdividend.com/2017/08/23/redux-tutorial-example-scratch/
+JSX (JavaScript XML)
+• JSX (JavaScript XML) is a syntax extension for
+• JavaScript is used in React.
+• JSX allows you to write HTML-like code within JavaScript, making it easier
+ to create and manipulate the UI.
+• JSX allows embedding JavaScript expressions
+ within curly braces {}.
+• JSX needs to be compiled into plain JavaScript
+ to be understood by the browser.
+ https://reactjs.org/tutorial/tutorial.html
+https://www.w3schools.com/REACT/DEFAULT.ASP
+Composition of Components
+Running a React Application
+●   To run a React Application, we need to install
+     ○   NodeJS
+     ○   Node Package Manager (NPM)
+●   Create React Application
+     ○   npx create-react-app my-app
+●   Run development server
+     ○   cd my-app
+     ○   npm start
+●   Build Project
+     ○   npm run build
+              SQLAlchemy Introduction
+                Engine • Session • Model • ORM • CRUD
+
+
+
+
+              SQLAlchem
+  Python                              Database
+                  y                                     Database
+Application                            Driver
+                ORM
+
+
+
+
+                                                                   1
+The problem SQLAlchemy solves
+
+ • Python programs work with objects
+
+ • Databases store rows in tables
+
+ • Raw SQL is powerful, but code can
+ become repetitive
+                                         Python     ORM       SQL
+ • SQLAlchemy creates a bridge between   Objects   Mapping   Tables
+ Python and SQL
+
+
+
+
+                                                                      3
+What is ORM?
+
+                    ORM = Object Relational Mapping
+
+        Python                                          Database
+
+         Class                                             Table
+
+
+         Object                                            Row
+
+
+        Attribute                                         Column
+
+
+
+                     Example: Student class ↔ students table
+
+
+                                                                   4
+The three core pieces
+
+
+
+
+      Model                       Session                                                 Database
+                                                                Engine
+    What data                     Work with                                            SQLite / MySQL
+                                                             Connect to DB               / Postgres
+    looks like                      data
+
+
+
+
+    Beginner shortcut: Model = table blueprint, Session = work area, Engine = database connection
+
+
+
+
+                                                                                                        5
+Engine: connection to the database
+
+ • Created with create_engine()
+
+ • Knows the database URL                           engine = create_engine(
+                                                       "sqlite:///school.db"
+                                                                  )
+ • Manages low-level database
+ connections
+
+ • Usually created once when the app
+ starts                                SQLAlchemy                 SQLite
+                                         Engine                Database File
+
+
+
+
+                                                                               6
+Model: Python class for a database table
+
+
+
+ class Student(Base):                                    students table
+     __tablename__ = "students"
+
+     id = mapped_column(primary_key=True)                     id
+     name = mapped_column(String(100))                       name
+     major = mapped_column(String(100))
+                                                             major
+
+
+
+
+         Model definitions are the “map” between Python and table structure.
+
+
+
+
+                                                                               7
+Base and metadata: create tables
+
+ • Base is the parent class for
+ ORM models
+                                     Student Model
+ • Models add table information to
+ Base.metadata
+                                                      Base.metadata.create_all(engi
+ • create_all(engine) creates        Base.metadata    ne)
+ missing tables
+
+
+                                     Database Table
+
+
+
+
+                                                                                      8
+Session: working conversation with the database
+
+ • The Session is where ORM work
+ happens
+
+ • It tracks new, changed, and deleted   Python                      Session
+ objects                                 Object                add / query / delete
+
+
+ • commit() saves the transaction
+
+ • rollback() cancels the transaction
+
+
+                                                  commit()
+                                                  rollback()
+
+
+
+
+                                                                                      9
+Create: insert one row
+
+                                      Student(...)
+                                     Python object
+ with Session(engine) as session:
+     student = Student(
+         name="Alice",
+         major="Computer Science"
+     )                               session.add()
+
+     session.add(student)
+     session.commit()
+
+                                    session.commit()
+                                       row saved
+
+
+
+
+                                                       10
+Read: select rows
+
+
+                                                 select(Student)
+ stmt = select(Student)
+
+ with Session(engine) as session:
+     students = session.scalars(stmt).all()
+
+ for student in students:
+                                              Session sends query
+     print(student.name)
+
+
+
+                                              Student objects return
+
+
+
+
+                                                                       11
+CRUD overview
+
+
+     Action               SQLAlchemy                   Database meaning
+
+
+     Create              session.add(obj)                 INSERT row
+
+
+     Read                 select(Model)                  SELECT rows
+
+
+     Update              obj.field = value                UPDATE row
+
+
+     Delete             session.delete(obj)               DELETE row
+
+
+     Save               session.commit()               COMMIT transaction
+
+
+              Commit is the point where changes become permanent.
+
+                                                                            12
+Relationships: tables connected to tables
+
+ • Real databases usually have multiple related
+ tables
+                                                   students
+
+ • Example: one student can have many                id
+ enrollments                                        name
+
+ • SQLAlchemy models can describe those                  one-to-many
+ relationships
+                                                  enrollments
+ • This lets Python navigate related data more
+ naturally                                            id
+                                                  student_id
+                                                    course
+
+
+
+
+                                                                       13
+Where SQLAlchemy ﬁts in a web app
+
+
+
+
+      Client             FastAPI           Session +          Engine +
+                                                                           Database
+   Browser/API            Route             Model              Driver
+
+
+
+
+            Most web apps create a short-lived session for each request.
+
+
+
+                                                                                      14
+Summary
+
+
+
+                                 Session
+       Model                                                  Engine                  Database
+                               add/query/co
+   class ↔ table                                            connection               tables/rows
+                                   mmit
+
+
+
+
+  The key idea: SQLAlchemy lets Python code work with database data
+                             as objects.
+     Next topic: relationships, joins, migrations with Alembic, and FastAPI dependency injection.
+
+
+
+
+                                                                                                    16
+Prompt Engineering
+    Prompt Engineering— Deﬁnition
+Prompt engineering is the practice of designing the input text (and optional
+parameters) that steer an LLM’s behavior toward a specific goal. It focuses on what
+you provide the model: clear task framing, constraints, desired style, output format,
+and any evaluation cues.
+
+Prompt formula:
+Task + Constraints + Output Format (+ Hints / Examples)
+
+Why it matters:
+
+●    Improves output quality and reliability.
+●    Supports evaluation and safety (e.g., grounding, refusals, format control).
+●    Is inherently iterative—effective prompts usually require testing and refinement.
+                                                              49
+The Prompt (single instruction)
+A prompt contains just enough to perform one task.
+
+ Summarize this article in 3 bullet points, focusing on the
+ causes.
+
+Strengths: fast, minimal tokens.
+Limits: ambiguity, higher variance, no examples, no memory.
+
+
+
+
+                                              50
+Elements of a Prompt
+A prompt = Instructions + (Context) + Input data + Output indicator.
+
+    Instructions                       Example
+    what to do
+                                         Instructions
+                                        Classify  the
+    Context
+                                        text into neutral, negative or positive
+    optional background
+    Input data                           Input data
+    the item to act on                  Text: I think the food was okay.
+    Output indicator                      Output indicator
+    where/how to answer                 Sentiment:
+
+
+                                     Context is optional here — add it when the model
+                                     needs background (notes, a document, prior turns).
+  A practical prompt template
+Use this when reliability matters         Template
+Role: who the model is in this            SYSTEM: You are a helpful TA for an LLM
+interaction                               course.
+                                          TASK: Answer the question using ONLY the
+Task: what success looks like             provided notes.
+                                          CONSTRAINTS:
+Inputs: what data is provided             - If the notes don't contain the answer,
+                                          say: "Not in notes."
+Constraints: policies, scope, citations   - Keep the response ≤ 6 bullets.
+                                          FORMAT: bullets
+Output format: exact schema /
+                                          NOTES:
+headings                                  {context}
+Examples: few-shot for tricky cases       QUESTION:
+                                          {question}
+Prompt anatomy: seven parts
+A checklist for any serious prompt — each part answers one question.
+
+ ELEMENT              QUESTION IT ANSWERS          EXAMPLE
+         Role         What perspective?            “You are a support drafting assistant.”
+
+        Task          What must it produce?        “Draft a reply and an escalation note.”
+
+       Context        What facts/policies apply?   “Use only the ticket and approved help center.”
+
+     Constraints      What must it avoid?          “Don’t promise refunds or invent behavior.”
+
+       Process        How to reason?               “Extract facts, check gaps, draft, self-check.”
+
+   Output format      What structure?              “Summary, reply, sources, confidence,
+                                                   escalation.”
+   Quality checks     How to self-verify?          “Validate against constraints; revise if needed.”
+   Few-shot prompting (teach the pattern)
+Provide 1–3 high-quality examples     Example
+                                      User: Classify sentiment.
+of the desired behavior.              Text: "The update broke my workflow."
+                                      Answer (JSON):
+Examples are most helpful for: edge   {"sentiment":"negative","confidence":0.9}
+
+cases, tone/style, and strict         User: Classify sentiment.
+                                      Text: "It works, nothing special."
+formatting.                           Answer (JSON):
+                                      {"sentiment":"neutral","confidence":0.6}
+Avoid huge examples—use minimal,      User: Classify sentiment.
+representative cases.                 Text: "{text}"
+                                      Answer (JSON):
+If you need strict JSON, consider
+constrained decoding instead.
+  Structured output & constraints
+Specify a schema (JSON) or a rigid     Schema example
+format (headings).                     Return JSON ONLY:
+                                       {
+Prefer machine-checkable outputs for     "answer": string,
+pipelines (agents, RAG).                 "citations": [{"source": string,
+                                       "quote": string}],
+Combine with: temperature=0–0.2 for      "uncertainties": [string]
+stability.                             }
+For strict validity:
+grammar-constrained sampling /
+function calling.
+ LangChain: prompt templates + LangChain
+ Expression Language (LCEL)
+                                       Example
+● Keep prompts version-controlled      from langchain_core.prompts import
+  (templates, not ad-hoc strings).     ChatPromptTemplate
+                                       from langchain_openai import ChatOpenAI
+● Separate: system instructions vs
+                                       llm = ChatOpenAI(model="gpt-4o-mini",
+  user content.                        temperature=0)
+
+● The system message defines the       prompt = ChatPromptTemplate.from_messages([
+                                          ("system", "You are a concise tutor. Output
+  behavior and rules of the AI.        JSON only."),
+● User message defines the actual         ("user", "Explain {topic} in 5 bullets.
+                                       Return JSON with keys: bullets.")
+  task or data supplied by the user    ])
+
+● Use output parsers (JSON) to         chain = prompt | llm
+                                       result = chain.invoke({"topic": "KV cache"})
+  reduce downstream errors.
+                                      The | symbol means: Take the output of the component on
+                                      the left and send it to the component on the right.
+ Context engineering
+What the model sees: retrieval, memory, tools,
+and token budgets
+ Context Engineering — Deﬁnition
+Context Engineering designs everything the model sees at inference
+time, not just the prompt: instructions, examples, retrieved
+documents, tools, memory/state, and control ﬂow.
+
+
+● Prompt engineering = how you ask
+● Context engineering = what you give the model to think with
+  Prompt vs Context Engineering
+Prompt engineering = “How do   Context engineering = “What do
+I ask?”                        I provide?”
+Instructions & constraints     RAG: retrieve the right docs
+Examples (few-shot)            Chunking + embeddings + ranking
+Output format                  Context
+Tone/persona                   compression/summarization
+Decoding params (temp/top_p)   Memory & conversation state
+                               Tool outputs + schemas
+                               Token budget management
+A 5-prompt method to build a grounded kit
+Build the system in stages: define the job, ground it, design the process, add controls, package it.
+
+
+  1    Frame the task: what the AI is supposed to do
+       Purpose, boundaries, required inputs, desired output, and when a human must review.
+
+  2    Add grounded context: what sources the AI is allowed to use
+       Use only approved sources; state freshness & citation; mark missing info; don’t invent.
+
+  3    Design the workflow: turn the task into a process.
+       Map intake → approved use; per step: owner, input, action, output, escalation path.
+
+  4    Define controls & evaluation: How to evaluate the AI is behaving correctly?
+       Privacy rules, human-review triggers, a 1–5 scorecard, a release rule, and test cases.
+
+  5    Assemble the kit: build the actual reusable package
+       Production prompt, intake form, output format, checklists, test set —
+       participant-ready.
+Everything the model sees is “context engineering”
+Prompt engineering is one input; context engineering assembles all of them.
+
+                           Prompt
+                         Engineering                                What goes into context:
+                                                                    • Prompt — instructions &
+                                                    RAG
+                                                                    format
+                                                                    • RAG — retrieved documents
+ Memory
+                         Context                                    • Memory — prefs, past turns
+                       Engineering                                  • State/History — plan,
+                                                                    checklist
+                                                  Structured
+                                                   Outputs
+                                                                    • Structured outputs — schema
+
+                           State /
+                           History
+                                                                    All of it shares one scarce
+                                                                    budget: the context window.
+  Core Components of Context Engineering
+● Prompts (user instructions and system directives)
+● Retrieval (documents from RAG systems)
+● Tool calls (API responses and external data)
+● Memories (past conversations and learned preferences)
+● Few-shot examples (training demonstrations)
+● Structured outputs (format and schema instructions)
+  RAG: Overview & Architecture
+Deﬁnition: combine a parametric model with a
+non-parametric memory (retriever + index) so outputs can
+be grounded in external, up-to-date knowledge.
+Two stages: (1) Indexing (ingest → chunk → embed → store) and
+(2) Retrieval + generation (fetch top-k, then prompt an LLM).
+
+Why it helps: improves speciﬁcity and factuality vs.
+parametric-only models.
+A RAG system: from data to grounded answer
+Indexing (top row) is done once; retrieval + generation (bottom row) runs per query.
+
+
+       Extract from                                                                               Index /
+                                   Chunk                        Embed
+       data sources                                                                              structure
+
+
+
+
+                                Knowledge base (vector index + metadata)
+
+
+
+
+        Query +                   Retrieve                     Rerank /                        Generate +
+        augment                    top-k                        distill                         validate
+
+
+
+ Quality hinges on retrieval: wrong chunks → hallucinations. Reranking and compression usually help more
+ than a bigger prompt; require citations.
+                                                                           https://pub.towardsai.net/the-7-building-blogs-of-a-retrieval-a
+                                                                           ugmented-generation-system-0a96ba82bb08
+Distillation
+Reranking: chooses the best chunks. Which retrieved documents or chunks are
+most relevant to this question?
+
+Context Distillation: What information inside these selected chunks is actually
+needed?
+
+Filter Summarize, Deduplicate Extract facts, Compact context documents →
+compact useful context
+
+Knowledge Distillation
+large teacher model → smaller student model
+Memory & tool outputs are part of “context”
+Memory patterns                  Tool outputs
+
+Short-term: last N turns         Normalize tool results (JSON)
+Long-term: user prefs, profile   Summarize noisy logs
+Summarized conversation state    Store key facts + citations
+Task state (plan, checklist)     Don’t dump raw pages unless
+                                 needed
+RAG (Retrieval‑Augmented Generation) in 3 Steps
+
+ 1. Retrieve top‑k passages for the query
+ 2. Construct a compact context pack (citations, snippets)
+ 3. Generate with grounding, refusing when insufﬁcient evidence
+
+Effect: fewer hallucinations, better factuality; tokens spent on
+relevant info.
+
+
+                                                  67
+ Measuring Impact (Rubric)
+● Accuracy (task‑speciﬁc)
+● Faithfulness (to given evidence)
+● Format compliance (schema, JSON)
+● Efﬁciency (tokens, latency)
+● Robustness (edge cases)
+● Repeatability (variance across runs)
+
+Track before/after when changing prompts or context kits.
+Evaluating prompts & RAG: measures + severity
+Track before/after when you change a prompt or the retrieved context.
+
+ What to measure                                        Failure severity → action
+Task success rate —Did the AI complete the entire       Critical: privacy breach, unsafe action,
+task correctly? cases meeting every must-pass ÷ total   fabricated commitment → stop the pilot
+ Grounded accuracy — supported by the                   High: material wrong claim / bad calc / missed
+ evidence supported claims ÷ all material claims        clause → reject & revise
+ Escalation recall — AI sends risky cases to a
+ human high-risk cases escalated ÷ all high-risk        Medium: incomplete coverage or heavy
+                                                        reviewer edits → track & improve
+ Reviewer effort — How much human work is still
+ required? median review + correction time              Low: style / formatting / clarity → fix in
+                                                        normal iteration
+ Cost per approved output — whether the
+ workflow is economically useful, model + tool
+                                                        Release gate: minimum quality condition, ship
+ cost ÷ approved results
+                                                        only above a set score with no Critical/High
+                                                        failures.
+●   LangChain and LlamaIndex. Both frameworks are designed to handle
+    document ingestion, splitting, indexing, and chaining together steps for
+    seamless RAG workflows
+●   LlamaIndex → handle ingestion, indexing, & retrieval (its sweet spot for RAG).
+●   LangChain → handle orchestration/agents, prompts, and tool use around that
+    retriever.
+
+
+
+
+https://medium.com/@tam.tamanna18/langchain-vs-llamaindex-a-comprehensive-comparison-for-retrieval-augmented-generation-rag-
+0adc119363fe
+●   LangChain
+    ○   Specializes in orchestration and chaining of LLM calls.
+    ○   Provides abstractions for prompts, tools, agents, memory, and
+        workflows.
+    ○   Lets you combine LLMs with other software systems (search engines, APIs,
+        calculators, etc.) into multi-step reasoning chains.
+RAG Quality Levers (retrieval side)
+• Embeddings model: pick for domain/language; better sentence
+  encoders improve top-k recall and margins (dimensionality ≠ quality).
+• Chunking strategy: sentence/recursive for coherence; token for strict
+  budget;
+• semantic for content-aware splits; hierarchies for multi-scale retrieval.
+• Retriever settings: k, metric (cosine/dot/L2), MMR/diversity, and
+  optional
+• rerankers (cross-encoders) for higher precision.
+LangChain: simple RAG with LCEL
+ Minimal pattern
+ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+ from langchain_community.vectorstores import FAISS
+ from langchain_core.prompts import ChatPromptTemplate
+ from langchain_core.runnables import RunnablePassthrough
+
+ # 1) Build/store the index (offline)
+ db = FAISS.from_texts(docs, embedding=OpenAIEmbeddings())
+ retriever = db.as_retriever(search_kwargs={"k": 6})
+
+ # 2) Compose a RAG chain (online)
+ prompt = ChatPromptTemplate.from_messages([
+    ("system", "Answer using ONLY the context. Cite sources as [#]."),
+    ("user", "Context:\n{context}\n\nQuestion: {question}")
+ ])
+ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+ rag = {"context": retriever, "question": RunnablePassthrough()} | prompt | llm
+ rag.invoke("What is top_p?")
+LlamaIndex: query engine with citations
+ Typical pattern
+ from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+ from llama_index.core.node_parser import SentenceSplitter
+
+ docs = SimpleDirectoryReader("data/notes").load_data()
+ nodes = SentenceSplitter(chunk_size=512,
+ chunk_overlap=80).get_nodes_from_documents(docs)
+
+ index = VectorStoreIndex(nodes)
+ query_engine = index.as_query_engine(similarity_top_k=6)
+
+ response = query_engine.query("Explain temperature vs top_p.")
+ print(response.response)
+ print(response.get_formatted_sources())
+   From a prompt to a tool-using agent
+       the model proposes a tool call; your code runs it and feeds the result back.
+
+                                                                     One safe entry point
+           1    User question
+                                                                     def execute_tool(name, inputs):
+                                                                         validate(inputs, schema)       # reject early
+
+           2                                                             data = run(name, inputs)
+                Model proposes a tool call                               return json({"ok": True,
+                                                                                        "data": data,
+
+loop                                                                                    "error": None})
+           3    execute_tool: validate + run
+(boun
+ ded)
+                                                                     Why it stays safe
+           4    Append result {ok, data, error}                      • Bound the loop: max steps + a stop reason
+                                                                     • Every call returns the same {ok,data,error}
+           5    Model returns final answer                           • A rejection is data the model can retry on: The
+                                                                     failure itself is useful information that helps the
+                                                                     agent recover.
+ User: "Find the cheapest flight and tell me the weather at the destination."
+Questions?
+

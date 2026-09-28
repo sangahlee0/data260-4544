@@ -1,0 +1,41 @@
+- id: q1
+  type: one_chunk
+  question: "What is a session and what is its purpose?"
+  expected_answer: "A session is a logical conversation between a web server and a browser that spans multiple requests and responses. Its purpose is to maintain stateful information about a user or client across multiple interactions."
+  expected_sources:
+    - "source3.txt"
+
+- id: q2
+  type: two_chunks
+  question: "How does FastAPI session management work, including where session data is stored and how SessionMiddleware handles the session cookie?"
+  expected_answer: "FastAPI can use cookie-based or server-side sessions. In a server-side session, session data can be stored in Redis or a database while only a session ID is kept in the browser cookie. SessionMiddleware provides signed-cookie session support."
+  expected_sources:
+    - "source3.txt"
+
+- id: q3
+  type: similar_across_documents
+  question: "What is the difference between prompt engineering and context engineering?"
+  expected_answer: "Prompt engineering focuses on how the model is asked, including instructions, constraints, examples, and output format. Context engineering focuses on what information is provided to the model, such as retrieved documents, chunking, ranking, memory, tools, and token budgets."
+  expected_sources:
+    - "source4.txt"
+    - "source5.txt"
+
+- id: q4
+  type: ambiguous
+  question: "How is state maintained?"
+  expected_answer: "State can refer to session state, which maintains user information across requests, or React application/component state, which maintains data used by UI components."
+  expected_sources:
+    - "source3.txt"
+    - "source5.txt"
+
+- id: q5
+  type: not_in_documents
+  question: "What is the default network port used by PostgreSQL?"
+  expected_answer: "I cannot answer this question from the provided documents"
+  expected_sources: []
+
+- id: q6
+  type: unrelated
+  question: "How can one survive the desert?"
+  expected_answer: "I cannot answer this question from the provided documents"
+  expected_sources: []

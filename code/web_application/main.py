@@ -85,6 +85,64 @@ def get_vulnerabilities(response: Response, search: str | None = None, page_size
     response.headers["X-Query-Count"] = str(sql_query_count)
     return results
 
+
+# Fix n+1 issue for part 5 of the question
+@app.get("/api/vulnerabilities-fixed")
+def get_vulnerabilities_fixed(response: Response, page_size: int = 10, db: Session = Depends(get_db), _session=Depends(require_session)):
+    global sql_query_count
+    sql_query_count = 0
+
+    # Get vulnerabilities and their descriptions using a JOIN
+    # First get exactly the requested number of vulnerability IDs
+    vulnerability_ids = [row.id
+        for row in (db.query(models.Vulnerability.id).order_by(models.Vulnerability.id.asc())
+            .limit(page_size).all()
+        )
+    ]
+
+    # JOIN vulnerabilities with their descriptions
+    rows = (
+        db.query(
+            models.Vulnerability,
+            models.VulnerabilityDescription
+        )
+        .outerjoin(
+            models.VulnerabilityDescription,
+            models.Vulnerability.id
+            == models.VulnerabilityDescription.vulnerability_id
+        )
+        .filter(
+            models.Vulnerability.id.in_(vulnerability_ids)
+        )
+        .order_by(models.Vulnerability.id.asc())
+        .all()
+    )
+
+    results = {}
+
+    for vulnerability, description in rows:
+        # Add vulnerability once
+        if vulnerability.id not in results:
+            results[vulnerability.id] = {
+                "id": vulnerability.id,
+                "package_name": vulnerability.package_name,
+                "vulnerability_name": vulnerability.vulnerability_name,
+                "descriptions": []
+            }
+
+        # Add description if one exists
+        if description:
+            results[vulnerability.id]["descriptions"].append({
+                "id": description.id,
+                "description": description.description
+            })
+
+    response.headers["X-Query-Count"] = str(sql_query_count)
+
+    return list(results.values())
+
+
+
 '''@app.get("/api/vulnerabilities", response_model=list[schema.VulnerabilityOut])
 # Search can be a string or None; if omitted, it defaults to None
 def get_vulnerabilities(response: Response, search: str | None = None, db: Session = Depends(get_db), _session=Depends(require_session)):
@@ -121,7 +179,6 @@ def update_record(vulnerability_id: int, payload: schema.VulnerabilityUpdate, db
     
     if not vulnerability:
         raise HTTPException(status_code=404, detail="Vulnerability not found")
-    
 
     return vulnerability
 
