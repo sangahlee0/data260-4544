@@ -15,20 +15,27 @@ Follow these steps to reproduce the experiment and verification script for HW04:
    source venv/bin/activate
    ```
 
-4. **Run the Self-Check Verification Script:**
+
+4. **Start the FastAPI application:**
+   ```bash
+   cd code/web_application 
+   python3 main.py
+   ```
+5. **Start React Frontend**
+   ```bash
+   cd code/web_application/frontend
+   npm install
+   npm run dev
+   ```
+6. **Run the Self-Check Verification Script:**
    ```bash
    make verify-hw04
    ```
 
-5. **Start the FastAPI application:**
-   ```bash
-   cd code/web_application python3 main.py
-   ```
-
-6. **Run the RAG experiment and log output:**
+7. **Run the RAG experiment and log output:**
    ```bash
    cd code
-   { date -u; python3 rag.py; date -u; } 2>&1 | tee -a ../../reports/hw04/RUN_LOG.txt
+   (echo "========================================"; echo "RUN: $(date '+%Y-%m-%d %H:%M:%S')"; PYTHONPATH=. python3 code/rag.py) 2>&1 | tee -a reports/hw04/RUN_LOG.txt
    ```
 
    
