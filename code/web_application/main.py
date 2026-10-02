@@ -65,7 +65,7 @@ def get_vulnerabilities(response: Response, search: str | None = None, page_size
 
     if search:
         search = search.lower()
-        vulnerabilities = [ v for v in vulnerabilities if search in v.package_name.lower() or search in v.vulnerability_name.lower()]
+        vulnerabilities = [ v for v in vulnerabilities if search in v.vulnerability_name.lower() or search in crud.get_package(db, v.package_id).name.lower()]
 
     # Limit results based on page size (10, 50, 200)
     vulnerabilities = vulnerabilities[:page_size]
@@ -78,8 +78,11 @@ def get_vulnerabilities(response: Response, search: str | None = None, page_size
 
         results.append({
             "id": vulnerability.id,
-            "package_name": vulnerability.package_name,
+            "package_id": vulnerability.package_id,
+            "package_name": crud.get_package(db, vulnerability.package_id).name,
             "vulnerability_name": vulnerability.vulnerability_name,
+            "vulnerability_code": vulnerability.vulnerability_code,
+            "count": vulnerability.count,
             "descriptions": [{"id": description.id, "description": description.description} for description in descriptions]
             })
     response.headers["X-Query-Count"] = str(sql_query_count)
@@ -104,7 +107,12 @@ def get_vulnerabilities_fixed(response: Response, page_size: int = 10, db: Sessi
     rows = (
         db.query(
             models.Vulnerability,
+            models.Package,
             models.VulnerabilityDescription
+        )
+        .join(
+            models.Package,
+            models.Vulnerability.package_id == models.Package.id
         )
         .outerjoin(
             models.VulnerabilityDescription,
@@ -120,13 +128,16 @@ def get_vulnerabilities_fixed(response: Response, page_size: int = 10, db: Sessi
 
     results = {}
 
-    for vulnerability, description in rows:
+    for vulnerability, package, description in rows:
         # Add vulnerability once
         if vulnerability.id not in results:
             results[vulnerability.id] = {
                 "id": vulnerability.id,
-                "package_name": vulnerability.package_name,
+                "package_id": vulnerability.package_id,
+                "package_name": package.name,
                 "vulnerability_name": vulnerability.vulnerability_name,
+                "vulnerability_code": vulnerability.vulnerability_code,
+                "count": vulnerability.count,
                 "descriptions": []
             }
 
@@ -162,21 +173,31 @@ def get_vulnerabilities(response: Response, search: str | None = None, db: Sessi
 
 @app.post("/api/vulnerabilities", response_model=schema.VulnerabilityOut, status_code=201)
 def create_vulnerability(vulnerability_data: schema.VulnerabilityCreate, db: Session = Depends(get_db), _session=Depends(require_session)):
-    if not vulnerability_data.package_name.strip():
-        raise HTTPException(status_code=400, detail="Package name is required")
-    
-    # Create vulnerabiity in MySQL
+    package = crud.get_package(db, vulnerability_data.package_id)
+    if not package:
+        raise HTTPException(status_code=404, detail="Invalid package_id: Package does not exist")
+
+    # Check if vulnerability_code is unique
+    existing_vulnerability = db.query(models.Vulnerability).filter(models.Vulnerability.vulnerability_code == vulnerability_data.vulnerability_code).first()
+    if existing_vulnerability:
+        raise HTTPException(status_code=409, detail="Vulnerability with this vulnerability_code already exists")
+    # Create vulnerability in MySQL
     return crud.create_vulnerability(db, vulnerability_data)
 
 # Update vulnerability using the ID
 @app.put("/api/vulnerabilities/{vulnerability_id}", response_model=schema.VulnerabilityOut)
 def update_record(vulnerability_id: int, payload: schema.VulnerabilityUpdate, db: Session = Depends(get_db), _session=Depends(require_session)):
     """Update an existing vulnerability - Accepts JSON with vulnerability details"""
-    if not payload.package_name.strip():
-        raise HTTPException(status_code=400, detail="Package name is required")
+    # Check if the package exists before updating the vulnerability
+    package = crud.get_package(db, payload.package_id)
+    if not package:
+        raise HTTPException(status_code=404, detail="Invalid package_id: Package does not exist")
+
+    existing_vulnerability = db.query(models.Vulnerability).filter(models.Vulnerability.vulnerability_code == payload.vulnerability_code, models.Vulnerability.id != vulnerability_id).first()
+    if existing_vulnerability:
+        raise HTTPException(status_code=409, detail="Vulnerability with this vulnerability_code already exists")
     
     vulnerability = crud.update_vulnerability(db, vulnerability_id, payload)
-    
     if not vulnerability:
         raise HTTPException(status_code=404, detail="Vulnerability not found")
 
@@ -233,6 +254,68 @@ def track_query_counts(conn, cursor, statement, parameters, context, executemany
 #     same_site="lax",
 #     max_age=3600
 # )
+
+
+# Packages api
+@app.get("/api/packages", response_model=list[schema.PackageOut])
+def get_packages(skip: int = 0, limit: int = 15, db: Session = Depends(get_db), _session=Depends(require_session)):
+    """Get all packages - Returns JSON array of package objects"""
+    return crud.get_packages(db, skip, limit)
+
+@app.post("/api/packages", response_model=schema.PackageOut, status_code=201)
+def create_package(package_data: schema.PackageCreate, db: Session = Depends(get_db), _session=Depends(require_session)):
+    """Create a new package - Accepts JSON with package details"""
+    # Check if the package already exists
+    existing_package = db.query(models.Package).filter(models.Package.package_code == package_data.package_code).first()
+    if existing_package:
+        raise HTTPException(status_code=409, detail="Package with this package_code already exists")
+    return crud.create_package(db, package_data)
+
+@app.get("/api/packages/{package_id}", response_model=schema.PackageOut)
+def get_package_by_id(package_id: int, db: Session = Depends(get_db), _session=Depends(require_session)):
+    """Get a package by ID - Returns JSON object of the package"""
+    package = crud.get_package(db, package_id)
+    if not package:
+        raise HTTPException(
+            status_code=404,
+            detail="Package not found"
+        )
+    return package
+
+@app.put("/api/packages/{package_id}", response_model=schema.PackageOut)
+def update_package(package_id: int, payload: schema.PackageUpdate, db: Session = Depends(get_db), _session=Depends(require_session)):
+    """Update an existing package - Accepts JSON with package details"""
+    # Check if a package uses the package_code
+    existing_package = db.query(models.Package).filter(models.Package.package_code == payload.package_code, models.Package.id != package_id).first()
+    if existing_package:
+        raise HTTPException(status_code=409, detail="Package with this package_code already exists")
+
+    package = crud.update_package(db, package_id, payload)
+    if not package:
+        raise HTTPException(status_code=404, detail="Package not found")
+    return package
+
+@app.delete("/api/packages/{package_id}", response_model=schema.PackageOut)
+def delete_package(package_id: int, db: Session = Depends(get_db), _session=Depends(require_session)):
+    """Delete a package by ID"""
+    package = crud.delete_package(db, package_id)
+    if package is None:
+        raise HTTPException(status_code=404, detail="Package not found")
+    if package is False:
+        raise HTTPException(status_code=409, detail="Package cannot be deleted because it has associated vulnerabilities")
+    return package
+
+
+# Relationship endpoint
+@app.get("/api/packages/{package_id}/vulnerabilities", response_model=list[schema.VulnerabilityOut])
+def get_vulnerabilities_by_package(package_id: int, db: Session = Depends(get_db), _session=Depends(require_session)):
+    """Get all vulnerabilities for a specific package - Returns JSON array of vulnerability objects"""
+    package = crud.get_package(db, package_id)
+    if not package:
+        raise HTTPException(status_code=404, detail="Package not found")
+    
+    vulnerabilities = crud.get_vulnerabilities_by_package(db, package_id)
+    return vulnerabilities
 
 # Register routes
 app.include_router(api_auth_router)

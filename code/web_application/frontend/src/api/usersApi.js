@@ -31,7 +31,6 @@ export async function deleteVulnerability(id) {
 }
 
 export async function login(email, password) {
-  // login uses query param for demo simplicity
   const res = await api.post(`/auth/login`, {email, password});
   return res.data;
 }

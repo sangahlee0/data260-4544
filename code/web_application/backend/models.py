@@ -7,8 +7,16 @@ class Vulnerability(Base):
     __tablename__= "vulnerabilities"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    package_name = Column(String(255), nullable=False)
     vulnerability_name = Column(String(255), nullable=False)
+
+    # numeric field with sensible default
+    count = Column(Integer, nullable=False, default=0)
+    # foreign key related to entity (package_name is updated to package_id)
+    package_id = Column(Integer, ForeignKey("packages.id", ondelete="CASCADE"), nullable=False)
+    # timestamps
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
 
 class User(Base):
     __tablename__ = "users"
@@ -35,3 +43,21 @@ class VulnerabilityDescription(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     vulnerability_id = Column(Integer, ForeignKey("vulnerabilities.id", ondelete="CASCADE"), nullable=False)
     description = Column(String(255), nullable=False)
+    # unique field
+    vulnerability_code = Column(String(100), nullable=False, unique=True)
+
+# Create second table for entity type
+class Package(Base):
+    __tablename__ = "packages"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    # primary text field
+    name = Column(String(255), nullable=False, unique=True)
+    # secondary text field
+    version = Column(String(50), nullable=False)
+    # unique field
+    package_code = Column(String(100), nullable=False, unique=True)
+
+    # timestamp fields
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
