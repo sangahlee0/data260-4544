@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 
 
 def create_vulnerability(db: Session, payload: schema.VulnerabilityCreate):
-    vulnerability = models.Vulnerability(package_id=payload.package_id, vulnerability_name=payload.vulnerability_name, vulnerability_code=payload.vulnerability_code, count=payload.count)
+    vulnerability = models.Vulnerability(package_id=payload.package_id, vulnerability_name=payload.vulnerability_name, vulnerability_code=payload.vulnerability_code, urgency_score=payload.urgency_score)
     db.add(vulnerability)
     db.commit()
     db.refresh(vulnerability)
@@ -23,7 +23,7 @@ def update_vulnerability(db: Session, vulnerability_id: int, payload: schema.Vul
     vulnerability.package_id = payload.package_id
     vulnerability.vulnerability_name = payload.vulnerability_name
     vulnerability.vulnerability_code = payload.vulnerability_code
-    vulnerability.count = payload.count
+    vulnerability.urgency_score = payload.urgency_score
     db.commit()
     db.refresh(vulnerability)
     return vulnerability

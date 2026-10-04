@@ -11,7 +11,7 @@ class Vulnerability(Base):
 
     vulnerability_code = Column(String(100), nullable=False, unique=True)  # unique field
     # numeric field with sensible default
-    count = Column(Integer, nullable=False, default=0)
+    urgency_score = Column(Integer, nullable=False, default=1)
     # foreign key related to entity (package_name is updated to package_id)
     package_id = Column(Integer, ForeignKey("packages.id"), nullable=False)
     # timestamps

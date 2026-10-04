@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createVulnerability } from "../features/vulnerabilities/vulnerabilitiesSlice";
 import { api } from "../api/axios";
+import {useNavigate } from "react-router-dom";
 
 export default function CreateRecord() {
     const dispatch = useDispatch();
     const { error } = useSelector((s) => s.vulnerabilities);
+    const navigate = useNavigate();
 
     const [form, setForm] = useState({
         package_name: "",
         vulnerability_name: "",
-        vulnerability_code: ""
+        vulnerability_code: "",
     });
 
     const onChange = (e) => {
@@ -25,24 +27,29 @@ export default function CreateRecord() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await api.get("/packages");
+        const res = await api.get("/api/packages");
 
-        const packageMatch = res.data.find(
+        let packageMatch = res.data.find(
             (p) => p.name.toLowerCase() === form.package_name.toLowerCase()
         );
 
         if (!packageMatch) {
-            alert("Package not found");
-            return;
+            const newPackageRes = await api.post("/api/packages", {
+                name: form.package_name,
+                version: "unknown",
+                package_code: form.package_name.toLowerCase().replace(/\s+/g, "-")
+            });
+            packageMatch = newPackageRes.data;
         }
 
         await dispatch(
             createVulnerability({
                 package_id: packageMatch.id,
                 vulnerability_name: form.vulnerability_name,
-                vulnerability_code: form.vulnerability_code
+                vulnerability_code: form.vulnerability_code,
             })
-        );
+        ).unwrap();
+        navigate("/");
     };
 
     return (

@@ -4,20 +4,20 @@ class VulnerabilityCreate(BaseModel):
     package_id: int
     vulnerability_name: str = Field(min_length=1)
     vulnerability_code: str = Field(min_length=1)
-    count: int = Field(default=0, ge=0)  # Ensure count is non-negative
+    urgency_score: int = Field(default=1, ge=1)  # Ensure urgency score is a positive integer
 
 class VulnerabilityUpdate(BaseModel):
     package_id: int
     vulnerability_name: str = Field(min_length=1)
     vulnerability_code: str = Field(min_length=1)
-    count: int = Field(default=0, ge=0)  # Ensure count is non-negative
+    urgency_score: int = Field(default=1, ge=1)  # Ensure urgency score is a positive integer
 
 class VulnerabilityOut(BaseModel):
     id: int
     package_id: int
     vulnerability_name: str
     vulnerability_code: str
-    count: int
+    urgency_score: int
 
     class Config:
         from_attributes = True

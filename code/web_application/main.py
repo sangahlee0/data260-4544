@@ -82,7 +82,7 @@ def get_vulnerabilities(response: Response, search: str | None = None, page_size
             "package_name": crud.get_package(db, vulnerability.package_id).name,
             "vulnerability_name": vulnerability.vulnerability_name,
             "vulnerability_code": vulnerability.vulnerability_code,
-            "count": vulnerability.count,
+            "urgency_score": vulnerability.urgency_score,
             "descriptions": [{"id": description.id, "description": description.description} for description in descriptions]
             })
     response.headers["X-Query-Count"] = str(sql_query_count)
@@ -137,7 +137,7 @@ def get_vulnerabilities_fixed(response: Response, page_size: int = 10, db: Sessi
                 "package_name": package.name,
                 "vulnerability_name": vulnerability.vulnerability_name,
                 "vulnerability_code": vulnerability.vulnerability_code,
-                "count": vulnerability.count,
+                "urgency_score": vulnerability.urgency_score,
                 "descriptions": []
             }
 

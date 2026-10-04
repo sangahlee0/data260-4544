@@ -70,13 +70,12 @@ export default function Home({ auth }) {
             <table className="table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Package</th>
-                  <th>Vulnerability</th>
-                  <th>Email</th>
-                  <th>Severity</th>
-                  <th>Description</th>
-                  <th>Actions</th>
+                    <th>ID</th>
+                    <th>Package</th>
+                    <th>Vulnerability</th>
+                    <th>Code</th>
+                    <th>Urgency</th>
+                    <th>Actions</th>
                 </tr>
               </thead>
 
@@ -86,9 +85,8 @@ export default function Home({ auth }) {
                     <td>{u.id}</td>
                     <td>{u.package_name}</td>
                     <td>{u.vulnerability_name}</td>
-                    <td>{u.reporter_email}</td>
-                    <td>{u.severity}</td>
-                    <td>{u.issue_description}</td>
+                    <td>{u.vulnerability_code}</td>
+                    <td>{u.urgency_score}</td>
                     <td className="actions">
                       <Link className="btn" to={`/update/${u.id}`}>
                         Update
