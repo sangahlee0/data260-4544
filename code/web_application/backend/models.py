@@ -9,10 +9,11 @@ class Vulnerability(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     vulnerability_name = Column(String(255), nullable=False)
 
+    vulnerability_code = Column(String(100), nullable=False, unique=True)  # unique field
     # numeric field with sensible default
     count = Column(Integer, nullable=False, default=0)
     # foreign key related to entity (package_name is updated to package_id)
-    package_id = Column(Integer, ForeignKey("packages.id", ondelete="CASCADE"), nullable=False)
+    package_id = Column(Integer, ForeignKey("packages.id"), nullable=False)
     # timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
@@ -43,8 +44,6 @@ class VulnerabilityDescription(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     vulnerability_id = Column(Integer, ForeignKey("vulnerabilities.id", ondelete="CASCADE"), nullable=False)
     description = Column(String(255), nullable=False)
-    # unique field
-    vulnerability_code = Column(String(100), nullable=False, unique=True)
 
 # Create second table for entity type
 class Package(Base):

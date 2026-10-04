@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVulnerabilities, deleteVulnerability } from "../features/vulnerabilities/vulnerabilitiesSlice";
+import { api } from "../api/axios";
 
-export default function Home({ vulnerabilities, loading, auth }) {
+export default function Home({ auth }) {
+  const dispatch = useDispatch();
+  const { items, loading, error } = useSelector((s) => s.vulnerabilities);
+
+  useEffect(() => {
+    if (auth.loggedIn) {
+      dispatch(fetchVulnerabilities());
+    }
+  }, [auth.loggedIn, dispatch]);
+
+  const vulnerabilities = items;
+
+
   // If not logged in, show a clear message (since backend is protected)
   if (!auth.loggedIn) {
     return (
@@ -17,7 +32,7 @@ export default function Home({ vulnerabilities, loading, auth }) {
 
         <div className="card-body">
           <div className="notice">
-            🔒 You are not logged in. Please login.
+            You are not logged in. Please login.
           </div>
         </div>
       </div>
@@ -41,6 +56,11 @@ export default function Home({ vulnerabilities, loading, auth }) {
       </div>
 
       <div className="card-body">
+        {error && (
+          <div className="notice">
+            {String(error)}
+          </div>
+        )}
         {loading ? (
           <div className="notice">Loading vulnerabilities...</div>
         ) : vulnerabilities.length === 0 ? (
@@ -73,9 +93,12 @@ export default function Home({ vulnerabilities, loading, auth }) {
                       <Link className="btn" to={`/update/${u.id}`}>
                         Update
                       </Link>
-                      <Link className="btn danger" to={`/delete/${u.id}`}>
+                      <button
+                        className="btn danger"
+                        onClick={() => dispatch(deleteVulnerability(u.id))}
+                      >
                         Delete
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))}
