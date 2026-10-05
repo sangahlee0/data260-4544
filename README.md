@@ -138,16 +138,16 @@ data260-4544/
 │   │   ├── reproducible_run_instructions
 │   │   └── verification.json
 │   ├── hw04/
-│       ├── AI_USE.md
-│       ├── METRICS.md
-│       ├── RUN_LOG.txt
-│       ├── questions.yaml
-│       ├── raw/
-│       │   ├── benchmark_raw.csv
-│       │   └── rag_evaluation.json
-│       ├── Lee_HW4.pdf
-│       ├── reproducible_run_instructions
-│       └── verification.json
+│   │   ├── AI_USE.md
+│   │   ├── METRICS.md
+│   │   ├── RUN_LOG.txt
+│   │   ├── questions.yaml
+│   │   ├── raw/
+│   │   │   ├── benchmark_raw.csv
+│   │   │   └── rag_evaluation.json
+│   │   ├── Lee_HW4.pdf
+│   │   ├── reproducible_run_instructions
+│   │   └── verification.json
 │   └── hw05/
 │       ├── AI_USE.md
 │       ├── METRICS.md
