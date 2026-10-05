@@ -31,6 +31,7 @@ data260-4544/
 │   │   └── summarize_results.py
 │   ├── agentgraph_demo.py
 │   ├── agents_demo.py
+│   ├── domain_agent.py
 │   ├── hw1_client.py
 │   ├── hw2experiment_run.py
 │   ├── hw4_benchmark.py
@@ -41,12 +42,15 @@ data260-4544/
 │   │   └── hw01/
 │   │       └── verification.json
 │   ├── router.py
+│   ├── simulate_failures_mcp.py
 │   ├── state.py
+│   ├── test_execute_tool.py
 │   ├── validateplanner.py
 │   ├── verify-hw01.py
 │   ├── verify-hw02.py
 │   ├── verify-hw03.py
 │   ├── verify-hw04.py
+│   ├── verify-hw05.py
 │   ├── workflow.py
 │   └── web_application/
 │       ├── index.html
@@ -74,15 +78,23 @@ data260-4544/
 │           ├── package-lock.json
 │           ├── vite.config.js
 │           └── src/
-│               ├── api/usersApi.js
+│               ├── api/
+│               │   ├── axios.js
+│               │   └── usersApi.js
 │               ├── app.jsx
-│               ├── components/Login.jsx
+│               ├── components/
+│               │   └── Login.jsx
+│               ├── features/
+│               │   └── vulnerabilities/
+│               │       └── vulnerabilitiesSlice.js
 │               ├── main.jsx
 │               ├── pages/
 │               │   ├── createRecord.jsx
 │               │   ├── deleteRecord.jsx
 │               │   ├── Home.jsx
 │               │   └── updateRecord.jsx
+│               ├── store/
+│               │   └── store.js
 │               └── styles.css
 ├── corpus/
 │   └── hw04/
@@ -125,7 +137,7 @@ data260-4544/
 │   │   ├── Lee_HW3.pdf
 │   │   ├── reproducible_run_instructions
 │   │   └── verification.json
-│   └── hw04/
+│   ├── hw04/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
@@ -134,6 +146,17 @@ data260-4544/
 │       │   ├── benchmark_raw.csv
 │       │   └── rag_evaluation.json
 │       ├── Lee_HW4.pdf
+│       ├── reproducible_run_instructions
+│       └── verification.json
+│   └── hw05/
+│       ├── AI_USE.md
+│       ├── METRICS.md
+│       ├── REFLECTION.md
+│       ├── RUN_LOG.txt
+│       ├── raw/
+│       │   ├── agent_runs.jsonl
+│       │   ├── inspector-protocol-*.json
+│       │   └── retry_results.csv
 │       ├── reproducible_run_instructions
 │       └── verification.json
 ├── src/
