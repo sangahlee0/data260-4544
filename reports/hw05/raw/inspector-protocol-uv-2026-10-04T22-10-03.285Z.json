@@ -1,0 +1,551 @@
+[
+  {
+    "id": "63c31757-c59b-4163-b733-837305b2a885",
+    "timestamp": "2026-10-04T21:55:26.985Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "sampling": {},
+          "elicitation": {
+            "form": {},
+            "url": {}
+          },
+          "roots": {
+            "listChanged": true
+          },
+          "tasks": {
+            "list": {},
+            "cancel": {},
+            "requests": {
+              "sampling": {
+                "createMessage": {}
+              },
+              "elicitation": {
+                "create": {}
+              }
+            }
+          },
+          "extensions": {
+            "io.modelcontextprotocol/tasks": {},
+            "io.modelcontextprotocol/ui": {
+              "mimeTypes": [
+                "text/html;profile=mcp-app"
+              ],
+              "elicitation": {}
+            },
+            "io.modelcontextprotocol/skills": {}
+          }
+        },
+        "clientInfo": {
+          "name": "mcp-inspector",
+          "version": "2.9.0"
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 0
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 0,
+      "result": {
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "experimental": {},
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "serverInfo": {
+          "name": "vulnerabilities",
+          "version": "1.30.0"
+        }
+      }
+    },
+    "duration": 426
+  },
+  {
+    "id": "313b91f7-95da-494c-81b0-6b480749f08e",
+    "timestamp": "2026-10-04T21:55:27.421Z",
+    "direction": "notification",
+    "origin": "client",
+    "message": {
+      "jsonrpc": "2.0",
+      "method": "notifications/initialized"
+    }
+  },
+  {
+    "id": "ed215de6-56e5-4028-9a03-4f17b888ac3c",
+    "timestamp": "2026-10-04T21:55:27.438Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "resources/list",
+      "jsonrpc": "2.0",
+      "id": 1,
+      "params": {
+        "_meta": {
+          "progressToken": 1
+        }
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "resources": []
+      }
+    },
+    "duration": 79
+  },
+  {
+    "id": "9bb047aa-7d3b-4060-8df9-653d2702c3ec",
+    "timestamp": "2026-10-04T21:55:27.438Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/list",
+      "jsonrpc": "2.0",
+      "id": 2,
+      "params": {
+        "_meta": {
+          "progressToken": 2
+        }
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "result": {
+        "tools": [
+          {
+            "name": "search_vulnerabilities_by_name",
+            "description": "\n    Input:\n        query (str): The search query for vulnerability names.\n        limit (int): The maximum number of results to return.\n    ",
+            "inputSchema": {
+              "properties": {
+                "query": {
+                  "title": "Query",
+                  "type": "string"
+                },
+                "limit": {
+                  "default": 5,
+                  "title": "Limit",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "query"
+              ],
+              "title": "search_vulnerabilities_by_nameArguments",
+              "type": "object"
+            }
+          },
+          {
+            "name": "search_vulnerabilities_by_id",
+            "description": "\n    Input:\n        vulnerability_id (int): The ID of the vulnerability to search for.\n    ",
+            "inputSchema": {
+              "properties": {
+                "vulnerability_id": {
+                  "title": "Vulnerability Id",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "vulnerability_id"
+              ],
+              "title": "search_vulnerabilities_by_idArguments",
+              "type": "object"
+            }
+          },
+          {
+            "name": "count_by_package",
+            "description": "\n    Count the number of vulnerabilities associated with a specific package.\n\n    Input:\n        package_name (str): The name of the package to search for.\n    ",
+            "inputSchema": {
+              "properties": {
+                "package_name": {
+                  "title": "Package Name",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "package_name"
+              ],
+              "title": "count_by_packageArguments",
+              "type": "object"
+            }
+          }
+        ]
+      }
+    },
+    "duration": 107
+  },
+  {
+    "id": "65366895-798b-46b2-8049-0b98ba3b44db",
+    "timestamp": "2026-10-04T21:55:27.439Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "prompts/list",
+      "jsonrpc": "2.0",
+      "id": 3,
+      "params": {
+        "_meta": {
+          "progressToken": 3
+        }
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "result": {
+        "prompts": []
+      }
+    },
+    "duration": 117
+  },
+  {
+    "id": "13d9b67e-464b-4ac1-97c9-ac7cbc7534af",
+    "timestamp": "2026-10-04T21:55:27.439Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "resources/templates/list",
+      "jsonrpc": "2.0",
+      "id": 4,
+      "params": {
+        "_meta": {
+          "progressToken": 4
+        }
+      }
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "result": {
+        "resourceTemplates": []
+      }
+    },
+    "duration": 127
+  },
+  {
+    "id": "1a9cf46c-8a21-4594-816a-34906a2482ab",
+    "timestamp": "2026-10-04T22:01:22.924Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "search_vulnerabilities_by_name",
+        "arguments": {
+          "limit": 5,
+          "query": "Injection"
+        },
+        "_meta": {
+          "progressToken": 5
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 5
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": true,\n  \"data\": [\n    {\n      \"id\": 10,\n      \"vulnerability_name\": \"SQL Injection Vulnerability\",\n      \"vulnerability_code\": \"VULN-DJA-001\",\n      \"urgency_score\": 5,\n      \"package_id\": 11\n    }\n  ],\n  \"error\": null\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 91
+  },
+  {
+    "id": "516deb8f-7456-400b-99bc-3d184e99e370",
+    "timestamp": "2026-10-04T22:01:56.853Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "search_vulnerabilities_by_name",
+        "arguments": {
+          "limit": 5,
+          "query": "zzz"
+        },
+        "_meta": {
+          "progressToken": 6
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 6
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 6,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": false,\n  \"data\": null,\n  \"error\": \"No vulnerabilities found matching 'zzz'\"\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 44
+  },
+  {
+    "id": "6e392699-13d9-4404-9b50-dda95e494838",
+    "timestamp": "2026-10-04T22:03:04.954Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "search_vulnerabilities_by_id",
+        "arguments": {
+          "vulnerability_id": 10
+        },
+        "_meta": {
+          "progressToken": 7
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 7
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 7,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": true,\n  \"data\": {\n    \"id\": 10,\n    \"vulnerability_name\": \"SQL Injection Vulnerability\",\n    \"vulnerability_code\": \"VULN-DJA-001\",\n    \"urgency_score\": 5,\n    \"package_id\": 11\n  },\n  \"error\": null\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 59
+  },
+  {
+    "id": "4da3b171-1967-4b05-963f-ad942b6f96f6",
+    "timestamp": "2026-10-04T22:03:23.869Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "search_vulnerabilities_by_id",
+        "arguments": {
+          "vulnerability_id": 999
+        },
+        "_meta": {
+          "progressToken": 8
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 8
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 8,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": false,\n  \"data\": null,\n  \"error\": \"No vulnerability found with ID 999\"\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 34
+  },
+  {
+    "id": "38e6cab0-2f14-4024-a14a-4686c7722af0",
+    "timestamp": "2026-10-04T22:04:07.086Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "count_by_package",
+        "arguments": {
+          "package_name": "requests"
+        },
+        "_meta": {
+          "progressToken": 9
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 9
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 9,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": true,\n  \"data\": 2,\n  \"error\": null\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 46
+  },
+  {
+    "id": "2e9e891f-777f-40fa-9d0d-cb052b6fc13c",
+    "timestamp": "2026-10-04T22:04:24.869Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "count_by_package",
+        "arguments": {
+          "package_name": "jelly"
+        },
+        "_meta": {
+          "progressToken": 10
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 10
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 10,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": false,\n  \"data\": null,\n  \"error\": \"No package found with name 'jelly'\"\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 41
+  },
+  {
+    "id": "b994a411-9c05-4aca-a06d-78ce82b6e0c6",
+    "timestamp": "2026-10-04T22:09:54.336Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "search_vulnerabilities_by_name",
+        "arguments": {
+          "limit": 5,
+          "query": "zzz"
+        },
+        "_meta": {
+          "progressToken": 11
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 11
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 11,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": false,\n  \"data\": null,\n  \"error\": \"No vulnerabilities found matching 'zzz'\"\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 49
+  },
+  {
+    "id": "5991a924-ed38-48c1-a1a8-ae8cb8daa61a",
+    "timestamp": "2026-10-04T22:09:57.969Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "search_vulnerabilities_by_name",
+        "arguments": {
+          "limit": 5,
+          "query": "zzz"
+        },
+        "_meta": {
+          "progressToken": 12
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 12
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 12,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": false,\n  \"data\": null,\n  \"error\": \"No vulnerabilities found matching 'zzz'\"\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 69
+  },
+  {
+    "id": "0e5a93cc-4e3d-40ca-bf60-c33419f6f1d8",
+    "timestamp": "2026-10-04T22:09:58.818Z",
+    "direction": "request",
+    "origin": "client",
+    "message": {
+      "method": "tools/call",
+      "params": {
+        "name": "search_vulnerabilities_by_name",
+        "arguments": {
+          "limit": 5,
+          "query": "zzz"
+        },
+        "_meta": {
+          "progressToken": 13
+        }
+      },
+      "jsonrpc": "2.0",
+      "id": 13
+    },
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 13,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"ok\": false,\n  \"data\": null,\n  \"error\": \"No vulnerabilities found matching 'zzz'\"\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "duration": 46
+  }
+]

@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:8044",
-  withCredentials: true,
-});
+import { api } from "./axios";
 
 export async function fetchVulnerabilities() {
   const res = await api.get("/api/vulnerabilities");
@@ -31,7 +26,6 @@ export async function deleteVulnerability(id) {
 }
 
 export async function login(email, password) {
-  // login uses query param for demo simplicity
   const res = await api.post(`/auth/login`, {email, password});
   return res.data;
 }
