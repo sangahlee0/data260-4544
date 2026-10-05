@@ -153,6 +153,7 @@ data260-4544/
 │       ├── METRICS.md
 │       ├── REFLECTION.md
 │       ├── RUN_LOG.txt
+│       ├── Lee_HW5.pdf
 │       ├── raw/
 │       │   ├── agent_runs.jsonl
 │       │   ├── inspector-protocol-*.json
