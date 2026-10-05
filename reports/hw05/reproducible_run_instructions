@@ -1,7 +1,7 @@
 # HW04 Reproducible Run Instructions
-Follow these steps to reproduce the experiment and verification script for HW04:
+Follow these steps to reproduce the experiment and verification script for HW05:
 
-**Needs:** Python 3.11/3.12, Ollama, pydantic, fastapi, uvicorn, Docker, AWS Account (optional for ECS deployment)
+**Needs:** Python 3.11/3.12, Ollama, pydantic, fastapi, uvicorn, Docker, AWS Account (optional for ECS deployment), MCP Inspector
 
 1. **Python Version:** Ensure you are using **Python 3.11 or 3.12** (avoid Python 3.13 due to NumPy/LangChain compatibility issues).
 2. **Environment Setup:** Ensure these are installed:
@@ -27,18 +27,44 @@ Follow these steps to reproduce the experiment and verification script for HW04:
    npm install
    npm run dev
    ```
-6. **Run the Self-Check Verification Script:**
+## MCP Inspector
+6. meals server
    ```bash
-   make verify-hw04
+   uv run --with mcp mcp run meals_server.py
    ```
 
-7. **Run the RAG experiment and log output:**
+7. domain server
+   ``` bash
+   PYTHONPATH=. mcp dev mcp_server/domain_server.py --with "mcp<2"
+   ```
+
+8. Run Fault Injection Benchmark
+   ``` bash
+   {
+   echo "===== HW05 Fault Injection Benchmark ====="
+   echo "Start: $(date)"
+   python simulate_failures_mcp.py
+   echo "End: $(date)"
+   echo
+   } 2>&1 | tee -a ../reports/hw05/RUN_LOG.txt
+   ```
+
+9. **Run the Self-Check Verification Script:**
    ```bash
-   cd code
-   (echo "========================================"; echo "RUN: $(date '+%Y-%m-%d %H:%M:%S')"; PYTHONPATH=. python3 code/rag.py) 2>&1 | tee -a reports/hw04/RUN_LOG.txt
+   make verify-hw05
+   ```
+
+10. **Run the Ollama Agent Scenario
+   ```bash
+   echo "===== HW05 Ollama Agent Scenario ====="
+   echo "Start: $(date)"
+   python domain_agent.py
+   echo "End: $(date)"
+   echo
+   } 2>&1 | tee -a ../reports/hw05/RUN_LOG.txt
    ```
 
    
 ## Notes
-- The verification script checks the HW04 setup and output files.
-- The RAG evaluation output is saved under `reports/hw04/raw/`.
+- The verification script checks the HW05 setup and output files.
+- The evaluation output is saved under `reports/hw05/raw/`.

@@ -1,0 +1,32 @@
+{
+  "homework": 5,
+  "sid4": 4544,
+  "commit_hash": "10588ee68854859bad928cef4847316d0bbcc15a",
+  "model": "qwen2.5:3b",
+  "seed": 4544,
+  "verify_seed": 264544,
+  "port_base": 8044,
+  "checks": [
+    {
+      "check": "FastAPI backend responds on PORT_BASE 8044.",
+      "passed": true
+    },
+    {
+      "check": "Domain MCP tool responds successfully.",
+      "passed": true
+    },
+    {
+      "check": "Offline test suite passes 8/8.",
+      "passed": true
+    },
+    {
+      "check": "Fault-injection CSV contains 150 calls.",
+      "passed": true
+    },
+    {
+      "check": "Agent log contains valid JSONL records.",
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}
