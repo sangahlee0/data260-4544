@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
@@ -48,6 +49,8 @@ EVICT = os.environ.get("EVICT") == "1"
 RAW_LOG_PATH = Path(__file__).resolve().parents[3] / "reports" / "hw06" / "raw" / "memory_logs.json"
 RUN_LOG_PATH = Path(__file__).resolve().parents[3] / "reports" / "hw06" / "RUN_LOG.txt"
 PROBES_PATH = Path(__file__).resolve().parents[3] / "reports" / "hw06" / "memory_probes.yaml"
+AGENT_PATH = Path(__file__).resolve().parents[3] / "AGENT.md"
+MEMORY_PATH = Path(__file__).resolve().parents[3] / "MEMORY.md"
 
 
 def tokens_used_by_each_part(prompt_tokens, pieces):
@@ -139,10 +142,151 @@ def extract_facts(message):
     return facts
 
 
+def load_markdown(path):
+    if path.exists():
+        return path.read_text()
+    return ""
+
+
+def memory_fact_lines(text):
+    count = 0
+    for line in text.splitlines():
+        if line.strip() == "":
+            continue
+        count = count + 1
+    return count
+
+
+def last_consolidated_time():
+    # The computer stores when MEMORY.md was last saved.
+    if not MEMORY_PATH.exists():
+        return None
+    return datetime.fromtimestamp(MEMORY_PATH.stat().st_mtime)
+
+
+def write_memory(lines):
+    text = ""
+    for line in lines:
+        stripped = line.strip()
+        if stripped == "":
+            continue
+        text = text + stripped + "\n"
+    MEMORY_PATH.write_text(text)
+
+
+def compact_memory():
+    before_text = load_markdown(MEMORY_PATH)
+    before_count = memory_fact_lines(before_text)
+
+    # One copy of each exact line.
+    lines = []
+    for line in before_text.splitlines():
+        line = line.strip()
+        if line == "" or line in lines:
+            continue
+        lines.append(line)
+
+    # If two lines match except for one word, keep the first and record the other.
+    kept = []
+    notes = []
+    for line in lines:
+        earlier_line = ""
+        for earlier in kept:
+            words = line.split()
+            earlier_words = earlier.split()
+            if len(words) == 0 or len(words) != len(earlier_words):
+                continue
+            changes = 0
+            for i in range(len(words)):
+                if words[i] != earlier_words[i]:
+                    changes = changes + 1
+            if changes == 1:
+                earlier_line = earlier
+                break
+        if earlier_line == "":
+            kept.append(line)
+        else:
+            notes.append('Kept "' + earlier_line + '" The other fact was "' + line + '"')
+
+    write_memory(kept + notes)
+    after_count = memory_fact_lines(load_markdown(MEMORY_PATH))
+    return "Before: " + str(before_count) + "\nAfter: " + str(after_count)
+
+
+def dream_memory(user_id, session_id):
+    recent = get_recent_messages(user_id, session_id, limit=SHORT_TERM_N)
+    lines = ""
+    for doc in recent:
+        lines = lines + doc.get("role", "") + ": " + doc.get("content", "") + "\n"
+
+    result = complete([
+        {
+            "role": "system",
+            "content": "List useful long-term facts from this conversation. One fact per line.",
+        },
+        {"role": "user", "content": lines},
+    ])
+
+    existing = load_markdown(MEMORY_PATH)
+    added = 0
+    for line in result["content"].splitlines():
+        fact = line.strip().lstrip("-").strip()
+        if fact == "" or fact.upper() == "NONE" or fact.endswith(":"):
+            continue
+        while len(fact) > 0 and fact[0].isdigit():
+            fact = fact[1:]
+        fact = fact.lstrip(".").strip()
+        if fact == "":
+            continue
+        if fact in existing:
+            continue
+        existing = existing.rstrip() + "\n" + fact + "\n"
+        added = added + 1
+    MEMORY_PATH.write_text(existing)
+    return "Added " + str(added) + " facts to MEMORY.md."
+
+
+def handle_command(user_id, session_id, message):
+    command = message.strip()
+    if command == "/help":
+        return (
+            "/memory shows AGENT.md and MEMORY.md.\n"
+            "/compact consolidates MEMORY.md and reports the line count before and after.\n"
+            "/dream adds useful facts from the recent conversation to MEMORY.md.\n"
+            "/help explains these commands."
+        )
+    if command == "/memory":
+        return "AGENT.md:\n" + load_markdown(AGENT_PATH) + "\nMEMORY.md:\n" + load_markdown(MEMORY_PATH)
+    if command == "/compact":
+        return compact_memory()
+    if command == "/dream":
+        return dream_memory(user_id, session_id)
+    return None
+
+
+def consolidation_required(text):
+    # More than 40 fact lines, or the last consolidation was over 24 hours ago.
+    if memory_fact_lines(text) > 40:
+        return True
+    when = last_consolidated_time()
+    if when is None:
+        return True
+    age_seconds = (datetime.now() - when).total_seconds()
+    if age_seconds > 24 * 60 * 60:
+        return True
+    return False
+
+
 # Put the summary, recent messages, and facts into the list the model reads.
 def build_prompt(recent_messages, session_summary, user_summary, episodes):
     system_text = "You help the user track open-source package vulnerabilities.\n"
-    system_text = system_text + "Use the memory below when it helps.\n"
+
+    agent_text = load_markdown(AGENT_PATH)
+    memory_text = load_markdown(MEMORY_PATH)
+    if agent_text != "":
+        system_text = system_text + "\nAGENT.md:\n" + agent_text + "\n"
+    if memory_text != "":
+        system_text = system_text + "\nMEMORY.md:\n" + memory_text + "\n"
 
     if user_summary is not None and user_summary.get("text"):
         system_text = system_text + "\nLifetime summary:\n" + user_summary["text"] + "\n"
@@ -203,6 +347,13 @@ def chat(payload: ChatRequest):
         session_id = payload.session_id
     else:
         session_id = "default"
+
+    command_reply = handle_command(payload.user_id, session_id, payload.message)
+    if command_reply is not None:
+        return {
+            "reply": command_reply,
+            "session_id": session_id,
+        }
 
     started = time.perf_counter()
 

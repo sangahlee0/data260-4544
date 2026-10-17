@@ -1,0 +1,24 @@
+# Five fixed questions asked after each 30-message run.
+
+scoring_rubric:
+  1: "The answer misses the expected fact."
+  2: "The answer mentions the topic but gives the wrong detail."
+  3: "The answer includes the expected fact, with extra unrelated detail."
+  4: "The answer includes the expected fact and little extra detail."
+  5: "The answer states the expected fact clearly and does not contradict it."
+
+questions:
+  - question: "What package are we tracking?"
+    expected_answer: "lodash"
+
+  - question: "Which lodash version is affected?"
+    expected_answer: "4.17.20"
+
+  - question: "What severity is the vulnerability?"
+    expected_answer: "high"
+
+  - question: "Which version fixes the bug?"
+    expected_answer: "4.17.21"
+
+  - question: "What is the reporter email?"
+    expected_answer: "lee4544@sjsu.edu"
