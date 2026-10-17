@@ -30,26 +30,6 @@ Do not commit the private key file.
 Do not commit any password.
 Messages have their own MongoDB collection.
 Summary text has its own MongoDB collection.
-The package being tracked is lodash.
-The package being tracked is lodash.
-The package being tracked is lodash.
-The package being tracked is lodash.
-The package being tracked is lodash.
-The package being tracked is lodash.
-The package being tracked is lodash.
-The package being tracked is lodash.
-The fixed version is 4.17.21.
-The fixed version is 4.17.21.
-The fixed version is 4.17.21.
-The fixed version is 4.17.21.
-The fixed version is 4.17.21.
-The fixed version is 4.17.21.
-The vulnerability type is prototype pollution.
-The vulnerability type is prototype pollution.
-The vulnerability type is prototype pollution.
-The vulnerability type is prototype pollution.
-The vulnerability type is prototype pollution.
-The vulnerability type is prototype pollution.
-The affected version is 4.17.15.
-The severity is high.
-The reporter email is other4544@sjsu.edu.
+Kept "The affected version is 4.17.20." The other fact was "The affected version is 4.17.15."
+Kept "The severity is low." The other fact was "The severity is high."
+Kept "The reporter email is lee4544@sjsu.edu." The other fact was "The reporter email is other4544@sjsu.edu."
