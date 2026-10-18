@@ -158,7 +158,7 @@ def memory_fact_lines(text):
 
 
 def last_consolidated_time():
-    # The computer stores when MEMORY.md was last saved.
+    # The computer stores when MEMORY.md was last saved
     if not MEMORY_PATH.exists():
         return None
     return datetime.fromtimestamp(MEMORY_PATH.stat().st_mtime)
@@ -265,7 +265,7 @@ def handle_command(user_id, session_id, message):
 
 
 def consolidation_required(text):
-    # More than 40 fact lines, or the last consolidation was over 24 hours ago.
+    # More than 40 fact lines, or the last consolidation was over 24 hours ago
     if memory_fact_lines(text) > 40:
         return True
     when = last_consolidated_time()
@@ -277,7 +277,7 @@ def consolidation_required(text):
     return False
 
 
-# Put the summary, recent messages, and facts into the list the model reads.
+# Put the summary, recent messages, and facts into the list the model reads
 def build_prompt(recent_messages, session_summary, user_summary, episodes):
     system_text = "You help the user track open-source package vulnerabilities.\n"
 

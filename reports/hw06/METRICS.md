@@ -43,4 +43,4 @@ This gives us:
 | SHORT_TERM_N = 30 | $137.64 |
 | 12 with eviction | $149.10 |
 
-The best settings is SHORT_TERM_N = 12, because it costs the lowest, whereas the worst value is SHORT_TERM_12 with eviction, as the cost is highest.
+The best setting is SHORT_TERM_N = 12, because it costs the lowest, whereas the worst value is SHORT_TERM_12 with eviction, as the cost is highest.

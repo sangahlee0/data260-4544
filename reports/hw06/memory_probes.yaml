@@ -1,5 +1,3 @@
-# Five fixed questions asked after each 30-message run.
-
 scoring_rubric:
   1: "The answer misses the expected fact."
   2: "The answer mentions the topic but gives the wrong detail."
