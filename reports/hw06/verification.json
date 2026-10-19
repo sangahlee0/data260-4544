@@ -1,0 +1,19 @@
+{
+  "homework": 6,
+  "sid4": 4544,
+  "commit_hash": "79e4daf8a37994dae86fa8f11007175af5b0de2d",
+  "model": "qwen2.5:3b",
+  "seed": 4544,
+  "verify_seed": 264544,
+  "checks": [
+    {
+      "check": "FastAPI backend responds on PORT_BASE 8044.",
+      "passed": true
+    },
+    {
+      "check": "POST /api/chat returns a reply.",
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}
