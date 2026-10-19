@@ -51,13 +51,25 @@ data260-4544/
 │   ├── verify-hw03.py
 │   ├── verify-hw04.py
 │   ├── verify-hw05.py
+│   ├── verify-hw06.py
 │   ├── workflow.py
 │   └── web_application/
 │       ├── index.html
 │       ├── main.py
 │       ├── routers/
 │       │   ├── api_auth.py
-│       │   └── auth.py
+│       │   ├── auth.py
+│       │   ├── memory.py
+│       │   └── vulnerabilities.py
+│       ├── mongo/
+│       │   ├── __init__.py
+│       │   ├── config.py
+│       │   ├── db.py
+│       │   ├── main.py
+│       │   ├── models.py
+│       │   ├── ollama_service.py
+│       │   ├── schemas.py
+│       │   └── utils.py
 │       ├── script.js
 │       ├── style.css
 │       ├── templates/
@@ -148,7 +160,7 @@ data260-4544/
 │   │   ├── Lee_HW4.pdf
 │   │   ├── reproducible_run_instructions
 │   │   └── verification.json
-│   └── hw05/
+│   ├── hw05/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── REFLECTION.md
@@ -158,6 +170,15 @@ data260-4544/
 │       │   ├── agent_runs.jsonl
 │       │   ├── inspector-protocol-*.json
 │       │   └── retry_results.csv
+│       ├── reproducible_run_instructions
+│       └── verification.json
+│   └── hw06/
+│       ├── AI_USE.md
+│       ├── METRICS.md
+│       ├── RUN_LOG.txt
+│       ├── memory_probes.yaml
+│       ├── raw/
+│       │   └── memory_logs.json
 │       ├── reproducible_run_instructions
 │       └── verification.json
 ├── src/
