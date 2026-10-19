@@ -1,0 +1,64 @@
+# HW06 Reproducible Run Instructions
+
+Follow these steps to run the HW06 memory chat, verification check, and memory probes. 
+
+The commands should be run from the `data260-4544/` project root unless stated otherwise.
+
+**Needs:** Python 3.11 or 3.12, MongoDB, Ollama, and the `qwen2.5:3b` and `nomic-embed-text` models.
+
+1. **Create and activate a virtual environment:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+2. **Install the Python dependencies:**
+   ```bash
+   python3 -m pip install fastapi uvicorn pymongo pydantic pydantic-settings ollama langchain-ollama requests
+   ```
+
+3. **Start MongoDB** using your local MongoDB installation. The app defaults to `mongodb://localhost:27017` and database `s4544_doc`. To use another MongoDB URI or database, set `MONGODB_URI` and `MONGODB_DB` before starting the app.
+
+4. **Start Ollama and download the models** (keep Ollama running in its own terminal):
+   ```bash
+   ollama serve
+   ```
+
+   In another terminal:
+   ```bash
+   ollama pull qwen2.5:3b
+   ollama pull nomic-embed-text
+   ```
+
+5. **Start the HW06 FastAPI application** (from the project root):
+   ```bash
+   cd code/web_application
+   PYTHONPATH=. python3 -m mongo.main
+   ```
+   The API listens on `http://127.0.0.1:8044`. The default short-term memory window is 12 messages.
+
+6. **Run the self-check verification script** in a separate terminal from the project root while the app is running:
+   ```bash
+   source venv/bin/activate
+   make verify-hw06
+   ```
+   The script checks the API and `/api/chat`, then writes results to `reports/hw06/verification.json`.
+
+7. **Run the five memory probe questions** from `code/web_application/` with a unique session ID for each run:
+   ```bash
+   PYTHONPATH=. python3 -m mongo.main --probes hw06-n12
+   ```
+   The questions are read from `reports/hw06/memory_probes.yaml`. Chat turns are stored in MongoDB and token/latency results are appended to `reports/hw06/RUN_LOG.txt` and `reports/hw06/raw/memory_logs.json`.
+
+8. **Compare short-term memory windows.** Stop the running server and restart it for each setting, then use a new session ID for each run:
+   ```bash
+   PYTHONPATH=. python3 -m mongo.main --4
+   PYTHONPATH=. python3 -m mongo.main --probes hw06-n4
+   ```
+   Repeat with `--12` and `--30` in place of `--4`, and use matching distinct session IDs such as `hw06-n12` and `hw06-n30`. 
+   Start the app with `PYTHONPATH=. python3 -m mongo.main --12 --evict` and run probes with a new session ID such as `hw06-n12-evict` for the eviction comparison.
+
+## Notes
+
+- Keep MongoDB and Ollama running while the API and probe commands are being executed.
+- The chat model uses `qwen2.5:3b` while embeddings use `nomic-embed-text`; Ollama must have both models available locally.
