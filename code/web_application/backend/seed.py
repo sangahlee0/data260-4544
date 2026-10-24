@@ -1,9 +1,9 @@
+import random
+
 from .database import SessionLocal
 from .models import Vulnerability, VulnerabilityDescription
 
-import random
-
-SEED = 4544 # based on my personal SEED value
+SEED = 4544  # based on my personal SEED value
 random.seed(SEED)
 
 package_names = [
@@ -14,7 +14,7 @@ package_names = [
     "flask",
     "numpy",
     "pandas",
-    "requests"
+    "requests",
 ]
 
 vulnerability_names = [
@@ -25,7 +25,7 @@ vulnerability_names = [
     "Authentication Bypass",
     "Information Disclosure",
     "Denial of Service",
-    "Remote Code Execution"
+    "Remote Code Execution",
 ]
 
 descriptions = [
@@ -38,8 +38,9 @@ descriptions = [
     "Dependency should be upgraded",
     "Potential security risk",
     "Further investigation required",
-    "Automated scan detected vulnerability"
+    "Automated scan detected vulnerability",
 ]
+
 
 def seed_data():
     db = SessionLocal()
@@ -49,7 +50,10 @@ def seed_data():
 
         # Seed 5000 vulnerability rows for testing
         for i in range(5000):
-            vulnerability = Vulnerability(package_name=f"{random.choice(package_names)}-{i}", vulnerability_name=random.choice(vulnerability_names))
+            vulnerability = Vulnerability(
+                package_name=f"{random.choice(package_names)}-{i}",
+                vulnerability_name=random.choice(vulnerability_names),
+            )
 
             db.add(vulnerability)
             vulnerabilities.append(vulnerability)
@@ -65,7 +69,10 @@ def seed_data():
         for i in range(200):
             selected_vulnerability = random.choice(vulnerabilities)
 
-            description = VulnerabilityDescription(vulnerability_id=selected_vulnerability.id, description=random.choice(descriptions))
+            description = VulnerabilityDescription(
+                vulnerability_id=selected_vulnerability.id,
+                description=random.choice(descriptions),
+            )
 
             db.add(description)
 

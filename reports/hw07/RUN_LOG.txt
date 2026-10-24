@@ -1,0 +1,8 @@
+# HW7 Run Log
+
+Timestamps and console output for the runs that produced the reported results.
+
+## Part 1 — JWT Auth, RBAC, Linting
+
+<!-- Paste terminal output here with timestamps after running -->
+

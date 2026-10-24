@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
-from typing import Optional, Literal
 from datetime import datetime
+from typing import Literal, Optional
+
+from pydantic import BaseModel, Field
 
 
 class VulnerabilityCreate(BaseModel):
@@ -13,9 +14,7 @@ class VulnerabilityCreate(BaseModel):
 
 class VulnerabilityUpdate(BaseModel):
     vulnerability_name: Optional[str] = Field(
-        default=None,
-        min_length=1,
-        max_length=100
+        default=None, min_length=1, max_length=100
     )
     description: Optional[str] = None
     status: Optional[Literal["open", "investigating", "resolved"]] = None
@@ -90,4 +89,3 @@ class ChatRequest(BaseModel):
     user_id: str
     session_id: Optional[str] = None
     message: str = Field(min_length=1)
-

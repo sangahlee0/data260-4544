@@ -1,13 +1,12 @@
-from fastapi import APIRouter, Request, Form
+import time
+
+from fastapi import APIRouter, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
 
-import time
-
 # Idle time-out
-IDLE_TIMEOUT_SECONDS = 180 # 3 min inactivity
-
+IDLE_TIMEOUT_SECONDS = 180  # 3 min inactivity
 
 
 # Create a router object
@@ -38,10 +37,7 @@ def home(request: Request):
         # Call home for the home page html; we used index for main form page
         request,
         "home.html",
-        {
-            "request": request,  
-            "user": user
-        }
+        {"request": request, "user": user},
     )
 
 
@@ -54,8 +50,9 @@ def login_page(request: Request):
     the template can choose what to display.
     """
     user = request.session.get("user")
-    error = request.query_params.get("error")   # Checks if there is somethig named error, otherwise would return None
-
+    error = request.query_params.get(
+        "error"
+    )  # Checks if there is somethig named error, otherwise would return None
 
     if error == "session_expired":
         e_message = "The session has expired. Please log in again."
@@ -65,13 +62,7 @@ def login_page(request: Request):
         e_message = None
 
     return templates.TemplateResponse(
-        request,
-        "login.html",
-        {
-            "request": request,
-            "user": user,
-            "error": e_message
-        }
+        request, "login.html", {"request": request, "user": user, "error": e_message}
     )
 
 
@@ -91,10 +82,7 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
         request.session["last_active"] = time.time()
 
         # Redirect user to dashboard
-        return RedirectResponse(
-            url="/dashboard",
-            status_code=HTTP_302_FOUND
-        )
+        return RedirectResponse(url="/dashboard", status_code=HTTP_302_FOUND)
 
     # If credentials are invalid:
     # Redirect back to login page
@@ -104,8 +92,8 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 
     # Students are expected to add Bootstrap alerts.
     return RedirectResponse(
-        url="/login?error=1",   # Error response
-        status_code=HTTP_302_FOUND
+        url="/login?error=1",  # Error response
+        status_code=HTTP_302_FOUND,
     )
 
 
@@ -118,35 +106,25 @@ def dashboard(request: Request):
     - Redirects to login page if session is missing
     """
     user = request.session.get("user")
-    last_active = request.session.get("last_active")    # For when user was last active
+    last_active = request.session.get("last_active")  # For when user was last active
 
     # If user is not logged, block access
     if not user or not last_active:
-        return RedirectResponse(
-            url="/login",
-            status_code=HTTP_302_FOUND
-        )
-
+        return RedirectResponse(url="/login", status_code=HTTP_302_FOUND)
 
     # If user is idle and it is past the active, block access
     if time.time() - last_active > IDLE_TIMEOUT_SECONDS:
         request.session.clear()
         return RedirectResponse(
-            url="/login?error=session_expired",
-            status_code=HTTP_302_FOUND
-        ) 
+            url="/login?error=session_expired", status_code=HTTP_302_FOUND
+        )
 
     # Else if the user is active, then keep the time refreshed to most recent
     request.session["last_active"] = time.time()
 
     # If user is logged in, render dashboard
     return templates.TemplateResponse(
-        request,
-        "dashboard.html",
-        {
-            "request": request,
-            "user": user
-        }
+        request, "dashboard.html", {"request": request, "user": user}
     )
 
 
@@ -160,7 +138,4 @@ def logout(request: Request):
     """
     request.session.clear()
 
-    return RedirectResponse(
-        url="/",
-        status_code=HTTP_302_FOUND
-    )
+    return RedirectResponse(url="/", status_code=HTTP_302_FOUND)
