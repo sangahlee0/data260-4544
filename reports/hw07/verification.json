@@ -1,0 +1,56 @@
+{
+  "homework": 7,
+  "sid4": "4544",
+  "commit_hash": "0f3e98f82c27d337400bdea1994746c5f80b1197",
+  "model": "qwen2.5:3b",
+  "seed": 4544,
+  "verify_seed": 264544,
+  "timestamp": "2026-10-26T05:10:25.856320+00:00",
+  "checks": [
+    {
+      "name": "login_valid_creds_200",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "login_invalid_creds_401",
+      "pass": true,
+      "detail": "status=401"
+    },
+    {
+      "name": "no_token_returns_401",
+      "pass": true,
+      "detail": "status=401"
+    },
+    {
+      "name": "auth_me_returns_role",
+      "pass": true,
+      "detail": "status=200 role=reader"
+    },
+    {
+      "name": "reader_can_list_200",
+      "pass": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "reader_cannot_create_403",
+      "pass": true,
+      "detail": "status=403"
+    },
+    {
+      "name": "writer_can_create_201",
+      "pass": true,
+      "detail": "status=201"
+    },
+    {
+      "name": "writer_cannot_delete_403",
+      "pass": true,
+      "detail": "status=403"
+    },
+    {
+      "name": "agent_loop_verification_task",
+      "pass": true,
+      "detail": "status=success tool_calls=2"
+    }
+  ]
+}

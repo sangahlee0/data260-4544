@@ -1,0 +1,21 @@
+attempt,task,injected_fault,well_formed_before_repair,repair_triggered,well_formed_after_repair,failure_type,tool_calls,status,latency_ms
+1,Task A,none,True,False,True,none,2,success,0.23
+2,Task A,none,True,False,True,none,2,success,0.23
+3,Task A,none,True,False,True,none,2,success,0.24
+4,Task A,unknown_tool,False,True,True,unknown tool,2,success,0.22
+5,Task A,none,True,False,True,none,2,success,0.21
+6,Task A,malformed_arguments,False,True,True,malformed arguments,2,success,0.22
+7,Task A,none,True,False,True,none,2,success,0.24
+8,Task B,none,True,False,True,none,2,success,0.24
+9,Task B,none,True,False,True,none,2,success,0.23
+10,Task B,text_when_tool_required,False,True,True,text when a tool was required,2,success,0.25
+11,Task B,none,True,False,True,none,2,success,0.22
+12,Task B,none,True,False,True,none,2,success,0.22
+13,Task B,unknown_tool,False,True,True,unknown tool,2,success,0.22
+14,Task B,none,True,False,True,none,2,success,0.22
+15,Task C,none,True,False,True,none,2,success,0.28
+16,Task C,none,True,False,True,none,2,success,0.36
+17,Task C,malformed_arguments,False,True,True,malformed arguments,2,success,0.32
+18,Task C,none,True,False,True,none,2,success,0.45
+19,Task C,none,True,False,True,none,2,success,0.4
+20,Task C,none,True,False,True,none,2,success,0.28

@@ -8,26 +8,26 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException
 from pymongo.errors import PyMongoError
 
-from mongo.schemas import ChatRequest
 from mongo.ollama_service import embed_text
+from mongo.schemas import ChatRequest
 from mongo.utils import (
-    save_message,
-    get_recent_messages,
-    get_session_summary,
-    get_latest_session_summary,
-    get_user_summary,
-    get_relevant_episodes,
-    save_episode,
     count_user_messages,
-    save_summary,
+    get_daily_message_counts,
+    get_latest_session_summary,
+    get_recent_episodes,
+    get_recent_messages,
+    get_recent_summaries,
+    get_relevant_episodes,
+    get_session_summary,
     get_session_summary_texts,
     get_user_messages,
-    get_recent_episodes,
-    get_recent_summaries,
-    get_daily_message_counts,
+    get_user_summary,
+    save_episode,
+    save_message,
+    save_summary,
+    serialize_episode,
     serialize_message,
     serialize_summary,
-    serialize_episode,
 )
 
 # model_client.py is in the src folder from HW1 that we pull from the previous homework
@@ -35,20 +35,29 @@ SRC_DIR = Path(__file__).resolve().parents[3] / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.append(str(SRC_DIR))
 
-from model_client import complete
-
+from model_client import complete  # noqa: E402
 
 router = APIRouter(tags=["Memory"])
 
-SHORT_TERM_N = int(os.environ.get("SHORT_TERM_N", "12"))    # defaut is 12; for short-term memory comparison
+SHORT_TERM_N = int(
+    os.environ.get("SHORT_TERM_N", "12")
+)  # defaut is 12; for short-term memory comparison
 SUMMARIZE_EVERY_USER_MSGS = 4
 EPISODE_TOP_K = 3
 EVICT = os.environ.get("EVICT") == "1"
 
 # Part 3 raw results. Same folder pattern as reports/hw01/raw/.
-RAW_LOG_PATH = Path(__file__).resolve().parents[3] / "reports" / "hw06" / "raw" / "memory_logs.json"
+RAW_LOG_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "reports"
+    / "hw06"
+    / "raw"
+    / "memory_logs.json"
+)
 RUN_LOG_PATH = Path(__file__).resolve().parents[3] / "reports" / "hw06" / "RUN_LOG.txt"
-PROBES_PATH = Path(__file__).resolve().parents[3] / "reports" / "hw06" / "memory_probes.yaml"
+PROBES_PATH = (
+    Path(__file__).resolve().parents[3] / "reports" / "hw06" / "memory_probes.yaml"
+)
 AGENT_PATH = Path(__file__).resolve().parents[3] / "AGENT.md"
 MEMORY_PATH = Path(__file__).resolve().parents[3] / "MEMORY.md"
 
@@ -87,16 +96,26 @@ def save_turn_log(row):
 
     with RUN_LOG_PATH.open("a") as log_file:
         log_file.write(
-            "SHORT_TERM_N = " + str(row["short_term_n"])
-            + " session_id = " + str(row["session_id"])
-            + " prompt_tokens = " + str(row["prompt_tokens"])
-            + " completion_tokens = " + str(row["completion_tokens"])
-            + " system_primer_tokens = " + str(row["system_primer_tokens"])
-            + " long_term_summary_tokens = " + str(row["long_term_summary_tokens"])
-            + " short_term_window_tokens = " + str(row["short_term_window_tokens"])
-            + " episodic_facts_tokens = " + str(row["episodic_facts_tokens"])
-            + " latency_ms = " + str(row["latency_ms"])
-            + " eviction = " + str(row["eviction"])
+            "SHORT_TERM_N = "
+            + str(row["short_term_n"])
+            + " session_id = "
+            + str(row["session_id"])
+            + " prompt_tokens = "
+            + str(row["prompt_tokens"])
+            + " completion_tokens = "
+            + str(row["completion_tokens"])
+            + " system_primer_tokens = "
+            + str(row["system_primer_tokens"])
+            + " long_term_summary_tokens = "
+            + str(row["long_term_summary_tokens"])
+            + " short_term_window_tokens = "
+            + str(row["short_term_window_tokens"])
+            + " episodic_facts_tokens = "
+            + str(row["episodic_facts_tokens"])
+            + " latency_ms = "
+            + str(row["latency_ms"])
+            + " eviction = "
+            + str(row["eviction"])
             + "\n"
         )
 
@@ -104,13 +123,15 @@ def save_turn_log(row):
 # Ask the model for up to 3 short facts from one user message.
 # Each line comes back as the fact, then an importance from 0 to 1.
 def extract_facts(message):
-    result = complete([
-        {
-            "role": "system",
-            "content": "Extract up to 3 short facts. One per line: the fact, an importance from 0 to 1. If there is no fact, reply NONE.",
-        },
-        {"role": "user", "content": message},
-    ])
+    result = complete(
+        [
+            {
+                "role": "system",
+                "content": "Extract up to 3 short facts. One per line: the fact, an importance from 0 to 1. If there is no fact, reply NONE.",
+            },
+            {"role": "user", "content": message},
+        ]
+    )
 
     facts = []
     lines = result["content"].splitlines()
@@ -129,7 +150,7 @@ def extract_facts(message):
             continue
 
         fact = line.strip()
-        fact = fact[:fact.rfind(words[-1])].strip(" -|")
+        fact = fact[: fact.rfind(words[-1])].strip(" -|")
 
         if fact == "" or fact.upper() == "NONE":
             continue
@@ -206,7 +227,9 @@ def compact_memory():
         if earlier_line == "":
             kept.append(line)
         else:
-            notes.append('Kept "' + earlier_line + '" The other fact was "' + line + '"')
+            notes.append(
+                'Kept "' + earlier_line + '" The other fact was "' + line + '"'
+            )
 
     write_memory(kept + notes)
     after_count = memory_fact_lines(load_markdown(MEMORY_PATH))
@@ -219,13 +242,15 @@ def dream_memory(user_id, session_id):
     for doc in recent:
         lines = lines + doc.get("role", "") + ": " + doc.get("content", "") + "\n"
 
-    result = complete([
-        {
-            "role": "system",
-            "content": "List useful long-term facts from this conversation. One fact per line.",
-        },
-        {"role": "user", "content": lines},
-    ])
+    result = complete(
+        [
+            {
+                "role": "system",
+                "content": "List useful long-term facts from this conversation. One fact per line.",
+            },
+            {"role": "user", "content": lines},
+        ]
+    )
 
     existing = load_markdown(MEMORY_PATH)
     added = 0
@@ -256,7 +281,12 @@ def handle_command(user_id, session_id, message):
             "/help explains these commands."
         )
     if command == "/memory":
-        return "AGENT.md:\n" + load_markdown(AGENT_PATH) + "\nMEMORY.md:\n" + load_markdown(MEMORY_PATH)
+        return (
+            "AGENT.md:\n"
+            + load_markdown(AGENT_PATH)
+            + "\nMEMORY.md:\n"
+            + load_markdown(MEMORY_PATH)
+        )
     if command == "/compact":
         return compact_memory()
     if command == "/dream":
@@ -289,10 +319,14 @@ def build_prompt(recent_messages, session_summary, user_summary, episodes):
         system_text = system_text + "\nMEMORY.md:\n" + memory_text + "\n"
 
     if user_summary is not None and user_summary.get("text"):
-        system_text = system_text + "\nLifetime summary:\n" + user_summary["text"] + "\n"
+        system_text = (
+            system_text + "\nLifetime summary:\n" + user_summary["text"] + "\n"
+        )
 
     if session_summary is not None and session_summary.get("text"):
-        system_text = system_text + "\nSession summary:\n" + session_summary["text"] + "\n"
+        system_text = (
+            system_text + "\nSession summary:\n" + session_summary["text"] + "\n"
+        )
 
     if len(episodes) > 0:
         system_text = system_text + "\nRelated facts:\n"
@@ -322,10 +356,15 @@ def maybe_summarize(user_id, session_id):
     for doc in recent:
         lines = lines + doc.get("role") + ": " + doc.get("content") + "\n"
 
-    result = complete([
-        {"role": "system", "content": "Summarize this conversation into concise bullets."},
-        {"role": "user", "content": lines},
-    ])
+    result = complete(
+        [
+            {
+                "role": "system",
+                "content": "Summarize this conversation into concise bullets.",
+            },
+            {"role": "user", "content": lines},
+        ]
+    )
     save_summary(user_id, session_id, "session", result["content"].strip())
 
     older_texts = get_session_summary_texts(user_id)
@@ -333,10 +372,15 @@ def maybe_summarize(user_id, session_id):
     for text in older_texts:
         combined = combined + text + "\n"
 
-    lifetime = complete([
-        {"role": "system", "content": "Condense these session summaries into concise bullets."},
-        {"role": "user", "content": combined},
-    ])
+    lifetime = complete(
+        [
+            {
+                "role": "system",
+                "content": "Condense these session summaries into concise bullets.",
+            },
+            {"role": "user", "content": combined},
+        ]
+    )
     # session_id is null for lifetime summary
     save_summary(user_id, None, "user", lifetime["content"].strip())
 
@@ -368,16 +412,20 @@ def chat(payload: ChatRequest):
             save_episode(payload.user_id, session_id, fact, importance, embedding)
 
         # load memory that will go into prompt
-        recent_messages = get_recent_messages(payload.user_id, session_id, limit=SHORT_TERM_N)
+        recent_messages = get_recent_messages(
+            payload.user_id, session_id, limit=SHORT_TERM_N
+        )
         session_summary = get_session_summary(payload.user_id, session_id)
         user_summary = get_user_summary(payload.user_id)
         # --evict makes it so that we can leave the session summary out and keep the lifetime summary.
         if EVICT and user_summary is not None and user_summary.get("text"):
             session_summary = None
         message_embedding = embed_text(payload.message)
-        episodes = get_relevant_episodes(payload.user_id, message_embedding, limit=EPISODE_TOP_K)
+        episodes = get_relevant_episodes(
+            payload.user_id, message_embedding, limit=EPISODE_TOP_K
+        )
 
-        # ask model and save reply  
+        # ask model and save reply
         prompt = build_prompt(recent_messages, session_summary, user_summary, episodes)
         result = complete(prompt)
         reply = result["content"]
@@ -391,7 +439,7 @@ def chat(payload: ChatRequest):
     except Exception:
         raise HTTPException(status_code=500, detail="Model error during chat.")
 
-    # info on what memory this turn used in the memory_used field  
+    # info on what memory this turn used in the memory_used field
     summary_parts = []
     if user_summary is not None and user_summary.get("text"):
         summary_parts.append(user_summary["text"])
@@ -405,10 +453,12 @@ def chat(payload: ChatRequest):
 
     short_term_messages = []
     for doc in recent_messages:
-        short_term_messages.append({
-            "role": doc.get("role"),
-            "content": doc.get("content"),
-        })
+        short_term_messages.append(
+            {
+                "role": doc.get("role"),
+                "content": doc.get("content"),
+            }
+        )
 
     episodic_facts = []
     for doc in episodes:
@@ -425,27 +475,32 @@ def chat(payload: ChatRequest):
             fact_text = fact_text + fact
 
     prompt_tokens = result["input_tokens"]
-    part_tokens = tokens_used_by_each_part(prompt_tokens, {
-        "system_primer": primer_text,
-        "long_term_summary": long_term_summary,
-        "short_term_window": short_term_text,
-        "episodic_facts": fact_text,
-    })
+    part_tokens = tokens_used_by_each_part(
+        prompt_tokens,
+        {
+            "system_primer": primer_text,
+            "long_term_summary": long_term_summary,
+            "short_term_window": short_term_text,
+            "episodic_facts": fact_text,
+        },
+    )
 
     latency_ms = round((time.perf_counter() - started) * 1000, 2)
-    save_turn_log({
-        "session_id": session_id,
-        "user_id": payload.user_id,
-        "short_term_n": SHORT_TERM_N,
-        "prompt_tokens": prompt_tokens,
-        "completion_tokens": result["output_tokens"],
-        "system_primer_tokens": part_tokens["system_primer"],
-        "long_term_summary_tokens": part_tokens["long_term_summary"],
-        "short_term_window_tokens": part_tokens["short_term_window"],
-        "episodic_facts_tokens": part_tokens["episodic_facts"],
-        "latency_ms": latency_ms,
-        "eviction": EVICT,
-    })
+    save_turn_log(
+        {
+            "session_id": session_id,
+            "user_id": payload.user_id,
+            "short_term_n": SHORT_TERM_N,
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": result["output_tokens"],
+            "system_primer_tokens": part_tokens["system_primer"],
+            "long_term_summary_tokens": part_tokens["long_term_summary"],
+            "short_term_window_tokens": part_tokens["short_term_window"],
+            "episodic_facts_tokens": part_tokens["episodic_facts"],
+            "latency_ms": latency_ms,
+            "eviction": EVICT,
+        }
+    )
 
     return {
         "reply": reply,
@@ -457,6 +512,7 @@ def chat(payload: ChatRequest):
             "episodic_facts": episodic_facts,
         },
     }
+
 
 # For Part 3, load the probe questions from memory_probes.yaml
 def load_probe_questions():
@@ -474,11 +530,13 @@ def run_probes(user_id, session_id):
     questions = load_probe_questions()
     for question in questions:
         print(question)
-        result = chat(ChatRequest(
-            user_id=user_id,
-            session_id=session_id,
-            message=question,
-        ))
+        result = chat(
+            ChatRequest(
+                user_id=user_id,
+                session_id=session_id,
+                message=question,
+            )
+        )
         print(result["reply"])
         print()
 
@@ -491,7 +549,9 @@ def get_memory(user_id: str):
         session_summary = get_latest_session_summary(user_id)
         user_summary = get_user_summary(user_id)
     except PyMongoError:
-        raise HTTPException(status_code=500, detail="Database error while reading memory.")
+        raise HTTPException(
+            status_code=500, detail="Database error while reading memory."
+        )
 
     message_list = []
     for doc in messages:
@@ -525,7 +585,9 @@ def get_aggregate(user_id: str):
         daily_counts = get_daily_message_counts(user_id)
         summaries = get_recent_summaries(user_id, limit=5)
     except PyMongoError:
-        raise HTTPException(status_code=500, detail="Database error while aggregating memory.")
+        raise HTTPException(
+            status_code=500, detail="Database error while aggregating memory."
+        )
 
     summary_list = []
     for doc in summaries:

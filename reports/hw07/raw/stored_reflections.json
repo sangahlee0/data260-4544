@@ -1,0 +1,37 @@
+[
+  {
+    "task_id": "Task A",
+    "attempt": 1,
+    "failed_answer": "Found SQL Injection vulnerability somewhere in the system.",
+    "evidence": {
+      "verifier_result": "Task A verifier failed: Trajectory missing 'search_vulnerabilities_by_id'; Answer does not identify vulnerability ID 1; Answer lacks specific vulnerability details (code or urgency)",
+      "failed_assertions": [
+        "Trajectory missing 'search_vulnerabilities_by_id'",
+        "Answer does not identify vulnerability ID 1",
+        "Answer lacks specific vulnerability details (code or urgency)"
+      ],
+      "tool_calls_in_trajectory": [
+        "search_vulnerabilities_by_name"
+      ]
+    },
+    "reflection": "Failure Cause: Trajectory missing 'search_vulnerabilities_by_id'; Answer does not identify vulnerability ID 1; Answer lacks specific vulnerability details (code or urgency). Revised Strategy: Ensure the agent first searches for 'Injection', retrieves result ID 1, then invokes search_vulnerabilities_by_id(1) to include the full GHSA code and urgency score in the final response.",
+    "timestamp": "2026-10-25T20:36:59.865465+00:00"
+  },
+  {
+    "task_id": "Task B",
+    "attempt": 1,
+    "failed_answer": "The package requests has two vulnerabilities. A supporting example is SQL Injection (ID 1).",
+    "evidence": {
+      "verifier_result": "Task B verifier failed: Count '2' (as digit) not found in answer",
+      "failed_assertions": [
+        "Count '2' (as digit) not found in answer"
+      ],
+      "tool_calls_in_trajectory": [
+        "count_by_package",
+        "search_vulnerabilities_by_name"
+      ]
+    },
+    "reflection": "Failure Cause: Count '2' (as digit) not found in answer. Revised Strategy: Ensure count_by_package('requests') is executed to report the count of 2, followed by search_vulnerabilities_by_name to extract a concrete vulnerability name and ID as a supporting example.",
+    "timestamp": "2026-10-25T20:36:59.865913+00:00"
+  }
+]

@@ -1,10 +1,17 @@
-from bson import ObjectId
 from datetime import datetime, timezone
-from .db import get_messages_collection, get_summaries_collection, get_episodes_collection
+
+from bson import ObjectId
+
+from .db import (
+    get_episodes_collection,
+    get_messages_collection,
+    get_summaries_collection,
+)
 
 
 def now_utc() -> datetime:
     return datetime.now(timezone.utc)
+
 
 def is_valid_object_id(value: str) -> bool:
     try:
@@ -13,8 +20,10 @@ def is_valid_object_id(value: str) -> bool:
     except Exception:
         return False
 
+
 def to_object_id(value: str) -> ObjectId:
     return ObjectId(value)
+
 
 def serialize_vulnerability(doc: dict) -> dict:
     return {
@@ -38,7 +47,7 @@ def save_message(user_id: str, session_id: str, role: str, content: str):
         "session_id": session_id,
         "role": role,
         "content": content,
-        "created_at": now_utc()
+        "created_at": now_utc(),
     }
 
     col.insert_one(doc)
@@ -48,9 +57,9 @@ def get_recent_messages(user_id: str, session_id: str, limit: int = 16):
     col = get_messages_collection()
 
     docs = list(
-        col.find({
-            "user_id": user_id,
-            "session_id": session_id}).sort("created_at", -1).limit(limit)
+        col.find({"user_id": user_id, "session_id": session_id})
+        .sort("created_at", -1)
+        .limit(limit)
     )
 
     return list(reversed(docs))
@@ -60,12 +69,8 @@ def get_session_summary(user_id: str, session_id: str):
     col = get_summaries_collection()
 
     return col.find_one(
-        {
-            "user_id": user_id,
-            "session_id": session_id,
-            "scope": "session"
-        },
-        sort=[("created_at", -1)]
+        {"user_id": user_id, "session_id": session_id, "scope": "session"},
+        sort=[("created_at", -1)],
     )
 
 
@@ -85,20 +90,12 @@ def get_user_summary(user_id: str):
     col = get_summaries_collection()
 
     return col.find_one(
-        {
-            "user_id": user_id,
-            "scope": "user"
-        },
-        sort=[("created_at", -1)]
+        {"user_id": user_id, "scope": "user"}, sort=[("created_at", -1)]
     )
 
 
 def save_episode(
-    user_id: str,
-    session_id: str,
-    fact: str,
-    importance: float,
-    embedding: list[float]
+    user_id: str, session_id: str, fact: str, importance: float, embedding: list[float]
 ):
     col = get_episodes_collection()
 
@@ -108,7 +105,7 @@ def save_episode(
         "fact": fact,
         "importance": importance,
         "embedding": embedding,
-        "created_at": now_utc()
+        "created_at": now_utc(),
     }
 
     col.insert_one(doc)
@@ -128,7 +125,7 @@ def cosine_similarity(left: list[float], right: list[float]) -> float:
     if left_size == 0 or right_size == 0:
         return 0.0
 
-    return dot / ((left_size ** 0.5) * (right_size ** 0.5))
+    return dot / ((left_size**0.5) * (right_size**0.5))
 
 
 def get_relevant_episodes(user_id: str, query_embedding: list[float], limit: int = 3):
@@ -155,22 +152,26 @@ def get_relevant_episodes(user_id: str, query_embedding: list[float], limit: int
 
 def count_user_messages(user_id: str, session_id: str) -> int:
     col = get_messages_collection()
-    return col.count_documents({
-        "user_id": user_id,
-        "session_id": session_id,
-        "role": "user",
-    })
+    return col.count_documents(
+        {
+            "user_id": user_id,
+            "session_id": session_id,
+            "role": "user",
+        }
+    )
 
 
 def save_summary(user_id: str, session_id: str | None, scope: str, text: str):
     col = get_summaries_collection()
-    col.insert_one({
-        "user_id": user_id,
-        "session_id": session_id,
-        "scope": scope,
-        "text": text,
-        "created_at": now_utc(),
-    })
+    col.insert_one(
+        {
+            "user_id": user_id,
+            "session_id": session_id,
+            "scope": scope,
+            "text": text,
+            "created_at": now_utc(),
+        }
+    )
 
 
 def count_session_summaries(user_id: str) -> int:
@@ -197,27 +198,21 @@ def get_session_summary_texts(user_id: str, limit: int = 6) -> list[str]:
 
 def get_user_messages(user_id: str, limit: int = 16):
     col = get_messages_collection()
-    docs = list(
-        col.find({"user_id": user_id}).sort("created_at", -1).limit(limit)
-    )
+    docs = list(col.find({"user_id": user_id}).sort("created_at", -1).limit(limit))
     docs.reverse()
     return docs
 
 
 def get_recent_episodes(user_id: str, limit: int = 20):
     col = get_episodes_collection()
-    docs = list(
-        col.find({"user_id": user_id}).sort("created_at", -1).limit(limit)
-    )
+    docs = list(col.find({"user_id": user_id}).sort("created_at", -1).limit(limit))
     docs.reverse()
     return docs
 
 
 def get_recent_summaries(user_id: str, limit: int = 5):
     col = get_summaries_collection()
-    return list(
-        col.find({"user_id": user_id}).sort("created_at", -1).limit(limit)
-    )
+    return list(col.find({"user_id": user_id}).sort("created_at", -1).limit(limit))
 
 
 def get_daily_message_counts(user_id: str):
