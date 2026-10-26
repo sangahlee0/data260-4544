@@ -6,3 +6,5 @@ venv/
 .venv/
 *.egg-info/
 .ruff_cache/
+code/RAG/pypi_vulnerabilities.zip
+.DS_Store
