@@ -35,6 +35,27 @@ data260-4544/
 │   ├── hw1_client.py
 │   ├── hw2experiment_run.py
 │   ├── hw4_benchmark.py
+│   ├── hw7_agent.py
+│   ├── hw7_reflexion.py
+│   ├── hw7_part4/
+│   │   ├── __init__.py
+│   │   ├── acceptance.py
+│   │   ├── agent.py
+│   │   ├── file_tools.py
+│   │   ├── main.py
+│   │   ├── part6_acceptance.py
+│   │   ├── requirements.txt
+│   │   ├── raw/
+│   │   │   ├── acceptance_cases.json
+│   │   │   ├── hostile_pricing_injection.txt
+│   │   │   ├── pricing_snapshots/
+│   │   │   └── scenarios/
+│   │   └── static/
+│   │       ├── app.js
+│   │       ├── index.html
+│   │       └── styles.css
+│   ├── mcp_server/
+│   │   └── domain_server.py
 │   ├── metric_helper.py
 │   ├── nodes.py
 │   ├── rag.py
@@ -52,6 +73,7 @@ data260-4544/
 │   ├── verify-hw04.py
 │   ├── verify-hw05.py
 │   ├── verify-hw06.py
+│   ├── verify-hw07.py
 │   ├── workflow.py
 │   └── web_application/
 │       ├── index.html
@@ -84,6 +106,7 @@ data260-4544/
 │       │   ├── schema.py
 │       │   ├── seed.py
 │       │   └── session_crud.py
+│       ├── seed_hw7.py
 │       └── frontend/
 │           ├── index.html
 │           ├── package.json
@@ -172,14 +195,26 @@ data260-4544/
 │   │   │   └── retry_results.csv
 │   │   ├── reproducible_run_instructions
 │   │   └── verification.json
-│   └── hw06/
+│   ├── hw06/
+│   │   ├── AI_USE.md
+│   │   ├── METRICS.md
+│   │   ├── RUN_LOG.txt
+│   │   ├── memory_probes.yaml
+│   │   ├── raw/
+│   │   │   └── memory_logs.json
+│   │   ├── reproducible_run_instructions
+│   │   └── verification.json
+│   └── hw07/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
-│       ├── memory_probes.yaml
 │       ├── raw/
-│       │   └── memory_logs.json
-│       ├── reproducible_run_instructions
+│       │   ├── reflexion_comparison.csv
+│       │   ├── reflexion_comparison.json
+│       │   ├── stored_reflections.json
+│       │   ├── tool_reliability.csv
+│       │   └── tool_reliability.json
+│       ├── reproducible_run_instructions.md
 │       └── verification.json
 ├── src/
 │   └── model_client.py

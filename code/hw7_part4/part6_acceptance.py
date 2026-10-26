@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 from hw7_part4.file_tools import (
@@ -15,9 +17,17 @@ from hw7_part4.file_tools import (
     write_file,
 )
 
+REPORT_RAW_DIR = Path(__file__).resolve().parents[2] / "reports" / "hw07" / "raw"
+
 
 def run() -> str:
     lines = ["HW7 PART 6 COMBINED ACCEPTANCE RUN"]
+    results: dict[str, object] = {
+        "run_at": datetime.now(timezone.utc).isoformat(),
+        "integration_test": {},
+        "safe_commands": [],
+        "blocked_commands": [],
+    }
     course_dir = Path(__file__).resolve().parent
     with tempfile.TemporaryDirectory(
         prefix="hw7_part6_sandbox_", dir=course_dir
@@ -46,6 +56,12 @@ def run() -> str:
             ]
         )
         assert found_file == "beta.py" and "DEBUG = True" in contents
+        results["integration_test"] = {
+            "sequence": ["glob", "search", "read"],
+            "globbed_files": files,
+            "debug_file": found_file,
+            "debug_contents": contents,
+        }
 
         # Run only in the temporary directory. No destructive command is executed.
         safe = ["pwd", "ls", "cat alpha.py", "head -n 1 beta.py", "wc -l gamma.py"]
@@ -64,6 +80,9 @@ def run() -> str:
                 f"PASS {command!r}: {decision['allowed']} ({decision['reason']}); ran={output['allowed']}"
             )
             assert decision["allowed"] and output["allowed"]
+            results["safe_commands"].append(
+                {"command": command, "decision": decision, "execution": output}
+            )
         for command in blocked:
             decision = confirm_bash(command)
             destructive = is_destructive(command)
@@ -71,6 +90,13 @@ def run() -> str:
                 f"BLOCK {command!r}: destructive={destructive}, allowed={decision['allowed']} ({decision['reason']})"
             )
             assert destructive and not decision["allowed"]
+            results["blocked_commands"].append(
+                {
+                    "command": command,
+                    "is_destructive": destructive,
+                    "decision": decision,
+                }
+            )
 
         # Regression for a recursive-delete variant caught during review.
         recursive_delete = "rm -r scratch"
@@ -80,13 +106,25 @@ def run() -> str:
         )
         assert isinstance(is_destructive(recursive_delete), bool)
         assert is_destructive(recursive_delete) and not regression["allowed"]
+        results["false_allow_regression"] = {
+            "command": recursive_delete,
+            "is_destructive": is_destructive(recursive_delete),
+            "decision": regression,
+        }
 
         approved = confirm_bash("rm -rf scratch", auto_approve=True)
         lines.append(
             f"Explicit confirmation check: {approved['allowed']} ({approved['reason']}); command was not executed."
         )
         assert approved["allowed"]
+        results["explicit_confirmation"] = approved
         lines.append("Result: PASS")
+        results["result"] = "PASS"
+
+    REPORT_RAW_DIR.mkdir(parents=True, exist_ok=True)
+    output_path = REPORT_RAW_DIR / "part6_safety_gate_results.json"
+    output_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    lines.append(f"Saved machine-readable safety results: {output_path}")
     return "\n".join(lines) + "\n"
 
 
