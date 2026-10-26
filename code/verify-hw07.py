@@ -21,11 +21,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 REPORT_DIR = REPO_ROOT / "reports" / "hw07"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-# ---------------------------------------------------------------------------
+
 # Helpers
-# ---------------------------------------------------------------------------
-
-
 def get_token(username: str, password: str) -> str:
     r = httpx.post(
         f"{BASE_URL}/auth/login", data={"username": username, "password": password}
@@ -41,11 +38,7 @@ def run_check(name: str, fn) -> dict:
         return {"name": name, "pass": False, "detail": str(exc)}
 
 
-# ---------------------------------------------------------------------------
 # Individual checks
-# ---------------------------------------------------------------------------
-
-
 def check_login_valid():
     r = httpx.post(
         f"{BASE_URL}/auth/login", data={"username": "alice", "password": "alice123"}
@@ -121,9 +114,19 @@ def check_writer_cannot_delete():
     return r.status_code == 403, f"status={r.status_code}"
 
 
-# ---------------------------------------------------------------------------
+def check_agent_loop_verification():
+    from hw7_agent import run_agent
+
+    res = run_agent(
+        "Search for 'Injection' vulnerabilities, then lookup the details of the first vulnerability found.",
+        use_live_model=False,
+        verbose=False,
+    )
+    ok = res.get("status") == "success" and res.get("tool_calls", 0) >= 2
+    return ok, f"status={res.get('status')} tool_calls={res.get('tool_calls')}"
+
+
 # Main
-# ---------------------------------------------------------------------------
 
 commit = (
     subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT)
@@ -140,6 +143,7 @@ checks = [
     run_check("reader_cannot_create_403", check_reader_cannot_create),
     run_check("writer_can_create_201", check_writer_can_create),
     run_check("writer_cannot_delete_403", check_writer_cannot_delete),
+    run_check("agent_loop_verification_task", check_agent_loop_verification),
 ]
 
 output = {

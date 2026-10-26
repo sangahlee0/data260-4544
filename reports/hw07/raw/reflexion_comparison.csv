@@ -1,0 +1,8 @@
+Metric,Original loop,Reflexion loop
+Task success,3/3 (100.0%),3/3 (100.0%)
+Unsupported claims,0,0
+Retry rate,0.0% (no self-correction),2/3 (66.7%)
+Tool calls (avg/task),2.0,3.0
+Tokens (avg/task),780.0,936.7
+Latency (avg ms/task),74.05,0.39
+Verifier false rejections,0,1

@@ -1,0 +1,150 @@
+{
+  "timestamp": "2026-10-25T20:36:59.867198+00:00",
+  "comparison_summary": [
+    {
+      "Metric": "Task success",
+      "Original loop": "3/3 (100.0%)",
+      "Reflexion loop": "3/3 (100.0%)"
+    },
+    {
+      "Metric": "Unsupported claims",
+      "Original loop": "0",
+      "Reflexion loop": "0"
+    },
+    {
+      "Metric": "Retry rate",
+      "Original loop": "0.0% (no self-correction)",
+      "Reflexion loop": "2/3 (66.7%)"
+    },
+    {
+      "Metric": "Tool calls (avg/task)",
+      "Original loop": "2.0",
+      "Reflexion loop": "3.0"
+    },
+    {
+      "Metric": "Tokens (avg/task)",
+      "Original loop": "780.0",
+      "Reflexion loop": "936.7"
+    },
+    {
+      "Metric": "Latency (avg ms/task)",
+      "Original loop": "74.05",
+      "Reflexion loop": "0.39"
+    },
+    {
+      "Metric": "Verifier false rejections",
+      "Original loop": "0",
+      "Reflexion loop": "1"
+    }
+  ],
+  "original_loop_runs": [
+    {
+      "task_id": "Task A",
+      "success": true,
+      "unsupported_claims": 0,
+      "retries": 0,
+      "tool_calls": 2,
+      "tokens": 775,
+      "latency_ms": 221.03,
+      "false_rejections": 0,
+      "answer": "Found SQL Injection Vulnerability (ID 1, code GHSA-2c2j-9gv5-cj73, urgency 4) affecting package requests."
+    },
+    {
+      "task_id": "Task B",
+      "success": true,
+      "unsupported_claims": 0,
+      "retries": 0,
+      "tool_calls": 2,
+      "tokens": 730,
+      "latency_ms": 0.63,
+      "false_rejections": 0,
+      "answer": "The package requests has 2 vulnerabilities. A supporting example is SQL Injection Vulnerability (ID 1, urgency 4)."
+    },
+    {
+      "task_id": "Task C",
+      "success": true,
+      "unsupported_claims": 0,
+      "retries": 0,
+      "tool_calls": 2,
+      "tokens": 835,
+      "latency_ms": 0.5,
+      "false_rejections": 0,
+      "answer": "Comparison: Vulnerability 1 is 'SQL Injection Vulnerability' (urgency 4), while Vulnerability 2 is 'Remote Code Execution' (urgency 5). Both affect requests."
+    }
+  ],
+  "reflexion_loop_runs": [
+    {
+      "task_id": "Task A",
+      "success": true,
+      "unsupported_claims": 0,
+      "retries": 1,
+      "tool_calls": 3,
+      "tokens": 925,
+      "latency_ms": 0.41,
+      "false_rejections": 0,
+      "answer": "Found SQL Injection Vulnerability (ID 1, code GHSA-2c2j-9gv5-cj73, urgency 4) affecting package requests.",
+      "stop_reason": "success"
+    },
+    {
+      "task_id": "Task B",
+      "success": true,
+      "unsupported_claims": 0,
+      "retries": 1,
+      "tool_calls": 4,
+      "tokens": 1050,
+      "latency_ms": 0.38,
+      "false_rejections": 1,
+      "answer": "The package requests has 2 vulnerabilities. A supporting example is SQL Injection Vulnerability (ID 1, urgency 4).",
+      "stop_reason": "success"
+    },
+    {
+      "task_id": "Task C",
+      "success": true,
+      "unsupported_claims": 0,
+      "retries": 0,
+      "tool_calls": 2,
+      "tokens": 835,
+      "latency_ms": 0.37,
+      "false_rejections": 0,
+      "answer": "Comparison: Vulnerability 1 is 'SQL Injection Vulnerability' (urgency 4), while Vulnerability 2 is 'Remote Code Execution' (urgency 5). Both affect requests.",
+      "stop_reason": "success"
+    }
+  ],
+  "stored_reflections": [
+    {
+      "task_id": "Task A",
+      "attempt": 1,
+      "failed_answer": "Found SQL Injection vulnerability somewhere in the system.",
+      "evidence": {
+        "verifier_result": "Task A verifier failed: Trajectory missing 'search_vulnerabilities_by_id'; Answer does not identify vulnerability ID 1; Answer lacks specific vulnerability details (code or urgency)",
+        "failed_assertions": [
+          "Trajectory missing 'search_vulnerabilities_by_id'",
+          "Answer does not identify vulnerability ID 1",
+          "Answer lacks specific vulnerability details (code or urgency)"
+        ],
+        "tool_calls_in_trajectory": [
+          "search_vulnerabilities_by_name"
+        ]
+      },
+      "reflection": "Failure Cause: Trajectory missing 'search_vulnerabilities_by_id'; Answer does not identify vulnerability ID 1; Answer lacks specific vulnerability details (code or urgency). Revised Strategy: Ensure the agent first searches for 'Injection', retrieves result ID 1, then invokes search_vulnerabilities_by_id(1) to include the full GHSA code and urgency score in the final response.",
+      "timestamp": "2026-10-25T20:36:59.865465+00:00"
+    },
+    {
+      "task_id": "Task B",
+      "attempt": 1,
+      "failed_answer": "The package requests has two vulnerabilities. A supporting example is SQL Injection (ID 1).",
+      "evidence": {
+        "verifier_result": "Task B verifier failed: Count '2' (as digit) not found in answer",
+        "failed_assertions": [
+          "Count '2' (as digit) not found in answer"
+        ],
+        "tool_calls_in_trajectory": [
+          "count_by_package",
+          "search_vulnerabilities_by_name"
+        ]
+      },
+      "reflection": "Failure Cause: Count '2' (as digit) not found in answer. Revised Strategy: Ensure count_by_package('requests') is executed to report the count of 2, followed by search_vulnerabilities_by_name to extract a concrete vulnerability name and ID as a supporting example.",
+      "timestamp": "2026-10-25T20:36:59.865913+00:00"
+    }
+  ]
+}
