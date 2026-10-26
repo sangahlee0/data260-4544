@@ -199,6 +199,7 @@ data260-4544/
 │   │   ├── AI_USE.md
 │   │   ├── METRICS.md
 │   │   ├── RUN_LOG.txt
+│   │   ├── Lee_HW6.pdf
 │   │   ├── memory_probes.yaml
 │   │   ├── raw/
 │   │   │   └── memory_logs.json
@@ -207,6 +208,7 @@ data260-4544/
 │   └── hw07/
 │       ├── AI_USE.md
 │       ├── METRICS.md
+│       ├── Lee_HW7.pdf
 │       ├── RUN_LOG.txt
 │       ├── raw/
 │       │   ├── reflexion_comparison.csv
