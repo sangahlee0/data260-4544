@@ -1,0 +1,1042 @@
+{
+  "run_at": "2026-10-25T22:01:49.758750+00:00",
+  "pricing_url": "https://lyftbikes.com/pricing",
+  "cases": [
+    {
+      "success": true,
+      "data": {
+        "decision": "Buy Monthly Membership",
+        "justification": "Across 600 trips in 1 calendar month(s), estimated pay-per-use cost is $9720.00. The membership plus estimated overage is $3599.00. The observed average is 80.0 minutes per trip and 600.0 trips per month. Captured pricing states: Month pass: $29.00/month; month pass classic bikes: 45 min free, then $0.17/min; single ride classic bikes: $1.00 to unlock, then $0.19/min. The estimate assumes classic-bike pricing wherever bike type is unavailable.",
+        "cost_breakdown": {
+          "trip_rows": 600,
+          "priced_trips": 600,
+          "months_covered": 1,
+          "pay_per_use_total": 9720.0,
+          "membership_fees": 29.0,
+          "membership_overage": 3570.0,
+          "membership_total": 3599.0,
+          "average_duration_minutes": 80.0,
+          "average_rides_per_month": 600.0,
+          "actual_rides_per_month": 600.0,
+          "actual_ride_minutes_per_month": 48000.0,
+          "break_even_rides_per_month": 3,
+          "break_even_ride_minutes_per_month": 240.0
+        },
+        "weekly_breakdown": [
+          {
+            "week": "2026-W31",
+            "ride_count": 60,
+            "average_duration_minutes": 80.0,
+            "pay_per_use_spend": 972.0
+          },
+          {
+            "week": "2026-W32",
+            "ride_count": 210,
+            "average_duration_minutes": 80.0,
+            "pay_per_use_spend": 3402.0
+          },
+          {
+            "week": "2026-W33",
+            "ride_count": 210,
+            "average_duration_minutes": 80.0,
+            "pay_per_use_spend": 3402.0
+          },
+          {
+            "week": "2026-W34",
+            "ride_count": 120,
+            "average_duration_minutes": 80.0,
+            "pay_per_use_spend": 1944.0
+          }
+        ],
+        "assumptions_and_caveats": [
+          "Bay Wheels trip records are anonymized and aggregate many riders; this comparison treats the uploaded rows as one hypothetical usage profile."
+        ],
+        "pricing_terms": {
+          "monthly_membership": 29.0,
+          "single_unlock": 1.0,
+          "single_classic_per_minute": 0.19,
+          "member_classic_minutes": 45.0,
+          "member_classic_overage_per_minute": 0.17,
+          "single_ebike_per_minute": 0.49,
+          "member_ebike_per_minute": 0.17
+        },
+        "citations": {
+          "pricing_url": "https://lyftbikes.com/pricing",
+          "captured_at": "2026-10-25T22:01:49.234591+00:00",
+          "sha256": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492",
+          "snapshot_file": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492.txt"
+        },
+        "pricing_passages": [
+          {
+            "text": "Month pass: $29.00/month.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Month pass classic bikes: 45 min free, then $0.17/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Single ride classic bikes: $1.00 to unlock, then $0.19/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Month pass e-bikes: Free unlocks + $0.17/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Single ride e-bikes: $0.49/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          }
+        ],
+        "step_count": 3,
+        "stop_reason": "success",
+        "total_time_ms": 675.45,
+        "tool_calls": [
+          {
+            "tool": "csv_sql",
+            "input": {
+              "sql": "SELECT COUNT(*) AS trip_count, AVG(duration_seconds) AS average_duration_seconds, SUM(CASE WHEN duration_seconds IS NULL THEN 1 ELSE 0 END) AS missing_duration_rows FROM trips"
+            },
+            "observation": {
+              "success": true,
+              "ts": "2026-10-25T22:01:48.571539+00:00",
+              "data": {
+                "rows": [
+                  {
+                    "trip_count": 600,
+                    "average_duration_seconds": 4800.0,
+                    "missing_duration_rows": 0
+                  }
+                ],
+                "row_count": 1,
+                "source": "uploaded.csv"
+              },
+              "source": "uploaded.csv"
+            }
+          },
+          {
+            "tool": "policy_retriever",
+            "input": {
+              "url": "https://lyftbikes.com/pricing",
+              "query": "month pass monthly price classic bike ebike 45 min free per-minute unlock overage",
+              "k": 8
+            },
+            "observation": {
+              "success": true,
+              "ts": "2026-10-25T22:01:49.235775+00:00",
+              "data": {
+                "passages": [
+                  {
+                    "text": "Month pass: $29.00/month.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Month pass classic bikes: 45 min free, then $0.17/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Single ride classic bikes: $1.00 to unlock, then $0.19/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Month pass e-bikes: Free unlocks + $0.17/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Single ride e-bikes: $0.49/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  }
+                ],
+                "snapshot": {
+                  "source_url": "https://lyftbikes.com/pricing",
+                  "captured_at": "2026-10-25T22:01:49.234591+00:00",
+                  "sha256": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492",
+                  "snapshot_file": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492.txt"
+                }
+              },
+              "source": "https://lyftbikes.com/pricing"
+            }
+          },
+          {
+            "tool": "calculator",
+            "input": {
+              "expression": "29.0 + 3570.0",
+              "units": "USD"
+            },
+            "observation": {
+              "success": true,
+              "ts": "2026-10-25T22:01:49.240099+00:00",
+              "data": {
+                "value": 3599.0,
+                "units": "USD"
+              }
+            }
+          }
+        ]
+      },
+      "scenario": {
+        "name": "membership_wins",
+        "trip_rows": 600,
+        "expected_decision": "Buy Monthly Membership",
+        "synthetic": true,
+        "note": "Hypothetical usage profile using Bay Wheels public trip-data field names; not an identified rider's history.",
+        "csv_file": "raw/scenarios/membership_wins.csv"
+      }
+    },
+    {
+      "success": true,
+      "data": {
+        "decision": "Pay Per Ride/Minute",
+        "justification": "Across 600 trips in 30 calendar month(s), estimated pay-per-use cost is $714.00. The membership plus estimated overage is $870.00. The observed average is 1.0 minutes per trip and 20.0 trips per month. Captured pricing states: Month pass: $29.00/month; month pass classic bikes: 45 min free, then $0.17/min; single ride classic bikes: $1.00 to unlock, then $0.19/min. The estimate assumes classic-bike pricing wherever bike type is unavailable.",
+        "cost_breakdown": {
+          "trip_rows": 600,
+          "priced_trips": 600,
+          "months_covered": 30,
+          "pay_per_use_total": 714.0,
+          "membership_fees": 870.0,
+          "membership_overage": 0.0,
+          "membership_total": 870.0,
+          "average_duration_minutes": 1.0,
+          "average_rides_per_month": 20.0,
+          "actual_rides_per_month": 20.0,
+          "actual_ride_minutes_per_month": 20.0,
+          "break_even_rides_per_month": 25,
+          "break_even_ride_minutes_per_month": 25.0
+        },
+        "weekly_breakdown": [
+          {
+            "week": "2022-W52",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2023-W01",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W02",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W03",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2023-W05",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2023-W06",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W07",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W08",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2023-W09",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2023-W10",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W11",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W12",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2023-W13",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2023-W14",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W15",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W16",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2023-W18",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W19",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W20",
+            "ride_count": 6,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 7.14
+          },
+          {
+            "week": "2023-W22",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2023-W23",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W24",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W25",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2023-W26",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2023-W27",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W28",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W29",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2023-W31",
+            "ride_count": 6,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 7.14
+          },
+          {
+            "week": "2023-W32",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W33",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W35",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2023-W36",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W37",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W38",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2023-W39",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2023-W40",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W41",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W42",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2023-W44",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2023-W45",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W46",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W47",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2023-W48",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2023-W49",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W50",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2023-W51",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2024-W01",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W02",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W03",
+            "ride_count": 6,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 7.14
+          },
+          {
+            "week": "2024-W05",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2024-W06",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W07",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W08",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2024-W09",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2024-W10",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W11",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W12",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2024-W14",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W15",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W16",
+            "ride_count": 6,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 7.14
+          },
+          {
+            "week": "2024-W18",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2024-W19",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W20",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W21",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2024-W22",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2024-W23",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W24",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W25",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2024-W27",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W28",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W29",
+            "ride_count": 6,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 7.14
+          },
+          {
+            "week": "2024-W31",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2024-W32",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W33",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W34",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2024-W35",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2024-W36",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W37",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W38",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2024-W40",
+            "ride_count": 6,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 7.14
+          },
+          {
+            "week": "2024-W41",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W42",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W44",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2024-W45",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W46",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W47",
+            "ride_count": 3,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 3.57
+          },
+          {
+            "week": "2024-W48",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2024-W49",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W50",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2024-W51",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2025-W01",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          },
+          {
+            "week": "2025-W02",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W03",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W04",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2025-W05",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2025-W06",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W07",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W08",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2025-W09",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2025-W10",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W11",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W12",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2025-W14",
+            "ride_count": 6,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 7.14
+          },
+          {
+            "week": "2025-W15",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W16",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W18",
+            "ride_count": 4,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 4.76
+          },
+          {
+            "week": "2025-W19",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W20",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W21",
+            "ride_count": 2,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 2.38
+          },
+          {
+            "week": "2025-W22",
+            "ride_count": 1,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 1.19
+          },
+          {
+            "week": "2025-W23",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W24",
+            "ride_count": 7,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 8.33
+          },
+          {
+            "week": "2025-W25",
+            "ride_count": 5,
+            "average_duration_minutes": 1.0,
+            "pay_per_use_spend": 5.95
+          }
+        ],
+        "assumptions_and_caveats": [
+          "Bay Wheels trip records are anonymized and aggregate many riders; this comparison treats the uploaded rows as one hypothetical usage profile."
+        ],
+        "pricing_terms": {
+          "monthly_membership": 29.0,
+          "single_unlock": 1.0,
+          "single_classic_per_minute": 0.19,
+          "member_classic_minutes": 45.0,
+          "member_classic_overage_per_minute": 0.17,
+          "single_ebike_per_minute": 0.49,
+          "member_ebike_per_minute": 0.17
+        },
+        "citations": {
+          "pricing_url": "https://lyftbikes.com/pricing",
+          "captured_at": "2026-10-25T22:01:49.753588+00:00",
+          "sha256": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492",
+          "snapshot_file": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492.txt"
+        },
+        "pricing_passages": [
+          {
+            "text": "Month pass: $29.00/month.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Month pass classic bikes: 45 min free, then $0.17/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Single ride classic bikes: $1.00 to unlock, then $0.19/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Month pass e-bikes: Free unlocks + $0.17/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          },
+          {
+            "text": "Single ride e-bikes: $0.49/min.",
+            "source": "https://lyftbikes.com/pricing",
+            "score": 1.0
+          }
+        ],
+        "step_count": 3,
+        "stop_reason": "success",
+        "total_time_ms": 517.36,
+        "tool_calls": [
+          {
+            "tool": "csv_sql",
+            "input": {
+              "sql": "SELECT COUNT(*) AS trip_count, AVG(duration_seconds) AS average_duration_seconds, SUM(CASE WHEN duration_seconds IS NULL THEN 1 ELSE 0 END) AS missing_duration_rows FROM trips"
+            },
+            "observation": {
+              "success": true,
+              "ts": "2026-10-25T22:01:49.245540+00:00",
+              "data": {
+                "rows": [
+                  {
+                    "trip_count": 600,
+                    "average_duration_seconds": 60.0,
+                    "missing_duration_rows": 0
+                  }
+                ],
+                "row_count": 1,
+                "source": "uploaded.csv"
+              },
+              "source": "uploaded.csv"
+            }
+          },
+          {
+            "tool": "policy_retriever",
+            "input": {
+              "url": "https://lyftbikes.com/pricing",
+              "query": "month pass monthly price classic bike ebike 45 min free per-minute unlock overage",
+              "k": 8
+            },
+            "observation": {
+              "success": true,
+              "ts": "2026-10-25T22:01:49.754186+00:00",
+              "data": {
+                "passages": [
+                  {
+                    "text": "Month pass: $29.00/month.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Month pass classic bikes: 45 min free, then $0.17/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Single ride classic bikes: $1.00 to unlock, then $0.19/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Month pass e-bikes: Free unlocks + $0.17/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  },
+                  {
+                    "text": "Single ride e-bikes: $0.49/min.",
+                    "source": "https://lyftbikes.com/pricing",
+                    "score": 1.0
+                  }
+                ],
+                "snapshot": {
+                  "source_url": "https://lyftbikes.com/pricing",
+                  "captured_at": "2026-10-25T22:01:49.753588+00:00",
+                  "sha256": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492",
+                  "snapshot_file": "ba78fafaa348ce87af53c7c925b959afea0663459d5aa219edd978f742a75492.txt"
+                }
+              },
+              "source": "https://lyftbikes.com/pricing"
+            }
+          },
+          {
+            "tool": "calculator",
+            "input": {
+              "expression": "870.0 + 0.0",
+              "units": "USD"
+            },
+            "observation": {
+              "success": true,
+              "ts": "2026-10-25T22:01:49.758398+00:00",
+              "data": {
+                "value": 870.0,
+                "units": "USD"
+              }
+            }
+          }
+        ]
+      },
+      "scenario": {
+        "name": "paygo_wins",
+        "trip_rows": 600,
+        "expected_decision": "Pay Per Ride/Minute",
+        "synthetic": true,
+        "note": "Hypothetical usage profile using Bay Wheels public trip-data field names; not an identified rider's history.",
+        "csv_file": "raw/scenarios/paygo_wins.csv"
+      }
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "run_at": "2026-10-26T06:18:49.109041+00:00",
+  "integration_test": {
+    "sequence": [
+      "glob",
+      "search",
+      "read"
+    ],
+    "globbed_files": [
+      "alpha.py",
+      "beta.py",
+      "gamma.py"
+    ],
+    "debug_file": "beta.py",
+    "debug_contents": "DEBUG = True\nprint(\"debug here\")\n"
+  },
+  "safe_commands": [
+    {
+      "command": "pwd",
+      "decision": {
+        "allowed": true,
+        "reason": "Allowed read-only command."
+      },
+      "execution": {
+        "allowed": true,
+        "reason": "Allowed read-only command.",
+        "returncode": 0,
+        "output": "/Users/sangah/Desktop/Data260/data260-4544/code/hw7_part4/hw7_part6_sandbox_y6dmj1g4\n"
+      }
+    },
+    {
+      "command": "ls",
+      "decision": {
+        "allowed": true,
+        "reason": "Allowed read-only command."
+      },
+      "execution": {
+        "allowed": true,
+        "reason": "Allowed read-only command.",
+        "returncode": 0,
+        "output": "alpha.py\nbeta.py\ngamma.py\n"
+      }
+    },
+    {
+      "command": "cat alpha.py",
+      "decision": {
+        "allowed": true,
+        "reason": "Allowed read-only command."
+      },
+      "execution": {
+        "allowed": true,
+        "reason": "Allowed read-only command.",
+        "returncode": 0,
+        "output": "NAME = \"alpha\"\n"
+      }
+    },
+    {
+      "command": "head -n 1 beta.py",
+      "decision": {
+        "allowed": true,
+        "reason": "Allowed read-only command."
+      },
+      "execution": {
+        "allowed": true,
+        "reason": "Allowed read-only command.",
+        "returncode": 0,
+        "output": "DEBUG = True\n"
+      }
+    },
+    {
+      "command": "wc -l gamma.py",
+      "decision": {
+        "allowed": true,
+        "reason": "Allowed read-only command."
+      },
+      "execution": {
+        "allowed": true,
+        "reason": "Allowed read-only command.",
+        "returncode": 0,
+        "output": "       1 gamma.py\n"
+      }
+    }
+  ],
+  "blocked_commands": [
+    {
+      "command": "rm -rf scratch",
+      "is_destructive": true,
+      "decision": {
+        "allowed": false,
+        "reason": "Destructive command requires explicit confirmation."
+      }
+    },
+    {
+      "command": "sudo whoami",
+      "is_destructive": true,
+      "decision": {
+        "allowed": false,
+        "reason": "Destructive command requires explicit confirmation."
+      }
+    },
+    {
+      "command": "chmod 777 alpha.py > /root/part6.txt",
+      "is_destructive": true,
+      "decision": {
+        "allowed": false,
+        "reason": "Destructive command requires explicit confirmation."
+      }
+    },
+    {
+      "command": "dd if=/dev/zero of=/dev/sda",
+      "is_destructive": true,
+      "decision": {
+        "allowed": false,
+        "reason": "Destructive command requires explicit confirmation."
+      }
+    },
+    {
+      "command": "mkfs.ext4 /dev/sda",
+      "is_destructive": true,
+      "decision": {
+        "allowed": false,
+        "reason": "Destructive command requires explicit confirmation."
+      }
+    }
+  ],
+  "false_allow_regression": {
+    "command": "rm -r scratch",
+    "is_destructive": true,
+    "decision": {
+      "allowed": false,
+      "reason": "Destructive command requires explicit confirmation."
+    }
+  },
+  "explicit_confirmation": {
+    "allowed": true,
+    "reason": "Destructive command explicitly confirmed."
+  },
+  "result": "PASS"
+}
