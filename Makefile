@@ -1,4 +1,4 @@
-.PHONY: verify-hw01 verify-hw02 verify-hw03 verify-hw04 verify-hw05 verify-hw06 verify-hw07
+.PHONY: verify-hw01 verify-hw02 verify-hw03 verify-hw04 verify-hw05 verify-hw06 verify-hw07 verify-hw08
 
 verify-hw01:
 	cd code && python3 verify-hw01.py
@@ -20,3 +20,6 @@ verify-hw06:
 
 verify-hw07:
 	cd code && python3 verify-hw07.py
+
+verify-hw08:
+	cd code && python3 verify-hw08.py

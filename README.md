@@ -96,6 +96,7 @@ data260-4544/
 │   ├── verify-hw05.py
 │   ├── verify-hw06.py
 │   ├── verify-hw07.py
+│   ├── verify-hw08.py
 │   ├── workflow.py
 │   └── web_application/
 │       ├── index.html
@@ -243,7 +244,14 @@ data260-4544/
 │   └── hw08/
 │       ├── AI_USE.md
 │       ├── METRICS.md
-│       └── RUN_LOG.txt
+│       ├── RUN_LOG.txt
+│       ├── raw/
+│       │   ├── consumer_death.json
+│       │   ├── duplicate_delivery.json
+│       │   ├── ordering_results.json
+│       │   └── poison_message.json
+│       ├── reproducible_run_instructions
+│       └── verification.json
 ├── src/
 │   └── model_client.py
 ├── .gitignore

@@ -1,0 +1,59 @@
+# HW8 Reproducible Run Instructions
+
+Run these commands from the `data260-4544/` project root.
+
+## Install dependencies
+
+```bash
+python -m pip install -r code/requirements-hw08.txt
+```
+
+## Start Part 1 services
+
+```bash
+docker compose -f docker-compose.hw08.yml up -d --build
+docker compose -f docker-compose.hw08.yml ps
+```
+
+## Run the Part 1 demonstration
+```bash
+python code/homework_demo.py
+```
+
+## Create Part 2 topics
+```bash
+bash code/hw08_kafka_pipeline/create_topics.sh
+```
+
+## Run the Part 2 agents
+Open four terminals. In each terminal, change to
+`code/hw08_kafka_pipeline/` and run:
+
+```bash
+python -u planner.py
+python -u writer.py
+python -u reviewer.py
+python -u send_question.py
+```
+
+Start Planner, Writer, and Reviewer first. Run the sender after all three show
+their listening messages.
+
+## Run the Part 3 tests
+Run the Writer before each test when required:
+
+```bash
+python -u replay_duplicate.py
+python -u consumer_death_test.py
+python -u poison_message_test.py
+ORDERING_KEYED=0 python -u ordering_test.py
+ORDERING_KEYED=1 python -u ordering_test.py
+```
+
+## Run the HW8 verification script
+
+```bash
+make verify-hw08
+```
+
+The verification script writes `reports/hw08/verification.json`.

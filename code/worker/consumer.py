@@ -3,8 +3,6 @@ import json
 import os
 import uuid
 
-from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
-
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 REQUEST_TOPIC = "s4544_vulnerability_requests"
 
@@ -97,6 +95,8 @@ def process_request_message(request):
 
 
 async def main():
+    from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
+
     consumer = AIOKafkaConsumer(
         REQUEST_TOPIC,
         bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,

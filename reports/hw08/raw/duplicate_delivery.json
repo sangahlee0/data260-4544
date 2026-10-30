@@ -1,0 +1,8 @@
+{
+  "scenario": "duplicate_delivery",
+  "correlation_id": "duplicate-demo-0aef7989-d7b0-4aaa-b263-10519f805463",
+  "attempts": 2,
+  "drafts_sent": 1,
+  "duplicates_ignored": 1,
+  "result": "passed"
+}

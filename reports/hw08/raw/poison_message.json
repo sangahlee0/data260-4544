@@ -1,0 +1,9 @@
+{
+  "scenario": "poison_message",
+  "poison_correlation_id": "poison-demo-001",
+  "retry_limit": 3,
+  "dead_letter_topic": "s4544_dead_letter",
+  "later_message_correlation_id": "after-poison-001",
+  "later_message_processed": true,
+  "result": "passed"
+}
