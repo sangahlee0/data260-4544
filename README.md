@@ -19,8 +19,30 @@ Model: qwen2.5:3b (switched from qwen3.8b due to hardware issues)
 
 ```text
 data260-4544/
+├── docker-compose.hw08.yml
 ├── code/
 │   ├── Dockerfile
+│   ├── Dockerfile.hw08
+│   ├── requirements-hw08.txt
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── kafka_rpc.py
+│   │   └── main.py
+│   ├── homework_demo.py
+│   ├── hw08_kafka_pipeline/
+│   │   ├── topics.py
+│   │   ├── create_topics.sh
+│   │   ├── planner.py
+│   │   ├── writer.py
+│   │   ├── reviewer.py
+│   │   ├── send_question.py
+│   │   ├── replay_duplicate.py
+│   │   ├── consumer_death_test.py
+│   │   ├── poison_message_test.py
+│   │   └── ordering_test.py
+│   ├── worker/
+│   │   ├── __init__.py
+│   │   └── consumer.py
 │   ├── RAG/
 │   │   ├── corpus/
 │   │   │   ├── *.json
@@ -205,19 +227,23 @@ data260-4544/
 │   │   │   └── memory_logs.json
 │   │   ├── reproducible_run_instructions
 │   │   └── verification.json
-│   └── hw07/
+│   ├── hw07/
+│   │   ├── AI_USE.md
+│   │   ├── METRICS.md
+│   │   ├── Lee_HW7.pdf
+│   │   ├── RUN_LOG.txt
+│   │   ├── raw/
+│   │   │   ├── reflexion_comparison.csv
+│   │   │   ├── reflexion_comparison.json
+│   │   │   ├── stored_reflections.json
+│   │   │   ├── tool_reliability.csv
+│   │   │   └── tool_reliability.json
+│   │   ├── reproducible_run_instructions.md
+│   │   └── verification.json
+│   └── hw08/
 │       ├── AI_USE.md
 │       ├── METRICS.md
-│       ├── Lee_HW7.pdf
-│       ├── RUN_LOG.txt
-│       ├── raw/
-│       │   ├── reflexion_comparison.csv
-│       │   ├── reflexion_comparison.json
-│       │   ├── stored_reflections.json
-│       │   ├── tool_reliability.csv
-│       │   └── tool_reliability.json
-│       ├── reproducible_run_instructions.md
-│       └── verification.json
+│       └── RUN_LOG.txt
 ├── src/
 │   └── model_client.py
 ├── .gitignore
@@ -228,4 +254,5 @@ data260-4544/
 ├── Makefile
 └── README.md
 ```
+
 
