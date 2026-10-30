@@ -1,0 +1,916 @@
+sangah@MacBook-Air-SAL data260-4544 % date '+%Y-%m-%d %H:%M:%S %Z'
+2026-10-29 17:06:22 PDT
+
+sangah@MacBook-Air-SAL data260-4544 % docker compose -f docker-compose.hw08.yml ps -a
+NAME            IMAGE                  COMMAND                  SERVICE   CREATED          STATUS              PORTS
+s4544-fastapi   data260-4544-fastapi   "uvicorn app.main:ap…"   fastapi   ...              Up                  0.0.0.0:8044->8044/tcp
+s4544-kafka     apache/kafka:3.9.2     "/__cacert_entrypoin…"   kafka     ...              Up                  0.0.0.0:9092->9092/tcp
+s4544-worker    data260-4544-worker    "python -u worker/co…"   worker    ...              Up
+
+sangah@MacBook-Air-SAL data260-4544 % docker compose -f docker-compose.hw08.yml logs --tail=50 worker
+s4544-worker  | Consumer is ready and listening...
+s4544-worker  | Listening for requests on topic: s4544_vulnerability_requests
+
+sangah@MacBook-Air-SAL data260-4544 % docker compose -f docker-compose.hw08.yml logs --tail=50 fastapi
+s4544-fastapi  | FastAPI KafkaRPC started
+s4544-fastapi  | Listening for Kafka responses on topic: s4544_vulnerability_responses
+s4544-fastapi  | Uvicorn running on http://0.0.0.0:8044
+
+sangah@MacBook-Air-SAL data260-4544 % python code/homework_demo.py
+
+
+sangah@MacBook-Air-SAL data260-4544 % docker compose -f docker-compose.hw08.yml logs --since=5m worker fastapi \
+| grep -E "topic=|Processing|correlation_id"
+s4544-fastapi  | [FASTAPI] topic=s4544_vulnerability_requests
+s4544-fastapi  |   "correlation_id": "42c78a3d-ba8e-440f-9eb5-c79a8132efce",
+s4544-worker   | [WORKER] Received request from topic=s4544_vulnerability_requests
+s4544-worker   | [WORKER] correlation_id=42c78a3d-ba8e-440f-9eb5-c79a8132efce
+s4544-worker   | [WORKER] Processing operation=CREATE_VULNERABILITY
+s4544-worker   | [WORKER] Sending response to topic=s4544_vulnerability_responses
+s4544-worker   |   "correlation_id": "42c78a3d-ba8e-440f-9eb5-c79a8132efce",
+s4544-fastapi  | [FASTAPI] Sent request to topic=s4544_vulnerability_requests
+s4544-fastapi  | [FASTAPI] Received response from topic=s4544_vulnerability_responses
+s4544-fastapi  | [FASTAPI] correlation_id=42c78a3d-ba8e-440f-9eb5-c79a8132efce
+s4544-fastapi  |   "correlation_id": "42c78a3d-ba8e-440f-9eb5-c79a8132efce",
+s4544-worker   | [WORKER] Received request from topic=s4544_vulnerability_requests
+s4544-worker   | [WORKER] correlation_id=42c78a3d-ba8e-440f-9eb5-c79a8132efce
+s4544-worker   | [WORKER] Processing operation=GET_VULNERABILITY
+s4544-worker   | [WORKER] Sending response to topic=s4544_vulnerability_responses
+s4544-worker   |   "correlation_id": "42c78a3d-ba8e-440f-9eb5-c79a8132efce",
+s4544-fastapi  | [FASTAPI] topic=s4544_vulnerability_requests
+s4544-fastapi  |   "correlation_id": "42c78a3d-ba8e-440f-9eb5-c79a8132efce",
+s4544-fastapi  | [FASTAPI] Sent request to topic=s4544_vulnerability_requests
+s4544-fastapi  | [FASTAPI] Received response from topic=s4544_vulnerability_responses
+s4544-fastapi  | [FASTAPI] correlation_id=42c78a3d-ba8e-440f-9eb5-c79a8132efce
+s4544-fastapi  |   "correlation_id": "42c78a3d-ba8e-440f-9eb5-c79a8132efce",
+Script started on Thu Oct 29 17:10:22 2026
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[J(base) sangah@MacBook-Air-SAL data260-4544 % [K[?2004h[7mdate '+%Y-%m-%d %H:%M:%S %Z'[27m
+
+[7mdocker compose -f docker-compose.hw08.yml up -d --build --force-recreate fastapi[27m[K
+
+[7mpython code/homework_demo.py[27m[K
+
+[7mdocker compose -f docker-compose.hw08.yml logs --since=5m worker fastapi \[27m[K
+
+[7m| grep -E "Sending request|Received request|Processing|Sending response|Received response|Returning response|operation=|topic=|correlation_id"[27m[K[4A[97D[27md[27ma[27mt[27me[27m [27m'[27m+[27m%[27mY[27m-[27m%[27mm[27m-[27m%[27md[27m [27m%[27mH[27m:[27m%[27mM[27m:[27m%[27mS[27m [27m%[27mZ[27m'[1B
+[27md[27mo[27mc[27mk[27me[27mr[27m [27mc[27mo[27mm[27mp[27mo[27ms[27me[27m [27m-[27mf[27m [27md[27mo[27mc[27mk[27me[27mr[27m-[27mc[27mo[27mm[27mp[27mo[27ms[27me[27m.[27mh[27mw[27m0[27m8[27m.[27my[27mm[27ml[27m [27mu[27mp[27m [27m-[27md[27m [27m-[27m-[27mb[27mu[27mi[27ml[27md[27m [27m-[27m-[27mf[27mo[27mr[27mc[27me[27m-[27mr[27me[27mc[27mr[27me[27ma[27mt[27me[27m [27mf[27ma[27ms[27mt[27ma[27mp[27mi[1B
+[27mp[27my[27mt[27mh[27mo[27mn[27m [27mc[27mo[27md[27me[27m/[27mh[27mo[27mm[27me[27mw[27mo[27mr[27mk[27m_[27md[27me[27mm[27mo[27m.[27mp[27my[1B
+[27md[27mo[27mc[27mk[27me[27mr[27m [27mc[27mo[27mm[27mp[27mo[27ms[27me[27m [27m-[27mf[27m [27md[27mo[27mc[27mk[27me[27mr[27m-[27mc[27mo[27mm[27mp[27mo[27ms[27me[27m.[27mh[27mw[27m0[27m8[27m.[27my[27mm[27ml[27m [27ml[27mo[27mg[27ms[27m [27m-[27m-[27ms[27mi[27mn[27mc[27me[27m=[27m5[27mm[27m [27mw[27mo[27mr[27mk[27me[27mr[27m [27mf[27ma[27ms[27mt[27ma[27mp[27mi[27m [27m\[1B
+[27m|[27m [27mg[27mr[27me[27mp[27m [27m-[27mE[27m [27m"[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mP[27mr[27mo[27mc[27me[27ms[27ms[27mi[27mn[27mg[27m|[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mt[27mu[27mr[27mn[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mo[27mp[27me[27mr[27ma[27mt[27mi[27mo[27mn[27m=[27m|[27mt[27mo[27mp[27mi[27mc[27m=[27m|[27mc[27mo[27mr[27mr[27me[27ml[27ma[27mt[27mi[27mo[27mn[27m_[27mi[27md[27m"[?2004l
+
+2026-10-29 17:10:35 PDT
+[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                                                                                                                               
+ => [internal] load local bake definitions                                                                                                                                       0.0s
+[?25h[1A[1A[0G[?25l[+] Building 0.2s (1/1)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Building 0.2s (1/2)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Building 0.4s (3/4)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.2s
+[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.6s (3/4)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.4s
+[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.7s (3/4)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.5s
+[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.9s (3/4)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.7s
+[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.9s (4/4)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.8s
+[0m[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.1s (6/11)                                                                                                                                                              
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.8s
+[0m[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[34m => [internal] load .dockerignore                                                                                                                                                0.0s
+[0m[34m => => transferring context: 2B                                                                                                                                                  0.0s
+[0m[34m => [1/5] FROM docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => => resolve docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m => [internal] load build context                                                                                                                                                0.1s
+ => => transferring context: 165.15kB                                                                                                                                            0.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.2s (6/11)                                                                                                                                                              
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.8s
+[0m[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[34m => [internal] load .dockerignore                                                                                                                                                0.0s
+[0m[34m => => transferring context: 2B                                                                                                                                                  0.0s
+[0m[34m => [1/5] FROM docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => => resolve docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m => [internal] load build context                                                                                                                                                0.2s
+ => => transferring context: 415.00kB                                                                                                                                            0.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.3s (13/13) FINISHED                                                                                                                                                    
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.8s
+[0m[34m => [auth] library/python:pull token for registry-1.docker.io                                                                                                                    0.0s
+[0m[34m => [internal] load .dockerignore                                                                                                                                                0.0s
+[0m[34m => => transferring context: 2B                                                                                                                                                  0.0s
+[0m[34m => [1/5] FROM docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => => resolve docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => [internal] load build context                                                                                                                                                0.2s
+[0m[34m => => transferring context: 420.46kB                                                                                                                                            0.2s
+[0m[34m => CACHED [2/5] WORKDIR /workspace/code                                                                                                                                         0.0s
+[0m[34m => CACHED [3/5] COPY code/requirements-hw08.txt /workspace/code/requirements-hw08.txt                                                                                           0.0s
+[0m[34m => CACHED [4/5] RUN pip install --no-cache-dir -r requirements-hw08.txt                                                                                                         0.0s
+[0m[34m => CACHED [5/5] COPY code/ /workspace/code/                                                                                                                                     0.0s
+[0m[34m => exporting to image                                                                                                                                                           0.0s
+[0m[34m => => exporting layers                                                                                                                                                          0.0s
+[0m[34m => => exporting manifest sha256:39686d6666fc2672aec9be40c65ecb48ecdec3edca4682fc1f9b560c43ac1c00                                                                                0.0s
+[0m[34m => => exporting config sha256:50956954be40de567268fa0a2fb10a632614e2c0237fdf9efb1ea509e74e5860                                                                                  0.0s
+[0m[34m => => exporting attestation manifest sha256:e88f346af144c4523f981b2662ff7cc1467209e641d53dc8636fdf2e7d78c90d                                                                    0.0s
+[0m[34m => => exporting manifest list sha256:e74cdf1a34c556a6b0d3f39cbf3ca2f9feae9d8bbf8ccadeafdf82e51f11120a                                                                           0.0s
+[0m[34m => => naming to docker.io/library/data260-4544-fastapi:latest                                                                                                                   0.0s
+[0m[34m => => unpacking to docker.io/library/data260-4544-fastapi:latest                                                                                                                0.0s
+[0m[34m => resolving provenance for metadata file                                                                                                                                       0.0s
+[0m[?25h[?25l[0G[2K[+] up 1/1
+[2K [32m✔[0m Image data260-4544-fastapi [32mBuilt[0m                                                                                                                                               [34m1.4s[0m
+[?25h[?25l[2A[0G[2K[+] up 2/3
+
+[2K [32m✔[0m Container s4544-kafka      [32mRunning[0m                                                                                                                                             [34m0.0s[0m
+[2K [33m⠋[0m Container s4544-fastapi    Recreate                                                                                                                                            [34m0.1s[0m
+[?25h[?25l[4A[0G
+
+
+[2K [33m⠙[0m Container s4544-fastapi    Recreate                                                                                                                                            [34m0.2s[0m
+[?25h[?25l[4A[0G
+
+
+[2K [33m⠹[0m Container s4544-fastapi    Recreate                                                                                                                                            [34m0.3s[0m
+[?25h[?25l[4A[0G
+
+
+[2K [33m⠸[0m Container s4544-fastapi    Starting                                                                                                                                            [34m0.4s[0m
+[?25h[?25l[4A[0G[2K[+] up 3/3
+
+
+[2K [32m✔[0m Container s4544-fastapi    [32mStarted[0m                                                                                                                                             [34m0.4s[0m
+[?25h<DEMO> correlation_id=f39b24a4-be4e-4070-99ce-42217071077b
+<DEMO> Sending CREATE_VULNERABILITY request
+Traceback (most recent call last):
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m793[0m, in [35murlopen[0m
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m540[0m, in [35m_make_request[0m
+    response = conn.getresponse()
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connection.py"[0m, line [35m638[0m, in [35mgetresponse[0m
+    httplib_response = super().getresponse()
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m1430[0m, in [35mgetresponse[0m
+    [31mresponse.begin[0m[1;31m()[0m
+    [31m~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m331[0m, in [35mbegin[0m
+    version, status, reason = [31mself._read_status[0m[1;31m()[0m
+                              [31m~~~~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m292[0m, in [35m_read_status[0m
+    line = str([31mself.fp.readline[0m[1;31m(_MAXLINE + 1)[0m, "iso-8859-1")
+               [31m~~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/socket.py"[0m, line [35m719[0m, in [35mreadinto[0m
+    return [31mself._sock.recv_into[0m[1;31m(b)[0m
+           [31m~~~~~~~~~~~~~~~~~~~~[0m[1;31m^^^[0m
+[1;35mConnectionResetError[0m: [35m[Errno 54] Connection reset by peer[0m
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/adapters.py"[0m, line [35m696[0m, in [35msend[0m
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m847[0m, in [35murlopen[0m
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/util/retry.py"[0m, line [35m510[0m, in [35mincrement[0m
+    raise [31mreraise[0m[1;31m(type(error), error, _stacktrace)[0m
+          [31m~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/util/util.py"[0m, line [35m38[0m, in [35mreraise[0m
+    raise value.with_traceback(tb)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m793[0m, in [35murlopen[0m
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m540[0m, in [35m_make_request[0m
+    response = conn.getresponse()
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connection.py"[0m, line [35m638[0m, in [35mgetresponse[0m
+    httplib_response = super().getresponse()
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m1430[0m, in [35mgetresponse[0m
+    [31mresponse.begin[0m[1;31m()[0m
+    [31m~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m331[0m, in [35mbegin[0m
+    version, status, reason = [31mself._read_status[0m[1;31m()[0m
+                              [31m~~~~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m292[0m, in [35m_read_status[0m
+    line = str([31mself.fp.readline[0m[1;31m(_MAXLINE + 1)[0m, "iso-8859-1")
+               [31m~~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/socket.py"[0m, line [35m719[0m, in [35mreadinto[0m
+    return [31mself._sock.recv_into[0m[1;31m(b)[0m
+           [31m~~~~~~~~~~~~~~~~~~~~[0m[1;31m^^^[0m
+[1;35murllib3.exceptions.ProtocolError[0m: [35m('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))[0m
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File [35m"/Users/sangah/Desktop/Data260/data260-4544/code/homework_demo.py"[0m, line [35m32[0m, in [35m<module>[0m
+    create_response = requests.post(BASE_URL, json=create_payload, timeout=15)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/api.py"[0m, line [35m134[0m, in [35mpost[0m
+    return request("post", url, data=data, json=json, **kwargs)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/api.py"[0m, line [35m71[0m, in [35mrequest[0m
+    return [31msession.request[0m[1;31m(method=method, url=url, **kwargs)[0m
+           [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/sessions.py"[0m, line [35m651[0m, in [35mrequest[0m
+    resp = self.send(prep, **send_kwargs)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/sessions.py"[0m, line [35m784[0m, in [35msend[0m
+    r = adapter.send(request, **kwargs)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/adapters.py"[0m, line [35m711[0m, in [35msend[0m
+    raise ConnectionError(err, request=request)
+[1;35mrequests.exceptions.ConnectionError[0m: [35m('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))[0m
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[J(base) sangah@MacBook-Air-SAL data260-4544 % [K[?2004h[7mdate '+%Y-%m-%d %H:%M:%S %Z'[27m
+
+[7mdocker compose -f docker-compose.hw08.yml up -d --build --force-recreate fastapi[27m[K
+
+[7mpython code/homework_demo.py[27m[K
+
+[7mdocker compose -f docker-compose.hw08.yml logs --since=5m worker fastapi \[27m[K
+
+[7m| grep -E "Sending request|Received request|Processing|Sending response|Received response|Returning response|operation=|topic=|correlation_id"[27m[K[4A[97D[27md[27ma[27mt[27me[27m [27m'[27m+[27m%[27mY[27m-[27m%[27mm[27m-[27m%[27md[27m [27m%[27mH[27m:[27m%[27mM[27m:[27m%[27mS[27m [27m%[27mZ[27m'[1B
+[27md[27mo[27mc[27mk[27me[27mr[27m [27mc[27mo[27mm[27mp[27mo[27ms[27me[27m [27m-[27mf[27m [27md[27mo[27mc[27mk[27me[27mr[27m-[27mc[27mo[27mm[27mp[27mo[27ms[27me[27m.[27mh[27mw[27m0[27m8[27m.[27my[27mm[27ml[27m [27mu[27mp[27m [27m-[27md[27m [27m-[27m-[27mb[27mu[27mi[27ml[27md[27m [27m-[27m-[27mf[27mo[27mr[27mc[27me[27m-[27mr[27me[27mc[27mr[27me[27ma[27mt[27me[27m [27mf[27ma[27ms[27mt[27ma[27mp[27mi[1B
+[27mp[27my[27mt[27mh[27mo[27mn[27m [27mc[27mo[27md[27me[27m/[27mh[27mo[27mm[27me[27mw[27mo[27mr[27mk[27m_[27md[27me[27mm[27mo[27m.[27mp[27my[1B
+[27md[27mo[27mc[27mk[27me[27mr[27m [27mc[27mo[27mm[27mp[27mo[27ms[27me[27m [27m-[27mf[27m [27md[27mo[27mc[27mk[27me[27mr[27m-[27mc[27mo[27mm[27mp[27mo[27ms[27me[27m.[27mh[27mw[27m0[27m8[27m.[27my[27mm[27ml[27m [27ml[27mo[27mg[27ms[27m [27m-[27m-[27ms[27mi[27mn[27mc[27me[27m=[27m5[27mm[27m [27mw[27mo[27mr[27mk[27me[27mr[27m [27mf[27ma[27ms[27mt[27ma[27mp[27mi[27m [27m\[1B
+[27m|[27m [27mg[27mr[27me[27mp[27m [27m-[27mE[27m [27m"[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mP[27mr[27mo[27mc[27me[27ms[27ms[27mi[27mn[27mg[27m|[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mt[27mu[27mr[27mn[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mo[27mp[27me[27mr[27ma[27mt[27mi[27mo[27mn[27m=[27m|[27mt[27mo[27mp[27mi[27mc[27m=[27m|[27mc[27mo[27mr[27mr[27me[27ml[27ma[27mt[27mi[27mo[27mn[27m_[27mi[27md[27m"[?2004l
+
+2026-10-29 17:10:43 PDT
+[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                                                                                                                                               
+ => [internal] load local bake definitions                                                                                                                                       0.0s
+[?25h[1A[1A[0G[?25l[+] Building 0.1s (1/2)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[?25h[1A[1A[1A[0G[?25l[+] Building 0.3s (2/3)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.2s
+[?25h[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.4s (3/3)                                                                                                                                                               
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.2s
+[0m[?25h[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.5s (5/10)                                                                                                                                                              
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.2s
+[0m[34m => [internal] load .dockerignore                                                                                                                                                0.0s
+[0m[34m => => transferring context: 2B                                                                                                                                                  0.0s
+[0m[34m => [1/5] FROM docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => => resolve docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m => [internal] load build context                                                                                                                                                0.1s
+[34m => => transferring context: 420.46kB                                                                                                                                            0.1s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.6s (12/12)                                                                                                                                                             
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.2s
+[0m[34m => [internal] load .dockerignore                                                                                                                                                0.0s
+[0m[34m => => transferring context: 2B                                                                                                                                                  0.0s
+[0m[34m => [1/5] FROM docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => => resolve docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => [internal] load build context                                                                                                                                                0.1s
+[0m[34m => => transferring context: 420.46kB                                                                                                                                            0.1s
+[0m[34m => CACHED [2/5] WORKDIR /workspace/code                                                                                                                                         0.0s
+[0m[34m => CACHED [3/5] COPY code/requirements-hw08.txt /workspace/code/requirements-hw08.txt                                                                                           0.0s
+[0m[34m => CACHED [4/5] RUN pip install --no-cache-dir -r requirements-hw08.txt                                                                                                         0.0s
+[0m[34m => CACHED [5/5] COPY code/ /workspace/code/                                                                                                                                     0.0s
+[0m[34m => exporting to image                                                                                                                                                           0.0s
+[0m[34m => => exporting layers                                                                                                                                                          0.0s
+[0m[34m => => exporting manifest sha256:39686d6666fc2672aec9be40c65ecb48ecdec3edca4682fc1f9b560c43ac1c00                                                                                0.0s
+[0m[34m => => exporting config sha256:50956954be40de567268fa0a2fb10a632614e2c0237fdf9efb1ea509e74e5860                                                                                  0.0s
+[0m[34m => => exporting attestation manifest sha256:e8606d63b6054b6d3531b7151d9e549dd6b4cc9afd4a0b41363e6827a590e2ee                                                                    0.0s
+[0m[34m => => exporting manifest list sha256:8e4c1236df44350454e497d0571de66698899c2cdf3cb627c2c15e3f3f9bed88                                                                           0.0s
+[0m[34m => => naming to docker.io/library/data260-4544-fastapi:latest                                                                                                                   0.0s
+[0m[34m => => unpacking to docker.io/library/data260-4544-fastapi:latest                                                                                                                0.0s
+[0m[34m => resolving provenance for metadata file                                                                                                                                       0.0s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 0.6s (12/12) FINISHED                                                                                                                                                    
+[34m => [internal] load local bake definitions                                                                                                                                       0.0s
+[0m[34m => => reading from stdin 560B                                                                                                                                                   0.0s
+[0m[34m => [internal] load build definition from Dockerfile.hw08                                                                                                                        0.0s
+[0m[34m => => transferring dockerfile: 247B                                                                                                                                             0.0s
+[0m[34m => [internal] load metadata for docker.io/library/python:3.12-slim                                                                                                              0.2s
+[0m[34m => [internal] load .dockerignore                                                                                                                                                0.0s
+[0m[34m => => transferring context: 2B                                                                                                                                                  0.0s
+[0m[34m => [1/5] FROM docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => => resolve docker.io/library/python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159                                                        0.0s
+[0m[34m => [internal] load build context                                                                                                                                                0.1s
+[0m[34m => => transferring context: 420.46kB                                                                                                                                            0.1s
+[0m[34m => CACHED [2/5] WORKDIR /workspace/code                                                                                                                                         0.0s
+[0m[34m => CACHED [3/5] COPY code/requirements-hw08.txt /workspace/code/requirements-hw08.txt                                                                                           0.0s
+[0m[34m => CACHED [4/5] RUN pip install --no-cache-dir -r requirements-hw08.txt                                                                                                         0.0s
+[0m[34m => CACHED [5/5] COPY code/ /workspace/code/                                                                                                                                     0.0s
+[0m[34m => exporting to image                                                                                                                                                           0.0s
+[0m[34m => => exporting layers                                                                                                                                                          0.0s
+[0m[34m => => exporting manifest sha256:39686d6666fc2672aec9be40c65ecb48ecdec3edca4682fc1f9b560c43ac1c00                                                                                0.0s
+[0m[34m => => exporting config sha256:50956954be40de567268fa0a2fb10a632614e2c0237fdf9efb1ea509e74e5860                                                                                  0.0s
+[0m[34m => => exporting attestation manifest sha256:e8606d63b6054b6d3531b7151d9e549dd6b4cc9afd4a0b41363e6827a590e2ee                                                                    0.0s
+[0m[34m => => exporting manifest list sha256:8e4c1236df44350454e497d0571de66698899c2cdf3cb627c2c15e3f3f9bed88                                                                           0.0s
+[0m[34m => => naming to docker.io/library/data260-4544-fastapi:latest                                                                                                                   0.0s
+[0m[34m => => unpacking to docker.io/library/data260-4544-fastapi:latest                                                                                                                0.0s
+[0m[34m => resolving provenance for metadata file                                                                                                                                       0.0s
+[0m[?25h[?25l[0G[2K[+] up 2/3
+[2K [32m✔[0m Image data260-4544-fastapi [32mBuilt[0m                                                                                                                                               [34m0.7s[0m
+[2K [32m✔[0m Container s4544-kafka      [32mRunning[0m                                                                                                                                             [34m0.0s[0m
+[2K [33m⠋[0m Container s4544-fastapi    Recreate                                                                                                                                            [34m0.1s[0m
+[?25h[?25l[4A[0G
+
+
+[2K [33m⠙[0m Container s4544-fastapi    Recreate                                                                                                                                            [34m0.2s[0m
+[?25h[?25l[4A[0G
+
+
+[2K [33m⠹[0m Container s4544-fastapi    Recreate                                                                                                                                            [34m0.3s[0m
+[?25h[?25l[4A[0G
+
+
+[2K [33m⠸[0m Container s4544-fastapi    Starting                                                                                                                                            [34m0.4s[0m
+[?25h[?25l[4A[0G[2K[+] up 3/3
+
+
+[2K [32m✔[0m Container s4544-fastapi    [32mStarted[0m                                                                                                                                             [34m0.4s[0m
+[?25h<DEMO> correlation_id=9579bb9a-2ada-4eb8-b229-30c2eb8e6dc5
+<DEMO> Sending CREATE_VULNERABILITY request
+Traceback (most recent call last):
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m793[0m, in [35murlopen[0m
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m540[0m, in [35m_make_request[0m
+    response = conn.getresponse()
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connection.py"[0m, line [35m638[0m, in [35mgetresponse[0m
+    httplib_response = super().getresponse()
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m1430[0m, in [35mgetresponse[0m
+    [31mresponse.begin[0m[1;31m()[0m
+    [31m~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m331[0m, in [35mbegin[0m
+    version, status, reason = [31mself._read_status[0m[1;31m()[0m
+                              [31m~~~~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m292[0m, in [35m_read_status[0m
+    line = str([31mself.fp.readline[0m[1;31m(_MAXLINE + 1)[0m, "iso-8859-1")
+               [31m~~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/socket.py"[0m, line [35m719[0m, in [35mreadinto[0m
+    return [31mself._sock.recv_into[0m[1;31m(b)[0m
+           [31m~~~~~~~~~~~~~~~~~~~~[0m[1;31m^^^[0m
+[1;35mConnectionResetError[0m: [35m[Errno 54] Connection reset by peer[0m
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/adapters.py"[0m, line [35m696[0m, in [35msend[0m
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m847[0m, in [35murlopen[0m
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/util/retry.py"[0m, line [35m510[0m, in [35mincrement[0m
+    raise [31mreraise[0m[1;31m(type(error), error, _stacktrace)[0m
+          [31m~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/util/util.py"[0m, line [35m38[0m, in [35mreraise[0m
+    raise value.with_traceback(tb)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m793[0m, in [35murlopen[0m
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connectionpool.py"[0m, line [35m540[0m, in [35m_make_request[0m
+    response = conn.getresponse()
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/urllib3/connection.py"[0m, line [35m638[0m, in [35mgetresponse[0m
+    httplib_response = super().getresponse()
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m1430[0m, in [35mgetresponse[0m
+    [31mresponse.begin[0m[1;31m()[0m
+    [31m~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m331[0m, in [35mbegin[0m
+    version, status, reason = [31mself._read_status[0m[1;31m()[0m
+                              [31m~~~~~~~~~~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/http/client.py"[0m, line [35m292[0m, in [35m_read_status[0m
+    line = str([31mself.fp.readline[0m[1;31m(_MAXLINE + 1)[0m, "iso-8859-1")
+               [31m~~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^[0m
+  File [35m"/opt/anaconda3/lib/python3.13/socket.py"[0m, line [35m719[0m, in [35mreadinto[0m
+    return [31mself._sock.recv_into[0m[1;31m(b)[0m
+           [31m~~~~~~~~~~~~~~~~~~~~[0m[1;31m^^^[0m
+[1;35murllib3.exceptions.ProtocolError[0m: [35m('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))[0m
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File [35m"/Users/sangah/Desktop/Data260/data260-4544/code/homework_demo.py"[0m, line [35m32[0m, in [35m<module>[0m
+    create_response = requests.post(BASE_URL, json=create_payload, timeout=15)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/api.py"[0m, line [35m134[0m, in [35mpost[0m
+    return request("post", url, data=data, json=json, **kwargs)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/api.py"[0m, line [35m71[0m, in [35mrequest[0m
+    return [31msession.request[0m[1;31m(method=method, url=url, **kwargs)[0m
+           [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/sessions.py"[0m, line [35m651[0m, in [35mrequest[0m
+    resp = self.send(prep, **send_kwargs)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/sessions.py"[0m, line [35m784[0m, in [35msend[0m
+    r = adapter.send(request, **kwargs)
+  File [35m"/Users/sangah/Desktop/Data260/venv/lib/python3.13/site-packages/requests/adapters.py"[0m, line [35m711[0m, in [35msend[0m
+    raise ConnectionError(err, request=request)
+[1;35mrequests.exceptions.ConnectionError[0m: [35m('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))[0m
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[J(base) sangah@MacBook-Air-SAL data260-4544 % [K[?2004h[7mpython code/homework_demo.py[27m
+
+[K[A[45C[27mp[27my[27mt[27mh[27mo[27mn[27m [27mc[27mo[27md[27me[27m/[27mh[27mo[27mm[27me[27mw[27mo[27mr[27mk[27m_[27md[27me[27mm[27mo[27m.[27mp[27my[1B
+[K[?2004l
+
+<DEMO> correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+<DEMO> Sending CREATE_VULNERABILITY request
+
+[DEMO] CREATE_VULNERABILITY response
+[DEMO] HTTP status=200
+{
+  "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+  "success": true,
+  "entity_id": "3e041041-6cbf-4cff-9bde-877cee61a0e5",
+  "message": "Entity created"
+}
+[DEMO] Generated entity_id=3e041041-6cbf-4cff-9bde-877cee61a0e5
+<DEMO> Sending GET_VULNERABILITY request
+
+[DEMO] GET_VULNERABILITY response
+[DEMO] HTTP status=200
+{
+  "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+  "success": true,
+  "entity": {
+    "entity_id": "3e041041-6cbf-4cff-9bde-877cee61a0e5",
+    "package_id": 1,
+    "vulnerability_name": "Unsafe parser",
+    "vulnerability_code": "CVE-DEMO-001",
+    "urgency_score": 5
+  }
+}
+<DEMO> correlation_id preserved successfully
+<DEMO> CREATE_VULNERABILITY -> GET_VULNERABILITY complete
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[J(base) sangah@MacBook-Air-SAL data260-4544 % [K[?2004h[7mdocker compose -f docker-compose.hw08.yml logs --since=5m worker fastapi \[27m
+
+[7m| grep -E "Sending request|Received request|Processing|Sending response|Received response|Returning response|operation=|topic=|correlation_id"[27m[K[A[97D[27md[27mo[27mc[27mk[27me[27mr[27m [27mc[27mo[27mm[27mp[27mo[27ms[27me[27m [27m-[27mf[27m [27md[27mo[27mc[27mk[27me[27mr[27m-[27mc[27mo[27mm[27mp[27mo[27ms[27me[27m.[27mh[27mw[27m0[27m8[27m.[27my[27mm[27ml[27m [27ml[27mo[27mg[27ms[27m [27m-[27m-[27ms[27mi[27mn[27mc[27me[27m=[27m5[27mm[27m [27mw[27mo[27mr[27mk[27me[27mr[27m [27mf[27ma[27ms[27mt[27ma[27mp[27mi[27m [27m\[1B
+[27m|[27m [27mg[27mr[27me[27mp[27m [27m-[27mE[27m [27m"[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mP[27mr[27mo[27mc[27me[27ms[27ms[27mi[27mn[27mg[27m|[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mt[27mu[27mr[27mn[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mo[27mp[27me[27mr[27ma[27mt[27mi[27mo[27mn[27m=[27m|[27mt[27mo[27mp[27mi[27mc[27m=[27m|[27mc[27mo[27mr[27mr[27me[27ml[27ma[27mt[27mi[27mo[27mn[27m_[27mi[27md[27m"[?2004l
+
+s4544-worker  | [WORKER] Received request from Kafka
+s4544-worker  | [WORKER] Received request from topic=s4544_vulnerability_requests
+s4544-worker  | [WORKER] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+s4544-worker  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-worker  | [WORKER] Processing operation=CREATE_VULNERABILITY
+s4544-worker  | [WORKER] Sending response to topic=s4544_vulnerability_responses
+s4544-worker  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-worker  | [WORKER] Received request from Kafka
+s4544-worker  | [WORKER] Received request from topic=s4544_vulnerability_requests
+s4544-worker  | [WORKER] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+s4544-worker  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-worker  | [WORKER] Processing operation=GET_VULNERABILITY
+s4544-worker  | [WORKER] Sending response to topic=s4544_vulnerability_responses
+s4544-worker  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-fastapi  | [FASTAPI] Sending request to Kafka
+s4544-fastapi  | [FASTAPI] topic=s4544_vulnerability_requests
+s4544-fastapi  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-fastapi  | [FASTAPI] Sent request to topic=s4544_vulnerability_requests
+s4544-fastapi  | [FASTAPI] Received response from topic=s4544_vulnerability_responses
+s4544-fastapi  | [FASTAPI] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+s4544-fastapi  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-fastapi  | [FASTAPI] Returning response to caller
+s4544-fastapi  | [FASTAPI] Sending request to Kafka
+s4544-fastapi  | [FASTAPI] topic=s4544_vulnerability_requests
+s4544-fastapi  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-fastapi  | [FASTAPI] Sent request to topic=s4544_vulnerability_requests
+s4544-fastapi  | [FASTAPI] Received response from topic=s4544_vulnerability_responses
+s4544-fastapi  | [FASTAPI] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+s4544-fastapi  |   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+s4544-fastapi  | [FASTAPI] Returning response to caller
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[J(base) sangah@MacBook-Air-SAL data260-4544 % [K[?2004h[7mdocker compose -f docker-compose.hw08.yml logs \[27m
+
+[7m--since=5m --timestamps --no-log-prefix worker fastapi \[27m[K
+
+[7m| grep -E "Sending request|Received request|Processing|Sending response|Received response|Returning response|operation|topic=|correlation_id"[27m[K[A[A[96D[27md[27mo[27mc[27mk[27me[27mr[27m [27mc[27mo[27mm[27mp[27mo[27ms[27me[27m [27m-[27mf[27m [27md[27mo[27mc[27mk[27me[27mr[27m-[27mc[27mo[27mm[27mp[27mo[27ms[27me[27m.[27mh[27mw[27m0[27m8[27m.[27my[27mm[27ml[27m [27ml[27mo[27mg[27ms[27m [27m\[1B
+[27m-[27m-[27ms[27mi[27mn[27mc[27me[27m=[27m5[27mm[27m [27m-[27m-[27mt[27mi[27mm[27me[27ms[27mt[27ma[27mm[27mp[27ms[27m [27m-[27m-[27mn[27mo[27m-[27ml[27mo[27mg[27m-[27mp[27mr[27me[27mf[27mi[27mx[27m [27mw[27mo[27mr[27mk[27me[27mr[27m [27mf[27ma[27ms[27mt[27ma[27mp[27mi[27m [27m\[1B
+[27m|[27m [27mg[27mr[27me[27mp[27m [27m-[27mE[27m [27m"[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27mq[27mu[27me[27ms[27mt[27m|[27mP[27mr[27mo[27mc[27me[27ms[27ms[27mi[27mn[27mg[27m|[27mS[27me[27mn[27md[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mc[27me[27mi[27mv[27me[27md[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mR[27me[27mt[27mu[27mr[27mn[27mi[27mn[27mg[27m [27mr[27me[27ms[27mp[27mo[27mn[27ms[27me[27m|[27mo[27mp[27me[27mr[27ma[27mt[27mi[27mo[27mn[27m|[27mt[27mo[27mp[27mi[27mc[27m=[27m|[27mc[27mo[27mr[27mr[27me[27ml[27ma[27mt[27mi[27mo[27mn[27m_[27mi[27md[27m"[?2004l
+
+2026-10-30T00:10:55.937551631Z [WORKER] Received request from Kafka
+2026-10-30T00:10:55.940414923Z [FASTAPI] Sending request to Kafka
+2026-10-30T00:10:55.940415839Z [FASTAPI] topic=s4544_vulnerability_requests
+2026-10-30T00:10:55.940417173Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.940418381Z   "operation": "CREATE_VULNERABILITY",
+2026-10-30T00:10:55.940422881Z [FASTAPI] Sent request to topic=s4544_vulnerability_requests
+2026-10-30T00:10:55.940423381Z [FASTAPI] Received response from topic=s4544_vulnerability_responses
+2026-10-30T00:10:55.940423881Z [FASTAPI] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+2026-10-30T00:10:55.940425048Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.940427923Z [FASTAPI] Returning response to caller
+2026-10-30T00:10:55.946692173Z [FASTAPI] Sending request to Kafka
+2026-10-30T00:10:55.946699589Z [FASTAPI] topic=s4544_vulnerability_requests
+2026-10-30T00:10:55.946701131Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.937621423Z [WORKER] Received request from topic=s4544_vulnerability_requests
+2026-10-30T00:10:55.946702464Z   "operation": "GET_VULNERABILITY",
+2026-10-30T00:10:55.937625089Z [WORKER] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+2026-10-30T00:10:55.937628214Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.937629673Z   "operation": "CREATE_VULNERABILITY",
+2026-10-30T00:10:55.937638589Z [WORKER] Processing operation=CREATE_VULNERABILITY
+2026-10-30T00:10:55.937639464Z [WORKER] Sending response to topic=s4544_vulnerability_responses
+2026-10-30T00:10:55.937645089Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.945254048Z [WORKER] Received request from Kafka
+2026-10-30T00:10:55.945289923Z [WORKER] Received request from topic=s4544_vulnerability_requests
+2026-10-30T00:10:55.945293256Z [WORKER] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+2026-10-30T00:10:55.945297839Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.945300464Z   "operation": "GET_VULNERABILITY",
+2026-10-30T00:10:55.945311006Z [WORKER] Processing operation=GET_VULNERABILITY
+2026-10-30T00:10:55.945312631Z [WORKER] Sending response to topic=s4544_vulnerability_responses
+2026-10-30T00:10:55.945315256Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.946705464Z [FASTAPI] Sent request to topic=s4544_vulnerability_requests
+2026-10-30T00:10:55.946706214Z [FASTAPI] Received response from topic=s4544_vulnerability_responses
+2026-10-30T00:10:55.946707006Z [FASTAPI] correlation_id=d3c09378-0855-464f-ba8c-7427fbe0855b
+2026-10-30T00:10:55.946708006Z   "correlation_id": "d3c09378-0855-464f-ba8c-7427fbe0855b",
+2026-10-30T00:10:55.946726423Z [FASTAPI] Returning response to caller
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[J(base) sangah@MacBook-Air-SAL data260-4544 % [K[?2004heexit[?2004l
+
+
+Script done on Thu Oct 29 17:13:59 2026
+Script started on Thu Oct 29 17:37:51 2026
+[1m[7m%[27m[1m[0m                                                                                                                                                                                     
+ 
+
+[0m[27m[24m[J(base) sangah@MacBook-Air-SAL data260-4544 % [K[?2004heexit[?2004l
+
+
+Script done on Thu Oct 29 17:44:54 2026
+[2026-10-29 17:46:46 PDT] PLANNER
+[PLANNER] Listening on s4544_inbox
+[2026-10-29 17:48:16 PDT] WRITER
+[WRITER] Listening on s4544_tasks
+[2026-10-29 17:48:57 PDT] REVIEWER
+[REVIEWER] Listening on s4544_drafts
+[2026-10-29 17:49:56 PDT] SENDER
+[SENDER] Sending to s4544_inbox: {"correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b", "question": "How should a team prioritize a high-severity vulnerability?"}
+[PLANNER] Received: {"correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b", "question": "How should a team prioritize a high-severity vulnerability?"}
+[PLANNER] Sending to s4544_tasks: {"correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Received: {"correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[REVIEWER] Received: {"correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[REVIEWER] Sending to s4544_final: {"correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b", "status": "approved", "answer": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[SENDER] Final result from s4544_final:
+{
+  "correlation_id": "6851954d-e041-4bbd-ac65-3ae6704bb67b",
+  "status": "approved",
+  "answer": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."
+}
+[2026-10-29 19:16:11 PDT] DUPLICATE WRITER
+[WRITER] Listening on s4544_tasks
+[WRITER] Received: {"correlation_id": "duplicate-demo-001", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "duplicate-demo-001", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-001
+[2026-10-29 19:16:32 PDT] DUPLICATE REPLAY
+[REPLAY] Sending attempt 1 with correlation_id=duplicate-demo-001
+[REPLAY] Sending attempt 2 with correlation_id=duplicate-demo-001
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-001
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-001
+[2026-10-29 19:17:35 PDT] DUPLICATE WRITER
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER] Listening on s4544_tasks
+[2026-10-29 19:17:45 PDT] DUPLICATE REPLAY
+[REPLAY] Sending attempt 1 with correlation_id=duplicate-demo-001
+[REPLAY] Sending attempt 2 with correlation_id=duplicate-demo-001
+[WRITER] Received: {"correlation_id": "duplicate-demo-001", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "duplicate-demo-001", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-001
+[2026-10-29 19:18:36 PDT] DUPLICATE REPLAY
+[REPLAY] Sending attempt 1 with correlation_id=duplicate-demo-001
+[REPLAY] Sending attempt 2 with correlation_id=duplicate-demo-001
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-001
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-001
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[2026-10-29 19:19:06 PDT] DUPLICATE WRITER
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER] Listening on s4544_tasks
+[2026-10-29 19:19:19 PDT] DUPLICATE REPLAY
+[REPLAY] Sending attempt 1 with correlation_id=duplicate-demo-001
+[REPLAY] Sending attempt 2 with correlation_id=duplicate-demo-001
+[WRITER] Received: {"correlation_id": "duplicate-demo-001", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "duplicate-demo-001", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-001
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[2026-10-29 19:20:25 PDT] DUPLICATE WRITER
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER] Listening on s4544_tasks
+[2026-10-29 19:20:37 PDT] DUPLICATE REPLAY
+[REPLAY] Sending attempt 1 with correlation_id=duplicate-demo-70ec204e-6fdb-4ae8-bd58-01971fa00c7b
+[REPLAY] Sending attempt 2 with correlation_id=duplicate-demo-70ec204e-6fdb-4ae8-bd58-01971fa00c7b
+[WRITER] Received: {"correlation_id": "duplicate-demo-70ec204e-6fdb-4ae8-bd58-01971fa00c7b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "duplicate-demo-70ec204e-6fdb-4ae8-bd58-01971fa00c7b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[WRITER] Received: {"correlation_id": "duplicate-demo-70ec204e-6fdb-4ae8-bd58-01971fa00c7b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "duplicate-demo-70ec204e-6fdb-4ae8-bd58-01971fa00c7b", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[2026-10-29 19:21:41 PDT] DUPLICATE WRITER
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER] Listening on s4544_tasks
+[2026-10-29 19:21:46 PDT] DUPLICATE REPLAY
+[REPLAY] Sending attempt 1 with correlation_id=duplicate-demo-0aef7989-d7b0-4aaa-b263-10519f805463
+[WRITER] Received: {"correlation_id": "duplicate-demo-0aef7989-d7b0-4aaa-b263-10519f805463", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "duplicate-demo-0aef7989-d7b0-4aaa-b263-10519f805463", "question": "How should a team prioritize a high-severity vulnerability?", "plan": ["Identify the main question", "Use the available vulnerability information", "Write a concise answer"], "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."}
+[REPLAY] Sending attempt 2 with correlation_id=duplicate-demo-0aef7989-d7b0-4aaa-b263-10519f805463
+[WRITER] Duplicate correlation_id ignored: duplicate-demo-0aef7989-d7b0-4aaa-b263-10519f805463
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[2026-10-29 19:26:41 PDT] CONSUMER DEATH
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER] Listening on s4544_tasks
+[2026-10-29 19:26:49 PDT] DEATH TEST
+[DEATH TEST] Sending to s4544_tasks
+{
+  "correlation_id": "consumer-death-demo-001",
+  "question": "What should happen when a writer stops during processing?",
+  "plan": [
+    "Detect the failed consumer",
+    "Redeliver the uncommitted message",
+    "Commit after successful processing"
+  ]
+}
+[WRITER] Simulating consumer death before commit for consumer-death-demo-001
+Traceback (most recent call last):
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/hw08_kafka_pipeline/writer.py", line 74, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/sangah/Desktop/Data260/data260-4544/code/hw08_kafka_pipeline/writer.py", line 54, in main
+    raise RuntimeError("Simulated writer failure")
+RuntimeError: Simulated writer failure
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER] Received: {"correlation_id": "consumer-death-demo-001", "question": "What should happen when a writer stops during processing?", "plan": ["Detect the failed consumer", "Redeliver the uncommitted message", "Commit after successful processing"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "consumer-death-demo-001", "question": "What should happen when a writer stops during processing?", "plan": ["Detect the failed consumer", "Redeliver the uncommitted message", "Commit after successful processing"], "draft": "The question was: What should happen when a writer stops during processing? The response follows this plan: Detect the failed consumer, Redeliver the uncommitted message, Commit after successful processing."}
+[2026-10-29 19:27:43 PDT] WRITER RESTART
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER] Listening on s4544_tasks
+[2026-10-29 19:28:50 PDT] DEATH TEST
+[DEATH TEST] Sending to s4544_tasks
+{
+  "correlation_id": "consumer-death-demo-001",
+  "question": "What should happen when a writer stops during processing?",
+  "plan": [
+    "Detect the failed consumer",
+    "Redeliver the uncommitted message",
+    "Commit after successful processing"
+  ]
+}
+[WRITER] Received: {"correlation_id": "consumer-death-demo-001", "question": "What should happen when a writer stops during processing?", "plan": ["Detect the failed consumer", "Redeliver the uncommitted message", "Commit after successful processing"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "consumer-death-demo-001", "question": "What should happen when a writer stops during processing?", "plan": ["Detect the failed consumer", "Redeliver the uncommitted message", "Commit after successful processing"], "draft": "The question was: What should happen when a writer stops during processing? The response follows this plan: Detect the failed consumer, Redeliver the uncommitted message, Commit after successful processing."}
+[WRITER] Offset committed for consumer-death-demo-001
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+
+(venv) (base) sangah@MacBook-Air-SAL hw08_kafka_pipeline % python -u writer.py
+[WRITER] Listening on s4544_tasks
+[WRITER] Poison message retry 1/3: question is required
+[WRITER] Received: {"correlation_id": "after-poison-001", "question": "What should happen after a poison message?", "plan": ["Retry the bad message", "Move it to dead letter", "Process later messages"]}
+[WRITER] Sending to s4544_drafts: {"correlation_id": "after-poison-001", "question": "What should happen after a poison message?", "plan": ["Retry the bad message", "Move it to dead letter", "Process later messages"], "draft": "The question was: What should happen after a poison message? The response follows this plan: Retry the bad message, Move it to dead letter, Process later messages."}
+[WRITER] Offset committed for after-poison-001
+[WRITER] Poison message retry 2/3: question is required
+[WRITER] Poison message retry 3/3: question is required
+[WRITER] Moving poison message to s4544_dead_letter after 3 retries
+
+(venv) (base) sangah@MacBook-Air-SAL hw08_kafka_pipeline % python -u poison_message_test.py
+[POISON TEST] Sending poison message to s4544_tasks
+[POISON TEST] Sending valid message after poison message
+(venv) (base) sangah@MacBook-Air-SAL hw08_kafka_pipeline % [2026-10-29 19:43:33 PDT] ORDERING WRITER 1
+[WRITER-one] Listening on s4544_tasks
+[2026-10-29 19:43:43 PDT] ORDERING WRITER 2
+Heartbeat failed for group s4544-writer-group because it is rebalancing
+[WRITER-two] Listening on s4544_tasks
+[2026-10-29 19:44:08 PDT] ORDERING UNKEYED
+[ORDERING] Starting unkeyed run with 20 messages
+[ORDERING] Sent sequence=1 keyed=False
+[WRITER-two] Received partition=1 offset=14 sequence=1 correlation_id=ordering-unkeyed-80ed3ef3-568a-4cb0-b8f6-7d6e3a72c5a7
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-80ed3ef3-568a-4cb0-b8f6-7d6e3a72c5a7", "question": "Ordering message 1", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 1 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=2 keyed=False
+[WRITER-one] Received partition=0 offset=8 sequence=2 correlation_id=ordering-unkeyed-c346a735-58cb-4d0e-bdd8-700172fd5844
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-c346a735-58cb-4d0e-bdd8-700172fd5844", "question": "Ordering message 2", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 2 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=3 keyed=False
+[ORDERING] Sent sequence=4 keyed=False
+[ORDERING] Sent sequence=5 keyed=False
+[WRITER-two] Offset committed for ordering-unkeyed-80ed3ef3-568a-4cb0-b8f6-7d6e3a72c5a7
+[WRITER-one] Offset committed for ordering-unkeyed-c346a735-58cb-4d0e-bdd8-700172fd5844
+[WRITER-two] Received partition=1 offset=15 sequence=3 correlation_id=ordering-unkeyed-dc2a3384-36a5-4488-b8cf-98942dfa2b47
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-dc2a3384-36a5-4488-b8cf-98942dfa2b47", "question": "Ordering message 3", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 3 The response follows this plan: Preserve related message order."}
+[WRITER-one] Received partition=0 offset=9 sequence=4 correlation_id=ordering-unkeyed-ac6a404d-f4ca-40e4-a1d8-0a7477fcfafd
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-ac6a404d-f4ca-40e4-a1d8-0a7477fcfafd", "question": "Ordering message 4", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 4 The response follows this plan: Preserve related message order."}
+[WRITER-two] Offset committed for ordering-unkeyed-dc2a3384-36a5-4488-b8cf-98942dfa2b47
+[WRITER-one] Offset committed for ordering-unkeyed-ac6a404d-f4ca-40e4-a1d8-0a7477fcfafd
+[WRITER-one] Received partition=0 offset=10 sequence=5 correlation_id=ordering-unkeyed-2ed7ebb2-8c76-4c33-a12d-b2b55e09f47b
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-2ed7ebb2-8c76-4c33-a12d-b2b55e09f47b", "question": "Ordering message 5", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 5 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-unkeyed-2ed7ebb2-8c76-4c33-a12d-b2b55e09f47b
+[ORDERING] Sent sequence=6 keyed=False
+[WRITER-two] Received partition=1 offset=16 sequence=6 correlation_id=ordering-unkeyed-3cc8efca-1f02-4484-a19b-77d4906ad1ed
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-3cc8efca-1f02-4484-a19b-77d4906ad1ed", "question": "Ordering message 6", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 6 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=7 keyed=False
+[WRITER-one] Received partition=0 offset=11 sequence=7 correlation_id=ordering-unkeyed-97ec64a0-3d44-4c25-b75b-ba47abac6b06
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-97ec64a0-3d44-4c25-b75b-ba47abac6b06", "question": "Ordering message 7", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 7 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=8 keyed=False
+[WRITER-two] Offset committed for ordering-unkeyed-3cc8efca-1f02-4484-a19b-77d4906ad1ed
+[ORDERING] Sent sequence=9 keyed=False
+[WRITER-two] Received partition=1 offset=17 sequence=9 correlation_id=ordering-unkeyed-f5261b90-1a46-4f4b-8b56-6a1aa2dec36a
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-f5261b90-1a46-4f4b-8b56-6a1aa2dec36a", "question": "Ordering message 9", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 9 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=10 keyed=False
+[WRITER-one] Offset committed for ordering-unkeyed-97ec64a0-3d44-4c25-b75b-ba47abac6b06
+[WRITER-one] Received partition=0 offset=12 sequence=8 correlation_id=ordering-unkeyed-e85632a4-11a4-444d-9f0b-4f2a048c3cf4
+[ORDERING] Sent sequence=11 keyed=False
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-e85632a4-11a4-444d-9f0b-4f2a048c3cf4", "question": "Ordering message 8", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 8 The response follows this plan: Preserve related message order."}
+[WRITER-two] Offset committed for ordering-unkeyed-f5261b90-1a46-4f4b-8b56-6a1aa2dec36a
+[WRITER-one] Offset committed for ordering-unkeyed-e85632a4-11a4-444d-9f0b-4f2a048c3cf4
+[WRITER-one] Received partition=0 offset=13 sequence=10 correlation_id=ordering-unkeyed-34daf02c-5cc6-406c-8cb7-915926b94716
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-34daf02c-5cc6-406c-8cb7-915926b94716", "question": "Ordering message 10", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 10 The response follows this plan: Preserve related message order."}
+[WRITER-two] Received partition=1 offset=18 sequence=11 correlation_id=ordering-unkeyed-79bb5833-ee22-4466-b6b4-0d41d98cedcb
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-79bb5833-ee22-4466-b6b4-0d41d98cedcb", "question": "Ordering message 11", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 11 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-unkeyed-34daf02c-5cc6-406c-8cb7-915926b94716
+[WRITER-two] Offset committed for ordering-unkeyed-79bb5833-ee22-4466-b6b4-0d41d98cedcb
+[ORDERING] Sent sequence=12 keyed=False
+[WRITER-one] Received partition=0 offset=14 sequence=12 correlation_id=ordering-unkeyed-34960670-3b80-43a3-9121-35380ba30174
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-34960670-3b80-43a3-9121-35380ba30174", "question": "Ordering message 12", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 12 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=13 keyed=False
+[ORDERING] Sent sequence=14 keyed=False
+[WRITER-one] Offset committed for ordering-unkeyed-34960670-3b80-43a3-9121-35380ba30174
+[WRITER-two] Received partition=1 offset=19 sequence=14 correlation_id=ordering-unkeyed-f6301378-79d6-49be-b603-315f292afb89
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-f6301378-79d6-49be-b603-315f292afb89", "question": "Ordering message 14", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 14 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=15 keyed=False
+[WRITER-one] Received partition=0 offset=15 sequence=13 correlation_id=ordering-unkeyed-8ebc39e7-a011-4991-90a3-a9d8d2acff60
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-8ebc39e7-a011-4991-90a3-a9d8d2acff60", "question": "Ordering message 13", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 13 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=16 keyed=False
+[WRITER-two] Offset committed for ordering-unkeyed-f6301378-79d6-49be-b603-315f292afb89
+[ORDERING] Sent sequence=17 keyed=False
+[WRITER-one] Offset committed for ordering-unkeyed-8ebc39e7-a011-4991-90a3-a9d8d2acff60
+[ORDERING] Sent sequence=18 keyed=False
+[WRITER-two] Received partition=1 offset=20 sequence=15 correlation_id=ordering-unkeyed-387d4fa7-2879-4427-b8cd-05a71f4f8fe0
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-387d4fa7-2879-4427-b8cd-05a71f4f8fe0", "question": "Ordering message 15", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 15 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=19 keyed=False
+[WRITER-one] Received partition=0 offset=16 sequence=19 correlation_id=ordering-unkeyed-395d29ac-29a4-4fa8-8a7f-021b08c07313
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-395d29ac-29a4-4fa8-8a7f-021b08c07313", "question": "Ordering message 19", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 19 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=20 keyed=False
+[WRITER-two] Offset committed for ordering-unkeyed-387d4fa7-2879-4427-b8cd-05a71f4f8fe0
+[WRITER-two] Received partition=1 offset=21 sequence=16 correlation_id=ordering-unkeyed-9fed295d-a563-439a-adde-26a3fe0bdf8f
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-9fed295d-a563-439a-adde-26a3fe0bdf8f", "question": "Ordering message 16", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 16 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-unkeyed-395d29ac-29a4-4fa8-8a7f-021b08c07313
+[WRITER-two] Offset committed for ordering-unkeyed-9fed295d-a563-439a-adde-26a3fe0bdf8f
+[WRITER-two] Received partition=1 offset=22 sequence=17 correlation_id=ordering-unkeyed-8feca512-7e0d-4293-a553-4b8fd92a7060
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-8feca512-7e0d-4293-a553-4b8fd92a7060", "question": "Ordering message 17", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 17 The response follows this plan: Preserve related message order."}
+[WRITER-two] Offset committed for ordering-unkeyed-8feca512-7e0d-4293-a553-4b8fd92a7060
+[WRITER-two] Received partition=1 offset=23 sequence=18 correlation_id=ordering-unkeyed-fe91b336-ffda-4b92-b91f-47c8b598c83f
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-fe91b336-ffda-4b92-b91f-47c8b598c83f", "question": "Ordering message 18", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 18 The response follows this plan: Preserve related message order."}
+[WRITER-two] Offset committed for ordering-unkeyed-fe91b336-ffda-4b92-b91f-47c8b598c83f
+[WRITER-two] Received partition=1 offset=24 sequence=20 correlation_id=ordering-unkeyed-eb5c8d8a-dac6-4eb6-997b-f53a098c711f
+[WRITER-two] Sending to s4544_drafts: {"correlation_id": "ordering-unkeyed-eb5c8d8a-dac6-4eb6-997b-f53a098c711f", "question": "Ordering message 20", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 20 The response follows this plan: Preserve related message order."}
+[WRITER-two] Offset committed for ordering-unkeyed-eb5c8d8a-dac6-4eb6-997b-f53a098c711f
+[2026-10-29 19:44:15 PDT] ORDERING KEYED
+[ORDERING] Starting keyed run with 20 messages
+[ORDERING] Sent sequence=1 keyed=True
+[WRITER-one] Received partition=0 offset=17 sequence=1 correlation_id=ordering-keyed-f469e51c-31de-40a2-8ea1-399c4a224bb0
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-f469e51c-31de-40a2-8ea1-399c4a224bb0", "question": "Ordering message 1", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 1 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=2 keyed=True
+[ORDERING] Sent sequence=3 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-f469e51c-31de-40a2-8ea1-399c4a224bb0
+[WRITER-one] Received partition=0 offset=18 sequence=2 correlation_id=ordering-keyed-389f07a9-2b39-470b-a1bf-009e16756936
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-389f07a9-2b39-470b-a1bf-009e16756936", "question": "Ordering message 2", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 2 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=4 keyed=True
+[ORDERING] Sent sequence=5 keyed=True
+[ORDERING] Sent sequence=6 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-389f07a9-2b39-470b-a1bf-009e16756936
+[WRITER-one] Received partition=0 offset=19 sequence=3 correlation_id=ordering-keyed-489d6087-eb79-4417-ae37-77efd7706a0c
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-489d6087-eb79-4417-ae37-77efd7706a0c", "question": "Ordering message 3", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 3 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=7 keyed=True
+[ORDERING] Sent sequence=8 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-489d6087-eb79-4417-ae37-77efd7706a0c
+[WRITER-one] Received partition=0 offset=20 sequence=4 correlation_id=ordering-keyed-d79418ab-f8c9-4c9e-985e-46a80aa1098d
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-d79418ab-f8c9-4c9e-985e-46a80aa1098d", "question": "Ordering message 4", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 4 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=9 keyed=True
+[ORDERING] Sent sequence=10 keyed=True
+[ORDERING] Sent sequence=11 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-d79418ab-f8c9-4c9e-985e-46a80aa1098d
+[WRITER-one] Received partition=0 offset=21 sequence=5 correlation_id=ordering-keyed-911bdc48-c9d9-407f-9118-e5b2ae8219a4
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-911bdc48-c9d9-407f-9118-e5b2ae8219a4", "question": "Ordering message 5", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 5 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=12 keyed=True
+[ORDERING] Sent sequence=13 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-911bdc48-c9d9-407f-9118-e5b2ae8219a4
+[WRITER-one] Received partition=0 offset=22 sequence=6 correlation_id=ordering-keyed-01927b0c-3bde-4482-83f2-b804700ac201
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-01927b0c-3bde-4482-83f2-b804700ac201", "question": "Ordering message 6", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 6 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=14 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-01927b0c-3bde-4482-83f2-b804700ac201
+[ORDERING] Sent sequence=15 keyed=True
+[WRITER-one] Received partition=0 offset=23 sequence=7 correlation_id=ordering-keyed-19d2d06e-7d16-4df5-9698-230822fc49c3
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-19d2d06e-7d16-4df5-9698-230822fc49c3", "question": "Ordering message 7", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 7 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=16 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-19d2d06e-7d16-4df5-9698-230822fc49c3
+[ORDERING] Sent sequence=17 keyed=True
+[WRITER-one] Received partition=0 offset=24 sequence=8 correlation_id=ordering-keyed-6c4d6ac8-90c4-4f2f-90cb-dd767ce3ba27
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-6c4d6ac8-90c4-4f2f-90cb-dd767ce3ba27", "question": "Ordering message 8", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 8 The response follows this plan: Preserve related message order."}
+[ORDERING] Sent sequence=18 keyed=True
+[WRITER-one] Offset committed for ordering-keyed-6c4d6ac8-90c4-4f2f-90cb-dd767ce3ba27
+[ORDERING] Sent sequence=19 keyed=True
+[ORDERING] Sent sequence=20 keyed=True
+[WRITER-one] Received partition=0 offset=25 sequence=9 correlation_id=ordering-keyed-55ffef95-a1cb-4346-ad5b-7c7990705ff6
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-55ffef95-a1cb-4346-ad5b-7c7990705ff6", "question": "Ordering message 9", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 9 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-55ffef95-a1cb-4346-ad5b-7c7990705ff6
+[WRITER-one] Received partition=0 offset=26 sequence=10 correlation_id=ordering-keyed-f78a2567-b384-4c74-ab74-0e47fb0f764f
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-f78a2567-b384-4c74-ab74-0e47fb0f764f", "question": "Ordering message 10", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 10 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-f78a2567-b384-4c74-ab74-0e47fb0f764f
+[WRITER-one] Received partition=0 offset=27 sequence=11 correlation_id=ordering-keyed-22bcf736-432d-4097-bfd7-c198ac2b8283
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-22bcf736-432d-4097-bfd7-c198ac2b8283", "question": "Ordering message 11", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 11 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-22bcf736-432d-4097-bfd7-c198ac2b8283
+[WRITER-one] Received partition=0 offset=28 sequence=12 correlation_id=ordering-keyed-55c76821-e1b4-4388-aa49-5b69fd21bfc5
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-55c76821-e1b4-4388-aa49-5b69fd21bfc5", "question": "Ordering message 12", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 12 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-55c76821-e1b4-4388-aa49-5b69fd21bfc5
+[WRITER-one] Received partition=0 offset=29 sequence=13 correlation_id=ordering-keyed-5d23159f-35e6-4f19-9ac3-ca10488cf4aa
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-5d23159f-35e6-4f19-9ac3-ca10488cf4aa", "question": "Ordering message 13", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 13 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-5d23159f-35e6-4f19-9ac3-ca10488cf4aa
+[WRITER-one] Received partition=0 offset=30 sequence=14 correlation_id=ordering-keyed-ef6119c7-edd9-4460-9d07-bee92e42c922
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-ef6119c7-edd9-4460-9d07-bee92e42c922", "question": "Ordering message 14", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 14 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-ef6119c7-edd9-4460-9d07-bee92e42c922
+[WRITER-one] Received partition=0 offset=31 sequence=15 correlation_id=ordering-keyed-6fcf5394-038b-4b3c-b69a-67bddd90affb
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-6fcf5394-038b-4b3c-b69a-67bddd90affb", "question": "Ordering message 15", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 15 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-6fcf5394-038b-4b3c-b69a-67bddd90affb
+[WRITER-one] Received partition=0 offset=32 sequence=16 correlation_id=ordering-keyed-fff16961-22c4-4b3c-a345-7b33c6a8bdf9
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-fff16961-22c4-4b3c-a345-7b33c6a8bdf9", "question": "Ordering message 16", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 16 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-fff16961-22c4-4b3c-a345-7b33c6a8bdf9
+[WRITER-one] Received partition=0 offset=33 sequence=17 correlation_id=ordering-keyed-faa4193a-1201-4a24-8497-5a9c303cdc3d
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-faa4193a-1201-4a24-8497-5a9c303cdc3d", "question": "Ordering message 17", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 17 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-faa4193a-1201-4a24-8497-5a9c303cdc3d
+[WRITER-one] Received partition=0 offset=34 sequence=18 correlation_id=ordering-keyed-e78e73f4-c087-4a2d-81c9-2ecaaa0f85b5
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-e78e73f4-c087-4a2d-81c9-2ecaaa0f85b5", "question": "Ordering message 18", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 18 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-e78e73f4-c087-4a2d-81c9-2ecaaa0f85b5
+[WRITER-one] Received partition=0 offset=35 sequence=19 correlation_id=ordering-keyed-3295687b-e308-49f7-afd8-41f4868d5ec3
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-3295687b-e308-49f7-afd8-41f4868d5ec3", "question": "Ordering message 19", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 19 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-3295687b-e308-49f7-afd8-41f4868d5ec3
+[WRITER-one] Received partition=0 offset=36 sequence=20 correlation_id=ordering-keyed-09d45b25-6664-4023-b7b6-c553c95710cf
+[WRITER-one] Sending to s4544_drafts: {"correlation_id": "ordering-keyed-09d45b25-6664-4023-b7b6-c553c95710cf", "question": "Ordering message 20", "plan": ["Preserve related message order"], "draft": "The question was: Ordering message 20 The response follows this plan: Preserve related message order."}
+[WRITER-one] Offset committed for ordering-keyed-09d45b25-6664-4023-b7b6-c553c95710cf
