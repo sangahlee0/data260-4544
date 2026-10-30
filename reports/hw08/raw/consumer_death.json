@@ -1,0 +1,8 @@
+{
+  "scenario": "consumer_death",
+  "correlation_id": "consumer-death-demo-001",
+  "first_attempt": "writer stopped before offset commit",
+  "restart_result": "message redelivered",
+  "final_result": "message processed and offset committed",
+  "result": "passed"
+}

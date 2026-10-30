@@ -3,7 +3,6 @@ import asyncio
 import json
 import os
 
-from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 from topics import DEAD_LETTER_TOPIC, DRAFTS_TOPIC, TASKS_TOPIC
 
 BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
@@ -32,6 +31,8 @@ def validate_task(incoming):
 
 
 async def main():
+    from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
+
     consumer = AIOKafkaConsumer(
         TASKS_TOPIC,
         bootstrap_servers=BOOTSTRAP_SERVERS,

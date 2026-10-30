@@ -1,0 +1,37 @@
+{
+  "homework": 8,
+  "sid4": "4544",
+  "commit_hash": "eceebef9a578cb45f7cfaf735f92f7f8688cd117",
+  "model": "qwen2.5:3b",
+  "seed": 4544,
+  "verify_seed": 264544,
+  "timestamp": "2026-10-30T03:17:58.121531+00:00",
+  "checks": [
+    {
+      "name": "required_topics",
+      "pass": true,
+      "detail": "request=s4544_vulnerability_requests, response=s4544_vulnerability_responses"
+    },
+    {
+      "name": "create_generates_entity_id",
+      "pass": true,
+      "detail": "{\"success\": true, \"entity_id\": \"d9447752-f7ea-4393-9ac2-9e4ddb0d50b0\", \"message\": \"Entity created\"}"
+    },
+    {
+      "name": "get_returns_created_entity",
+      "pass": true,
+      "detail": "{\"success\": true, \"entity\": {\"entity_id\": \"d9447752-f7ea-4393-9ac2-9e4ddb0d50b0\", \"package_id\": 1, \"vulnerability_name\": \"Verification vulnerability\", \"vulnerability_code\": \"VERIFY-7dec3e51\", \"urgency_score\": 5}}"
+    },
+    {
+      "name": "correlation_id_preserved",
+      "pass": true,
+      "detail": "{\"correlation_id\": \"verify-hw08-001\", \"success\": true, \"entity\": {\"entity_id\": \"d9447752-f7ea-4393-9ac2-9e4ddb0d50b0\", \"package_id\": 1, \"vulnerability_name\": \"Verification vulnerability\", \"vulnerability_code\": \"VERIFY-7dec3e51\", \"urgency_score\": 5}}"
+    },
+    {
+      "name": "unknown_operation_returns_error",
+      "pass": true,
+      "detail": "success=false"
+    }
+  ],
+  "all_passed": true
+}

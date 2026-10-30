@@ -1,0 +1,18 @@
+{
+  "scenario": "ordering",
+  "topic": "s4544_tasks",
+  "partitions": 2,
+  "writer_instances": 2,
+  "unkeyed": {
+    "partitions_observed": [0, 1],
+    "global_order_guaranteed": false
+  },
+  "keyed": {
+    "key": "related-entity-4544",
+    "partition_observed": 0,
+    "sequence_start": 1,
+    "sequence_end": 20,
+    "order_preserved": true
+  },
+  "result": "passed"
+}
