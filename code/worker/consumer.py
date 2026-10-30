@@ -1,10 +1,11 @@
 import asyncio
 import json
+import os
 import uuid
 
 from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 
-KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 REQUEST_TOPIC = "s4544_vulnerability_requests"
 
 
@@ -107,7 +108,7 @@ async def main():
 
     await consumer.start()
     await producer.start()
-    print("The consumer is ready and listening...")
+    print("Consumer is ready and listening...")
     print(f"Listening for requests on topic: {REQUEST_TOPIC}")
 
     try:
@@ -122,12 +123,14 @@ async def main():
             reply_to = request.get("reply_to")
 
             print("[WORKER] Received request from Kafka")
+            print(f"[WORKER] Received request from topic={message.topic}")
             print(f"[WORKER] correlation_id={correlation_id}")
             print(f"[WORKER] request={json.dumps(request, indent=2)}")
+            print(f"[WORKER] Processing operation={request.get('operation')}")
 
             response = process_request_message(request)
 
-            print("[WORKER] Sending response to Kafka")
+            print(f"[WORKER] Sending response to topic={reply_to}")
             print(f"[WORKER] response={json.dumps(response, indent=2)}")
             if reply_to:
                 await producer.send_and_wait(reply_to, json.dumps(response).encode())
