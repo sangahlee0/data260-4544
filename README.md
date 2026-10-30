@@ -245,6 +245,7 @@ data260-4544/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
+│       ├── Lee_HW8.pdf
 │       ├── raw/
 │       │   ├── consumer_death.json
 │       │   ├── duplicate_delivery.json
