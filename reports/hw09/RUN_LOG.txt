@@ -1,0 +1,100 @@
+
+--- Part 1 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part1_counter.py
+=== Testing Counter ===
+Access #1: Total = 1
+Access #2: Total = 2
+Access #3: Total = 3
+Access #4: Total = 4
+Access #5: Total = 5
+Access #6: Total = 6
+Access #7: Total = 7
+Access #8: Total = 8
+Access #9: Total = 9
+Synced views to database: vulnerability_id=1 count=10
+Access #10: Total = 10
+✓ Synced views to database
+Access #11: Total = 11
+Access #12: Total = 12
+Access #13: Total = 13
+Access #14: Total = 14
+Access #15: Total = 15
+Access #16: Total = 16
+Access #17: Total = 17
+Access #18: Total = 18
+Access #19: Total = 19
+Synced views to database: vulnerability_id=1 count=20
+Access #20: Total = 20
+✓ Synced views to database
+Access #21: Total = 21
+Access #22: Total = 22
+Access #23: Total = 23
+Access #24: Total = 24
+Access #25: Total = 25
+Database checkpoint after 25 accesses: 20
+
+--- Part 1 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part1_counter.py
+=== Testing Counter ===
+Access #1: Total = 1
+Access #2: Total = 2
+Access #3: Total = 3
+Access #4: Total = 4
+Access #5: Total = 5
+Access #6: Total = 6
+Access #7: Total = 7
+Access #8: Total = 8
+Access #9: Total = 9
+Synced views to database: vulnerability_id=1 count=10
+Access #10: Total = 10
+✓ Synced views to database
+Access #11: Total = 11
+Access #12: Total = 12
+Access #13: Total = 13
+Access #14: Total = 14
+Access #15: Total = 15
+Access #16: Total = 16
+Access #17: Total = 17
+Access #18: Total = 18
+Access #19: Total = 19
+Synced views to database: vulnerability_id=1 count=20
+Access #20: Total = 20
+✓ Synced views to database
+Access #21: Total = 21
+Access #22: Total = 22
+Access #23: Total = 23
+Access #24: Total = 24
+Access #25: Total = 25
+Database checkpoint after 25 accesses: 20
+
+--- Part 2 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part2_semantic_cache.py
+CACHE MISS similarity=-1.000 query=What is vulnerability ID 1?
+CACHE HIT similarity=1.000 query=What is vulnerability ID 1?
+CACHE MISS similarity=0.000 query=How many vulnerabilities affect requests?
+CACHE MISS similarity=0.772 query=How many security issues affect requests?
+CACHE MISS similarity=0.800 query=What is vulnerability ID 2?
+CACHE MISS similarity=0.671 query=Explain vulnerability ID 2.
+CACHE MISS similarity=0.246 query=How should a team prioritize a high-severity vulnerability?
+CACHE MISS similarity=0.149 query=What package has the most recent release?
+CACHE MISS similarity=0.400 query=What is the weather today?
+CACHE MISS similarity=0.302 query=How do I reset my laptop password?
+Cache hit rate: 10.0% (1/10)
+Average cached latency: 0.029 ms
+Average non-cached latency: 0.120 ms
+
+--- Part 2 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part2_semantic_cache.py
+CACHE MISS similarity=None query=What is vulnerability ID 1?
+CACHE HIT similarity=1.000 query=What is vulnerability ID 1?
+CACHE MISS similarity=0.0 query=How many vulnerabilities affect requests?
+CACHE HIT similarity=0.926 query=How many vulnerabilities affect the requests package?
+CACHE MISS similarity=0.6666666666666669 query=What is vulnerability ID 2?
+CACHE HIT similarity=0.866 query=Please provide vulnerability ID 2
+CACHE MISS similarity=0.2357022603955159 query=How should a team prioritize a high-severity vulnerability?
+CACHE MISS similarity=0.0 query=What package has the most recent release?
+CACHE MISS similarity=0.0 query=What is the weather today?
+CACHE MISS similarity=0.0 query=How do I reset my laptop password?
+Cache hit rate: 30.0% (3/10)
+Average cached latency: 0.026 ms
+Average non-cached latency: 0.044 ms
