@@ -1,0 +1,205 @@
+# HW9 Part 3.1 labeled cache cases.
+# Labels are fixed before threshold testing and must not be changed afterward.
+- id: exact_01
+  category: exact_duplicate
+  cached_query: "What is vulnerability ID 1?"
+  incoming_query: "What is vulnerability ID 1?"
+  expected: hit
+- id: exact_02
+  category: exact_duplicate
+  cached_query: "What is vulnerability ID 2?"
+  incoming_query: "What is vulnerability ID 2?"
+  expected: hit
+- id: exact_03
+  category: exact_duplicate
+  cached_query: "How many vulnerabilities affect requests?"
+  incoming_query: "How many vulnerabilities affect requests?"
+  expected: hit
+- id: exact_04
+  category: exact_duplicate
+  cached_query: "How should a team prioritize a high-severity vulnerability?"
+  incoming_query: "How should a team prioritize a high-severity vulnerability?"
+  expected: hit
+- id: exact_05
+  category: exact_duplicate
+  cached_query: "Search for injection vulnerabilities."
+  incoming_query: "Search for injection vulnerabilities."
+  expected: hit
+- id: exact_06
+  category: exact_duplicate
+  cached_query: "Which package contains vulnerability ID 1?"
+  incoming_query: "Which package contains vulnerability ID 1?"
+  expected: hit
+- id: exact_07
+  category: exact_duplicate
+  cached_query: "What is the urgency score for vulnerability ID 1?"
+  incoming_query: "What is the urgency score for vulnerability ID 1?"
+  expected: hit
+- id: exact_08
+  category: exact_duplicate
+  cached_query: "List vulnerabilities in the requests package."
+  incoming_query: "List vulnerabilities in the requests package."
+  expected: hit
+- id: exact_09
+  category: exact_duplicate
+  cached_query: "Compare vulnerability ID 1 and vulnerability ID 2."
+  incoming_query: "Compare vulnerability ID 1 and vulnerability ID 2."
+  expected: hit
+- id: exact_10
+  category: exact_duplicate
+  cached_query: "What should a team do about a remote code execution flaw?"
+  incoming_query: "What should a team do about a remote code execution flaw?"
+  expected: hit
+
+- id: paraphrase_01
+  category: paraphrase
+  cached_query: "What is vulnerability ID 1?"
+  incoming_query: "Can you provide the details for vulnerability number 1?"
+  expected: hit
+- id: paraphrase_02
+  category: paraphrase
+  cached_query: "What is vulnerability ID 2?"
+  incoming_query: "Tell me about the second vulnerability."
+  expected: hit
+- id: paraphrase_03
+  category: paraphrase
+  cached_query: "How many vulnerabilities affect requests?"
+  incoming_query: "How many security issues are associated with requests?"
+  expected: hit
+- id: paraphrase_04
+  category: paraphrase
+  cached_query: "How should a team prioritize a high-severity vulnerability?"
+  incoming_query: "What is the proper response priority for a severe vulnerability?"
+  expected: hit
+- id: paraphrase_05
+  category: paraphrase
+  cached_query: "Search for injection vulnerabilities."
+  incoming_query: "Find vulnerabilities related to injection."
+  expected: hit
+- id: paraphrase_06
+  category: paraphrase
+  cached_query: "Which package contains vulnerability ID 1?"
+  incoming_query: "What package is affected by vulnerability one?"
+  expected: hit
+- id: paraphrase_07
+  category: paraphrase
+  cached_query: "What is the urgency score for vulnerability ID 1?"
+  incoming_query: "How urgent is vulnerability number one?"
+  expected: hit
+- id: paraphrase_08
+  category: paraphrase
+  cached_query: "List vulnerabilities in the requests package."
+  incoming_query: "Show the security flaws belonging to requests."
+  expected: hit
+- id: paraphrase_09
+  category: paraphrase
+  cached_query: "Compare vulnerability ID 1 and vulnerability ID 2."
+  incoming_query: "How do vulnerabilities one and two differ?"
+  expected: hit
+- id: paraphrase_10
+  category: paraphrase
+  cached_query: "What should a team do about a remote code execution flaw?"
+  incoming_query: "How should an organization respond to an RCE vulnerability?"
+  expected: hit
+
+- id: similar_different_01
+  category: similar_different_answer
+  cached_query: "What is vulnerability ID 1?"
+  incoming_query: "What is vulnerability ID 2?"
+  expected: miss
+- id: similar_different_02
+  category: similar_different_answer
+  cached_query: "What is vulnerability ID 2?"
+  incoming_query: "What is vulnerability ID 1?"
+  expected: miss
+- id: similar_different_03
+  category: similar_different_answer
+  cached_query: "How many vulnerabilities affect requests?"
+  incoming_query: "How many vulnerabilities affect urllib3?"
+  expected: miss
+- id: similar_different_04
+  category: similar_different_answer
+  cached_query: "Which package contains vulnerability ID 1?"
+  incoming_query: "Which package contains vulnerability ID 2?"
+  expected: miss
+- id: similar_different_05
+  category: similar_different_answer
+  cached_query: "What is the urgency score for vulnerability ID 1?"
+  incoming_query: "What is the urgency score for vulnerability ID 2?"
+  expected: miss
+- id: similar_different_06
+  category: similar_different_answer
+  cached_query: "Search for injection vulnerabilities."
+  incoming_query: "Search for remote code execution vulnerabilities."
+  expected: miss
+- id: similar_different_07
+  category: similar_different_answer
+  cached_query: "Compare vulnerability ID 1 and vulnerability ID 2."
+  incoming_query: "Compare vulnerability ID 2 and vulnerability ID 3."
+  expected: miss
+- id: similar_different_08
+  category: similar_different_answer
+  cached_query: "What should a team do about a remote code execution flaw?"
+  incoming_query: "What should a team do about an injection flaw?"
+  expected: miss
+- id: similar_different_09
+  category: similar_different_answer
+  cached_query: "List vulnerabilities in the requests package."
+  incoming_query: "List vulnerabilities in the flask package."
+  expected: miss
+- id: similar_different_10
+  category: similar_different_answer
+  cached_query: "How should a team prioritize a high-severity vulnerability?"
+  incoming_query: "How should a team prioritize a low-severity vulnerability?"
+  expected: miss
+
+- id: unrelated_01
+  category: unrelated
+  cached_query: "What is vulnerability ID 1?"
+  incoming_query: "What is the weather forecast today?"
+  expected: miss
+- id: unrelated_02
+  category: unrelated
+  cached_query: "What is vulnerability ID 2?"
+  incoming_query: "How do I reset my laptop password?"
+  expected: miss
+- id: unrelated_03
+  category: unrelated
+  cached_query: "How many vulnerabilities affect requests?"
+  incoming_query: "What is the capital of France?"
+  expected: miss
+- id: unrelated_04
+  category: unrelated
+  cached_query: "Search for injection vulnerabilities."
+  incoming_query: "Give me a recipe for pancakes."
+  expected: miss
+- id: unrelated_05
+  category: unrelated
+  cached_query: "Which package contains vulnerability ID 1?"
+  incoming_query: "How do I organize my desktop files?"
+  expected: miss
+- id: unrelated_06
+  category: unrelated
+  cached_query: "What is the urgency score for vulnerability ID 1?"
+  incoming_query: "Who won the baseball game last night?"
+  expected: miss
+- id: unrelated_07
+  category: unrelated
+  cached_query: "List vulnerabilities in the requests package."
+  incoming_query: "Explain how photosynthesis works."
+  expected: miss
+- id: unrelated_08
+  category: unrelated
+  cached_query: "Compare vulnerability ID 1 and vulnerability ID 2."
+  incoming_query: "What time does the library close?"
+  expected: miss
+- id: unrelated_09
+  category: unrelated
+  cached_query: "What should a team do about a remote code execution flaw?"
+  incoming_query: "Recommend a beginner guitar."
+  expected: miss
+- id: unrelated_10
+  category: unrelated
+  cached_query: "How should a team prioritize a high-severity vulnerability?"
+  incoming_query: "How do I make a budget spreadsheet?"
+  expected: miss
