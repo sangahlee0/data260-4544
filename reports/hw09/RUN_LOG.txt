@@ -98,3 +98,49 @@ CACHE MISS similarity=0.0 query=How do I reset my laptop password?
 Cache hit rate: 30.0% (3/10)
 Average cached latency: 0.026 ms
 Average non-cached latency: 0.044 ms
+
+--- Part 2 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part2_semantic_cache.py
+CACHE MISS similarity=None latency_ms=0.196 started_at=2026-11-05T20:12:48.803853+00:00 finished_at=2026-11-05T20:12:48.804047+00:00 query=What is vulnerability ID 1?
+CACHE HIT similarity=1.000 latency_ms=0.032 started_at=2026-11-05T20:12:48.804070+00:00 finished_at=2026-11-05T20:12:48.804102+00:00 query=What is vulnerability ID 1?
+CACHE MISS similarity=0.0 latency_ms=0.034 started_at=2026-11-05T20:12:48.804125+00:00 finished_at=2026-11-05T20:12:48.804159+00:00 query=How many vulnerabilities affect requests?
+CACHE HIT similarity=0.926 latency_ms=0.027 started_at=2026-11-05T20:12:48.804171+00:00 finished_at=2026-11-05T20:12:48.804198+00:00 query=How many vulnerabilities affect the requests package?
+CACHE MISS similarity=0.6666666666666669 latency_ms=0.031 started_at=2026-11-05T20:12:48.804210+00:00 finished_at=2026-11-05T20:12:48.804241+00:00 query=What is vulnerability ID 2?
+CACHE HIT similarity=0.866 latency_ms=0.027 started_at=2026-11-05T20:12:48.804253+00:00 finished_at=2026-11-05T20:12:48.804280+00:00 query=Please provide vulnerability ID 2
+CACHE MISS similarity=0.2357022603955159 latency_ms=0.038 started_at=2026-11-05T20:12:48.804293+00:00 finished_at=2026-11-05T20:12:48.804331+00:00 query=How should a team prioritize a high-severity vulnerability?
+CACHE MISS similarity=0.0 latency_ms=0.041 started_at=2026-11-05T20:12:48.804342+00:00 finished_at=2026-11-05T20:12:48.804383+00:00 query=What package has the most recent release?
+CACHE MISS similarity=0.0 latency_ms=0.044 started_at=2026-11-05T20:12:48.804393+00:00 finished_at=2026-11-05T20:12:48.804437+00:00 query=What is the weather today?
+CACHE MISS similarity=0.0 latency_ms=0.053 started_at=2026-11-05T20:12:48.804447+00:00 finished_at=2026-11-05T20:12:48.804500+00:00 query=How do I reset my laptop password?
+Cache hit rate: 30.0% (3/10)
+Average cached latency: 0.029 ms
+Average non-cached latency: 0.062 ms
+
+--- Part 2 run: 2026-11-05 ---
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': False, 'similarity': None, 'latency_ms': 28910.19987501204, 'started_at': '2026-11-06T00:50:57.478475+00:00', 'finished_at': '2026-11-06T00:51:26.388103+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 1277.3125000530854, 'started_at': '2026-11-06T00:51:26.388805+00:00', 'finished_at': '2026-11-06T00:51:27.666098+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to the term 'requests' due to an error in the SQL query.", 'is_cached': False, 'similarity': 0.44094699621199995, 'latency_ms': 10749.306582962163, 'started_at': '2026-11-06T00:51:27.666213+00:00', 'finished_at': '2026-11-06T00:51:38.415429+00:00', 'data_version': 'v1'}
+{'answer': 'I encountered an error while trying to count the vulnerabilities related to the requests package. Please check the package name or try again later.', 'is_cached': False, 'similarity': 0.7505235672, 'latency_ms': 10428.203166113235, 'started_at': '2026-11-06T00:51:38.415614+00:00', 'finished_at': '2026-11-06T00:51:48.843721+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.9007599949837, 'latency_ms': 537.440708023496, 'started_at': '2026-11-06T00:51:48.843865+00:00', 'finished_at': '2026-11-06T00:51:49.381302+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.856689810753, 'latency_ms': 282.2264999849722, 'started_at': '2026-11-06T00:51:49.381329+00:00', 'finished_at': '2026-11-06T00:51:49.663559+00:00', 'data_version': 'v1'}
+{'answer': 'A team should prioritize a high-severity vulnerability by addressing it promptly to mitigate the risk of a security breach or exploit.', 'is_cached': False, 'similarity': 0.37471181154300004, 'latency_ms': 2943.6462910380214, 'started_at': '2026-11-06T00:51:49.663588+00:00', 'finished_at': '2026-11-06T00:51:52.607149+00:00', 'data_version': 'v1'}
+{'answer': 'To determine the package with the most recent release, please provide the search tool name.', 'is_cached': False, 'similarity': 0.31073439121199997, 'latency_ms': 2844.718166976236, 'started_at': '2026-11-06T00:51:52.607329+00:00', 'finished_at': '2026-11-06T00:51:55.452020+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find weather information as it is an unrelated question to the tools available. Please ask a question related to vulnerability information.", 'is_cached': False, 'similarity': 0.20481771230699997, 'latency_ms': 3641.5127080399543, 'started_at': '2026-11-06T00:51:55.452071+00:00', 'finished_at': '2026-11-06T00:51:59.092444+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to resetting a laptop password. Please check the spelling or try a different search term.", 'is_cached': False, 'similarity': 0.13694888353300005, 'latency_ms': 15304.845166974701, 'started_at': '2026-11-06T00:51:59.093655+00:00', 'finished_at': '2026-11-06T00:52:14.398423+00:00', 'data_version': 'v1'}
+Cache hit rate: 30.0% (3/10)
+Average cached latency: 698.993 ms
+Average non-cached latency: 10688.919 ms
+
+--- Part 2 run: 2026-11-05 ---
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 1026.0843330761418, 'started_at': '2026-11-06T01:10:41.716526+00:00', 'finished_at': '2026-11-06T01:10:42.742620+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 13.633667025715113, 'started_at': '2026-11-06T01:10:42.742650+00:00', 'finished_at': '2026-11-06T01:10:42.756272+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to the term 'requests' due to an error in the SQL query.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 15.687957988120615, 'started_at': '2026-11-06T01:10:42.756295+00:00', 'finished_at': '2026-11-06T01:10:42.771976+00:00', 'data_version': 'v1'}
+{'answer': 'I encountered an error while trying to count the vulnerabilities related to the requests package. Please check the package name or try again later.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 11.761292000301182, 'started_at': '2026-11-06T01:10:42.771989+00:00', 'finished_at': '2026-11-06T01:10:42.783742+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.9007599949837, 'latency_ms': 13.23712500743568, 'started_at': '2026-11-06T01:10:42.783756+00:00', 'finished_at': '2026-11-06T01:10:42.796989+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.856689810753, 'latency_ms': 13.123624958097935, 'started_at': '2026-11-06T01:10:42.796998+00:00', 'finished_at': '2026-11-06T01:10:42.810115+00:00', 'data_version': 'v1'}
+{'answer': 'A team should prioritize a high-severity vulnerability by addressing it promptly to mitigate the risk of a security breach or exploit.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 16.846041078679264, 'started_at': '2026-11-06T01:10:42.810127+00:00', 'finished_at': '2026-11-06T01:10:42.826966+00:00', 'data_version': 'v1'}
+{'answer': 'To determine the package with the most recent release, please provide the search tool name.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 11.428874917328358, 'started_at': '2026-11-06T01:10:42.826978+00:00', 'finished_at': '2026-11-06T01:10:42.838402+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find weather information as it is an unrelated question to the tools available. Please ask a question related to vulnerability information.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 14.37987491954118, 'started_at': '2026-11-06T01:10:42.838412+00:00', 'finished_at': '2026-11-06T01:10:42.852782+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to resetting a laptop password. Please check the spelling or try a different search term.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 11.931249988265336, 'started_at': '2026-11-06T01:10:42.852797+00:00', 'finished_at': '2026-11-06T01:10:42.864721+00:00', 'data_version': 'v1'}
+Cache hit rate: 100.0% (10/10)
+Average cached latency: 114.811 ms
+Average non-cached latency: 0.000 ms
