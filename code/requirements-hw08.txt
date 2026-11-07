@@ -4,3 +4,4 @@ uvicorn
 requests
 redis
 sentence-transformers
+pyyaml

@@ -1,5 +1,4 @@
-# HW9 Part 3.1 labeled cache cases.
-# Labels are fixed before threshold testing and must not be changed afterward.
+# HW9 Part 3.1 labeled cache cases---
 - id: exact_01
   category: exact_duplicate
   cached_query: "What is vulnerability ID 1?"
