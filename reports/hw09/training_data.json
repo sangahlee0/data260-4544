@@ -1,0 +1,8 @@
+[
+  {"question": "What package is affected by GHSA-2f96-g7mh-g2hx?"},
+  {"question": "What is the severity of the GitPython command-injection vulnerability?"},
+  {"question": "Which version fixes the GitPython vulnerability?"},
+  {"question": "What CVE is associated with the GitPython advisory?"},
+  {"question": "What type of vulnerability affects TensorFlow in GHSA-2cpx-427x-q2c6?"},
+  {"question": "Which TensorFlow version fixes the reported issue?"}
+]

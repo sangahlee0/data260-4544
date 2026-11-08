@@ -16,6 +16,8 @@ class Vulnerability(Base):
     )  # unique field
     # numeric field with sensible default
     urgency_score = Column(Integer, nullable=False, default=1)
+    # For HW9 where Redis absorbs frequent view increments
+    view_count = Column(Integer, nullable=False, default=0, server_default="0")
     # foreign key related to entity (package_name is updated to package_id)
     package_id = Column(Integer, ForeignKey("packages.id"), nullable=False)
     # timestamps

@@ -1,0 +1,10 @@
+[
+  {"question": "What is the GHSA identifier for the GitPython command injection?"},
+  {"question": "Which GitPython option families are weaponizable in this advisory?"},
+  {"question": "What versions of GitPython are affected?"},
+  {"question": "Summarize the GitPython security issue in one sentence."},
+  {"question": "What is the TensorFlow advisory's CVE number?"},
+  {"question": "What severity is assigned to the TensorFlow issue?"},
+  {"question": "Which TensorFlow versions are affected before the fix?"},
+  {"question": "Compare the primary impact of the GitPython and TensorFlow advisories."}
+]

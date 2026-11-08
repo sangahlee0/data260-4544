@@ -1,0 +1,9 @@
+[
+  {"question": "Identify the package affected by CVE-2026-67325."},
+  {"question": "Is the GitPython advisory high or low severity?"},
+  {"question": "What is the first safe GitPython version?"},
+  {"question": "What attack can GHSA-2cpx-427x-q2c6 cause?"},
+  {"question": "Which package is associated with CVE-2021-29523?"},
+  {"question": "What is the fixed TensorFlow version?"},
+  {"question": "What is the weather today?"}
+]

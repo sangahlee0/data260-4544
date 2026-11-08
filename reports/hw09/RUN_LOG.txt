@@ -1,0 +1,419 @@
+
+--- Part 1 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part1_counter.py
+=== Testing Counter ===
+Access #1: Total = 1
+Access #2: Total = 2
+Access #3: Total = 3
+Access #4: Total = 4
+Access #5: Total = 5
+Access #6: Total = 6
+Access #7: Total = 7
+Access #8: Total = 8
+Access #9: Total = 9
+Synced views to database: vulnerability_id=1 count=10
+Access #10: Total = 10
+✓ Synced views to database
+Access #11: Total = 11
+Access #12: Total = 12
+Access #13: Total = 13
+Access #14: Total = 14
+Access #15: Total = 15
+Access #16: Total = 16
+Access #17: Total = 17
+Access #18: Total = 18
+Access #19: Total = 19
+Synced views to database: vulnerability_id=1 count=20
+Access #20: Total = 20
+✓ Synced views to database
+Access #21: Total = 21
+Access #22: Total = 22
+Access #23: Total = 23
+Access #24: Total = 24
+Access #25: Total = 25
+Database checkpoint after 25 accesses: 20
+
+--- Part 1 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part1_counter.py
+=== Testing Counter ===
+Access #1: Total = 1
+Access #2: Total = 2
+Access #3: Total = 3
+Access #4: Total = 4
+Access #5: Total = 5
+Access #6: Total = 6
+Access #7: Total = 7
+Access #8: Total = 8
+Access #9: Total = 9
+Synced views to database: vulnerability_id=1 count=10
+Access #10: Total = 10
+✓ Synced views to database
+Access #11: Total = 11
+Access #12: Total = 12
+Access #13: Total = 13
+Access #14: Total = 14
+Access #15: Total = 15
+Access #16: Total = 16
+Access #17: Total = 17
+Access #18: Total = 18
+Access #19: Total = 19
+Synced views to database: vulnerability_id=1 count=20
+Access #20: Total = 20
+✓ Synced views to database
+Access #21: Total = 21
+Access #22: Total = 22
+Access #23: Total = 23
+Access #24: Total = 24
+Access #25: Total = 25
+Database checkpoint after 25 accesses: 20
+
+--- Part 2 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part2_semantic_cache.py
+CACHE MISS similarity=-1.000 query=What is vulnerability ID 1?
+CACHE HIT similarity=1.000 query=What is vulnerability ID 1?
+CACHE MISS similarity=0.000 query=How many vulnerabilities affect requests?
+CACHE MISS similarity=0.772 query=How many security issues affect requests?
+CACHE MISS similarity=0.800 query=What is vulnerability ID 2?
+CACHE MISS similarity=0.671 query=Explain vulnerability ID 2.
+CACHE MISS similarity=0.246 query=How should a team prioritize a high-severity vulnerability?
+CACHE MISS similarity=0.149 query=What package has the most recent release?
+CACHE MISS similarity=0.400 query=What is the weather today?
+CACHE MISS similarity=0.302 query=How do I reset my laptop password?
+Cache hit rate: 10.0% (1/10)
+Average cached latency: 0.029 ms
+Average non-cached latency: 0.120 ms
+
+--- Part 2 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part2_semantic_cache.py
+CACHE MISS similarity=None query=What is vulnerability ID 1?
+CACHE HIT similarity=1.000 query=What is vulnerability ID 1?
+CACHE MISS similarity=0.0 query=How many vulnerabilities affect requests?
+CACHE HIT similarity=0.926 query=How many vulnerabilities affect the requests package?
+CACHE MISS similarity=0.6666666666666669 query=What is vulnerability ID 2?
+CACHE HIT similarity=0.866 query=Please provide vulnerability ID 2
+CACHE MISS similarity=0.2357022603955159 query=How should a team prioritize a high-severity vulnerability?
+CACHE MISS similarity=0.0 query=What package has the most recent release?
+CACHE MISS similarity=0.0 query=What is the weather today?
+CACHE MISS similarity=0.0 query=How do I reset my laptop password?
+Cache hit rate: 30.0% (3/10)
+Average cached latency: 0.026 ms
+Average non-cached latency: 0.044 ms
+
+--- Part 2 run: 2026-11-05 ---
+Command: PYTHONPATH=data260-4544/code python3 data260-4544/code/hw09_part2_semantic_cache.py
+CACHE MISS similarity=None latency_ms=0.196 started_at=2026-11-05T20:12:48.803853+00:00 finished_at=2026-11-05T20:12:48.804047+00:00 query=What is vulnerability ID 1?
+CACHE HIT similarity=1.000 latency_ms=0.032 started_at=2026-11-05T20:12:48.804070+00:00 finished_at=2026-11-05T20:12:48.804102+00:00 query=What is vulnerability ID 1?
+CACHE MISS similarity=0.0 latency_ms=0.034 started_at=2026-11-05T20:12:48.804125+00:00 finished_at=2026-11-05T20:12:48.804159+00:00 query=How many vulnerabilities affect requests?
+CACHE HIT similarity=0.926 latency_ms=0.027 started_at=2026-11-05T20:12:48.804171+00:00 finished_at=2026-11-05T20:12:48.804198+00:00 query=How many vulnerabilities affect the requests package?
+CACHE MISS similarity=0.6666666666666669 latency_ms=0.031 started_at=2026-11-05T20:12:48.804210+00:00 finished_at=2026-11-05T20:12:48.804241+00:00 query=What is vulnerability ID 2?
+CACHE HIT similarity=0.866 latency_ms=0.027 started_at=2026-11-05T20:12:48.804253+00:00 finished_at=2026-11-05T20:12:48.804280+00:00 query=Please provide vulnerability ID 2
+CACHE MISS similarity=0.2357022603955159 latency_ms=0.038 started_at=2026-11-05T20:12:48.804293+00:00 finished_at=2026-11-05T20:12:48.804331+00:00 query=How should a team prioritize a high-severity vulnerability?
+CACHE MISS similarity=0.0 latency_ms=0.041 started_at=2026-11-05T20:12:48.804342+00:00 finished_at=2026-11-05T20:12:48.804383+00:00 query=What package has the most recent release?
+CACHE MISS similarity=0.0 latency_ms=0.044 started_at=2026-11-05T20:12:48.804393+00:00 finished_at=2026-11-05T20:12:48.804437+00:00 query=What is the weather today?
+CACHE MISS similarity=0.0 latency_ms=0.053 started_at=2026-11-05T20:12:48.804447+00:00 finished_at=2026-11-05T20:12:48.804500+00:00 query=How do I reset my laptop password?
+Cache hit rate: 30.0% (3/10)
+Average cached latency: 0.029 ms
+Average non-cached latency: 0.062 ms
+
+--- Part 2 run: 2026-11-05 ---
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': False, 'similarity': None, 'latency_ms': 28910.19987501204, 'started_at': '2026-11-06T00:50:57.478475+00:00', 'finished_at': '2026-11-06T00:51:26.388103+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 1277.3125000530854, 'started_at': '2026-11-06T00:51:26.388805+00:00', 'finished_at': '2026-11-06T00:51:27.666098+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to the term 'requests' due to an error in the SQL query.", 'is_cached': False, 'similarity': 0.44094699621199995, 'latency_ms': 10749.306582962163, 'started_at': '2026-11-06T00:51:27.666213+00:00', 'finished_at': '2026-11-06T00:51:38.415429+00:00', 'data_version': 'v1'}
+{'answer': 'I encountered an error while trying to count the vulnerabilities related to the requests package. Please check the package name or try again later.', 'is_cached': False, 'similarity': 0.7505235672, 'latency_ms': 10428.203166113235, 'started_at': '2026-11-06T00:51:38.415614+00:00', 'finished_at': '2026-11-06T00:51:48.843721+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.9007599949837, 'latency_ms': 537.440708023496, 'started_at': '2026-11-06T00:51:48.843865+00:00', 'finished_at': '2026-11-06T00:51:49.381302+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.856689810753, 'latency_ms': 282.2264999849722, 'started_at': '2026-11-06T00:51:49.381329+00:00', 'finished_at': '2026-11-06T00:51:49.663559+00:00', 'data_version': 'v1'}
+{'answer': 'A team should prioritize a high-severity vulnerability by addressing it promptly to mitigate the risk of a security breach or exploit.', 'is_cached': False, 'similarity': 0.37471181154300004, 'latency_ms': 2943.6462910380214, 'started_at': '2026-11-06T00:51:49.663588+00:00', 'finished_at': '2026-11-06T00:51:52.607149+00:00', 'data_version': 'v1'}
+{'answer': 'To determine the package with the most recent release, please provide the search tool name.', 'is_cached': False, 'similarity': 0.31073439121199997, 'latency_ms': 2844.718166976236, 'started_at': '2026-11-06T00:51:52.607329+00:00', 'finished_at': '2026-11-06T00:51:55.452020+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find weather information as it is an unrelated question to the tools available. Please ask a question related to vulnerability information.", 'is_cached': False, 'similarity': 0.20481771230699997, 'latency_ms': 3641.5127080399543, 'started_at': '2026-11-06T00:51:55.452071+00:00', 'finished_at': '2026-11-06T00:51:59.092444+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to resetting a laptop password. Please check the spelling or try a different search term.", 'is_cached': False, 'similarity': 0.13694888353300005, 'latency_ms': 15304.845166974701, 'started_at': '2026-11-06T00:51:59.093655+00:00', 'finished_at': '2026-11-06T00:52:14.398423+00:00', 'data_version': 'v1'}
+Cache hit rate: 30.0% (3/10)
+Average cached latency: 698.993 ms
+Average non-cached latency: 10688.919 ms
+
+--- Part 2 run: 2026-11-05 ---
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 1026.0843330761418, 'started_at': '2026-11-06T01:10:41.716526+00:00', 'finished_at': '2026-11-06T01:10:42.742620+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 13.633667025715113, 'started_at': '2026-11-06T01:10:42.742650+00:00', 'finished_at': '2026-11-06T01:10:42.756272+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to the term 'requests' due to an error in the SQL query.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 15.687957988120615, 'started_at': '2026-11-06T01:10:42.756295+00:00', 'finished_at': '2026-11-06T01:10:42.771976+00:00', 'data_version': 'v1'}
+{'answer': 'I encountered an error while trying to count the vulnerabilities related to the requests package. Please check the package name or try again later.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 11.761292000301182, 'started_at': '2026-11-06T01:10:42.771989+00:00', 'finished_at': '2026-11-06T01:10:42.783742+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.9007599949837, 'latency_ms': 13.23712500743568, 'started_at': '2026-11-06T01:10:42.783756+00:00', 'finished_at': '2026-11-06T01:10:42.796989+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.856689810753, 'latency_ms': 13.123624958097935, 'started_at': '2026-11-06T01:10:42.796998+00:00', 'finished_at': '2026-11-06T01:10:42.810115+00:00', 'data_version': 'v1'}
+{'answer': 'A team should prioritize a high-severity vulnerability by addressing it promptly to mitigate the risk of a security breach or exploit.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 16.846041078679264, 'started_at': '2026-11-06T01:10:42.810127+00:00', 'finished_at': '2026-11-06T01:10:42.826966+00:00', 'data_version': 'v1'}
+{'answer': 'To determine the package with the most recent release, please provide the search tool name.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 11.428874917328358, 'started_at': '2026-11-06T01:10:42.826978+00:00', 'finished_at': '2026-11-06T01:10:42.838402+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find weather information as it is an unrelated question to the tools available. Please ask a question related to vulnerability information.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 14.37987491954118, 'started_at': '2026-11-06T01:10:42.838412+00:00', 'finished_at': '2026-11-06T01:10:42.852782+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to resetting a laptop password. Please check the spelling or try a different search term.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 11.931249988265336, 'started_at': '2026-11-06T01:10:42.852797+00:00', 'finished_at': '2026-11-06T01:10:42.864721+00:00', 'data_version': 'v1'}
+Cache hit rate: 100.0% (10/10)
+Average cached latency: 114.811 ms
+Average non-cached latency: 0.000 ms
+
+--- Part 2 run: 2026-11-05 ---
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 2475.432917010039, 'started_at': '2026-11-06T01:18:47.582624+00:00', 'finished_at': '2026-11-06T01:18:50.058032+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 40.122375008650124, 'started_at': '2026-11-06T01:18:50.058122+00:00', 'finished_at': '2026-11-06T01:18:50.098368+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to the term 'requests' due to an error in the SQL query.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 34.71004206221551, 'started_at': '2026-11-06T01:18:50.098399+00:00', 'finished_at': '2026-11-06T01:18:50.133090+00:00', 'data_version': 'v1'}
+{'answer': 'I encountered an error while trying to count the vulnerabilities related to the requests package. Please check the package name or try again later.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 47.851999988779426, 'started_at': '2026-11-06T01:18:50.133134+00:00', 'finished_at': '2026-11-06T01:18:50.180970+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.9007599949837, 'latency_ms': 37.53287496510893, 'started_at': '2026-11-06T01:18:50.181007+00:00', 'finished_at': '2026-11-06T01:18:50.218528+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.856689810753, 'latency_ms': 43.42250002082437, 'started_at': '2026-11-06T01:18:50.218549+00:00', 'finished_at': '2026-11-06T01:18:50.261951+00:00', 'data_version': 'v1'}
+{'answer': 'A team should prioritize a high-severity vulnerability by addressing it promptly to mitigate the risk of a security breach or exploit.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 60.93058409169316, 'started_at': '2026-11-06T01:18:50.261989+00:00', 'finished_at': '2026-11-06T01:18:50.322820+00:00', 'data_version': 'v1'}
+{'answer': 'To determine the package with the most recent release, please provide the search tool name.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 29.645207920111716, 'started_at': '2026-11-06T01:18:50.322968+00:00', 'finished_at': '2026-11-06T01:18:50.352612+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find weather information as it is an unrelated question to the tools available. Please ask a question related to vulnerability information.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 28.536582947708666, 'started_at': '2026-11-06T01:18:50.352631+00:00', 'finished_at': '2026-11-06T01:18:50.381152+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to resetting a laptop password. Please check the spelling or try a different search term.", 'is_cached': True, 'similarity': 1.0, 'latency_ms': 26.083333999849856, 'started_at': '2026-11-06T01:18:50.381177+00:00', 'finished_at': '2026-11-06T01:18:50.407248+00:00', 'data_version': 'v1'}
+Cache hit rate: 100.0% (10/10)
+Average cached latency: 282.427 ms
+Average non-cached latency: 0.000 ms
+
+--- Part 2 run: 2026-11-05 ---
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': False, 'similarity': None, 'latency_ms': 12138.049707980826, 'started_at': '2026-11-06T01:23:07.454415+00:00', 'finished_at': '2026-11-06T01:23:19.592444+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 1.0, 'latency_ms': 452.21262495033443, 'started_at': '2026-11-06T01:23:19.592736+00:00', 'finished_at': '2026-11-06T01:23:20.044924+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to the term 'requests' due to an error in the SQL query.", 'is_cached': False, 'similarity': 0.44094699621199995, 'latency_ms': 10108.507208060473, 'started_at': '2026-11-06T01:23:20.044993+00:00', 'finished_at': '2026-11-06T01:23:30.153433+00:00', 'data_version': 'v1'}
+{'answer': 'I encountered an error while trying to count the vulnerabilities related to the requests package. Please check the package name or try again later.', 'is_cached': False, 'similarity': 0.7505235672, 'latency_ms': 12365.114208078012, 'started_at': '2026-11-06T01:23:30.153538+00:00', 'finished_at': '2026-11-06T01:23:42.518506+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.9007599949837, 'latency_ms': 521.108707995154, 'started_at': '2026-11-06T01:23:42.518733+00:00', 'finished_at': '2026-11-06T01:23:43.039830+00:00', 'data_version': 'v1'}
+{'answer': 'Vulnerability ID 1 could not be found or accessed.', 'is_cached': True, 'similarity': 0.856689810753, 'latency_ms': 28.292833012528718, 'started_at': '2026-11-06T01:23:43.039859+00:00', 'finished_at': '2026-11-06T01:23:43.068142+00:00', 'data_version': 'v1'}
+{'answer': 'A team should prioritize a high-severity vulnerability by addressing it promptly to mitigate the risk of a security breach or exploit.', 'is_cached': False, 'similarity': 0.37471181154300004, 'latency_ms': 3506.892958073877, 'started_at': '2026-11-06T01:23:43.068164+00:00', 'finished_at': '2026-11-06T01:23:46.574733+00:00', 'data_version': 'v1'}
+{'answer': 'To determine the package with the most recent release, please provide the search tool name.', 'is_cached': False, 'similarity': 0.31073439121199997, 'latency_ms': 3643.2027500122786, 'started_at': '2026-11-06T01:23:46.575761+00:00', 'finished_at': '2026-11-06T01:23:50.218757+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find weather information as it is an unrelated question to the tools available. Please ask a question related to vulnerability information.", 'is_cached': False, 'similarity': 0.20481771230699997, 'latency_ms': 3895.1137909898534, 'started_at': '2026-11-06T01:23:50.219103+00:00', 'finished_at': '2026-11-06T01:23:54.114191+00:00', 'data_version': 'v1'}
+{'answer': "I couldn't find any vulnerabilities related to resetting a laptop password. Please check the spelling or try a different search term.", 'is_cached': False, 'similarity': 0.13694888353300005, 'latency_ms': 18219.797665951774, 'started_at': '2026-11-06T01:23:54.114267+00:00', 'finished_at': '2026-11-06T01:24:12.333893+00:00', 'data_version': 'v1'}
+Cache hit rate: 30.0% (3/10)
+Average cached latency: 333.871 ms
+Average non-cached latency: 9125.240 ms
+
+
+--- Part 3.3 false-hit report ---
+## 3.3 False hit
+
+- Case: `similar_different_01`
+- Cached query: What is vulnerability ID 1?
+- Incoming query: What is vulnerability ID 2?
+- Similarity score: 0.9008
+- Threshold: 0.85
+- Cached answer returned: ID 1 is a SQL Injection vulnerability in requests.
+- Correct answer: ID 2 is a Remote Code Execution vulnerability.
+- Explanation: [observation about why the embedding confused these two different vulnerability records]
+
+--- Part 3.5 stale invalidation ---
+## 3.5 Stale answers and invalidation
+
+- Versioned record: `s4544_rel_vulnerability_1`
+- Query: What is the urgency score for vulnerability ID 1?
+- Original answer at `s4544-rel-v1`: Vulnerability ID 1 has urgency score 9.
+- Updated record value: urgency score `3`
+- Stale hit at unchanged version: Vulnerability ID 1 has urgency score 9.
+- Invalidation strategy: bump the data-version marker from `s4544-rel-v1` to `s4544-rel-v2` after the record update.
+- Refreshed answer after invalidation: Vulnerability ID 1 has urgency score 3.
+
+
+--- Part 4.1 repair demonstration: 2026-11-07 ---
+## 4.1 Evaluator repair demonstration
+
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+--- Part 4.1 repair demonstration: 2026-11-07 ---
+## 4.1 Evaluator repair demonstration
+
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+--- Part 4.2 lesson memory: 2026-11-07 ---
+## 4.2 Lesson memory demonstration
+
+- Lesson created after the failed answer: `lesson_001`
+- Lesson file: `reports/hw09/lessons.json`
+- Later question: Which version fixes the GitPython command-injection vulnerability?
+- Lessons loaded before answering: ['lesson_001']
+- Answer after lesson reuse: The fixed version is 3.1.51.
+- Lesson use count after reuse: 1
+
+--- Part 4.3 validation: 2026-11-07 ---
+## 4.3 Validated improvement
+
+- Validation cases: 7
+- Correct before lesson: 6/7
+- Correct after lesson: 7/7
+- Unrelated unsupported-answer regressions: 0
+- Lesson kept: `True`
+- Decision: The lesson is kept because failure cases improved or remained unchanged, previously correct answers remained correct, and the unrelated question did not receive an unsupported domain answer.
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `2`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `3`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+### 4.4 Final held-out test comparison
+The same `test_data.json` was used independently for all four variants.
+
+| Variant | Correct answers | Incorrect answers | Average attempts | Average latency (ms) |
+|---|---:|---:|---:|---:|
+| Baseline | 6 | 2 | 1.00 | 0.006 |
+| Evaluator Repair | 8 | 0 | 1.25 | 0.004 |
+| Lesson Memory | 8 | 0 | 1.00 | 0.003 |
+| Validated Improvement | 8 | 0 | 1.00 | 0.003 |
+
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `4`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+### 4.4 Final held-out test comparison
+The same `test_data.json` was used independently for all four variants.
+
+| Variant | Correct answers | Incorrect answers | Average attempts | Average latency (ms) |
+|---|---:|---:|---:|---:|
+| Baseline | 6 | 2 | 1.00 | 0.004 |
+| Evaluator Repair | 8 | 0 | 1.25 | 0.003 |
+| Lesson Memory | 8 | 0 | 1.00 | 0.002 |
+| Validated Improvement | 8 | 0 | 1.00 | 0.002 |
+
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+- Final response: `GitPython has a HIGH severity issue. The fixed version is 3.1.51.`
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `5`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+### 4.4 Final held-out test comparison
+The same `test_data.json` was used independently for all four variants.
+
+| Variant | Correct answers | Incorrect answers | Average attempts | Average latency (ms) |
+|---|---:|---:|---:|---:|
+| Baseline | 6 | 2 | 1.00 | 0.005 |
+| Evaluator Repair | 8 | 0 | 1.25 | 0.004 |
+| Lesson Memory | 8 | 0 | 1.00 | 0.003 |
+| Validated Improvement | 8 | 0 | 1.00 | 0.003 |
+
+
+### Part 4 explanation
+
+- Agent communication: the Answering Agent produces an answer, then the Evaluator Agent compares it with the reference dataset and returns `PASS` or `REVISE` feedback.
+- Stopping condition: the repair workflow allows at most two attempts and returns the second result even if it is still `REVISE`.
+- Lesson reuse: a repeated failure creates a structured lesson in `lessons.json`; later questions load matching lessons before answering and increment `use_count`.
+- Validation process: the same validation questions are evaluated before and after the lesson. The lesson is kept only when results improve or remain unchanged and unrelated questions do not receive unsupported domain facts.
+- Limitation: this implementation uses deterministic local answering rules rather than a fully generative model, so the measured results may not represent the variability of a production LLM agent.

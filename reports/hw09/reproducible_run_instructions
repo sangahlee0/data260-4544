@@ -1,0 +1,86 @@
+# HW9 Reproducible Run Instructions
+
+Run these commands from the `data260-4544/` project root.
+
+## Install dependencies
+
+```bash
+python -m pip install -r code/requirements-hw08.txt
+```
+
+## Start Redis and Ollama
+
+Start Redis with Homebrew:
+
+```bash
+brew services start redis
+redis-cli ping
+```
+
+Expected output:
+
+```text
+PONG
+```
+
+Start Ollama in a separate terminal:
+
+```bash
+ollama serve
+ollama pull qwen2.5:3b
+```
+
+## Run Part 1
+
+```bash
+PYTHONPATH=code python code/hw09_part1_counter.py
+```
+
+## Run Part 2
+
+```bash
+PYTHONPATH=code \
+REDIS_URL=redis://localhost:6379/0 \
+SMOL_MODEL=qwen2.5:3b \
+python code/hw09_part2_semantic_cache.py
+```
+
+## Run Part 3
+
+Run the threshold sweep:
+
+```bash
+PYTHONPATH=code \
+REDIS_URL=redis://localhost:6379/0 \
+python code/hw09_part3_threshold_sweep.py
+```
+
+Run the false-hit demonstration:
+
+```bash
+PYTHONPATH=code \
+REDIS_URL=redis://localhost:6379/0 \
+python code/hw09_part3_false_hit.py
+```
+
+Run stale-answer invalidation:
+
+```bash
+PYTHONPATH=code \
+REDIS_URL=redis://localhost:6379/0 \
+python code/hw09_part3_stale_invalidation.py
+```
+
+## Run Part 4
+
+```bash
+PYTHONPATH=code python code/hw09_part4.py
+```
+
+## Run the HW9 verification script
+
+```bash
+PYTHONPATH=code python code/verify-hw09.py
+```
+
+The verification script writes `reports/hw09/verification.json`.
