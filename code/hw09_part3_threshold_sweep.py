@@ -65,6 +65,22 @@ def nearest(client: redis.Redis, index_name: str, vector: bytes) -> float | None
     return 1.0 - float(result.docs[0].distance)
 
 
+def seed_case(client: redis.Redis, embedder: SentenceTransformer, case: dict) -> None:
+    for key in client.scan_iter(match=f"{SWEEP_PREFIX}*"):
+        client.delete(key)
+    vector = embedder.encode(
+        case["cached_query"], normalize_embeddings=True, convert_to_numpy=True
+    )
+    client.hset(
+        f"{SWEEP_PREFIX}{case['id']}",
+        mapping={
+            "query": case["cached_query"],
+            "case_id": case["id"],
+            "embedding": vector.astype("float32").tobytes(),
+        },
+    )
+
+
 def main() -> None:
     cases = yaml.safe_load(CASES_PATH.read_text(encoding="utf-8"))
     client = redis.Redis.from_url(REDIS_URL, decode_responses=False)
@@ -73,25 +89,12 @@ def main() -> None:
     )
     ensure_index(client)
 
-    # Seed exactly one cached record for each labeled case's cached query.
-    for case in cases:
-        vector = embedder.encode(
-            case["cached_query"], normalize_embeddings=True, convert_to_numpy=True
-        )
-        client.hset(
-            f"{SWEEP_PREFIX}{case['id']}",
-            mapping={
-                "query": case["cached_query"],
-                "case_id": case["id"],
-                "embedding": vector.astype("float32").tobytes(),
-            },
-        )
-
     rows = []
     for threshold in THRESHOLDS:
         true_hits = false_hits = 0
         latencies = []
         for case in cases:
+            seed_case(client, embedder, case)
             started = time.perf_counter()
             vector = embedder.encode(
                 case["incoming_query"], normalize_embeddings=True, convert_to_numpy=True

@@ -1,0 +1,42 @@
+{
+  "homework": 9,
+  "sid4": "4544",
+  "prefix": "s4544",
+  "model": "qwen2.5:3b",
+  "seed": 4544,
+  "verify_seed": 264544,
+  "timestamp": "2026-11-08T00:09:42.043999+00:00",
+  "checks": [
+    {
+      "name": "required_code_files",
+      "pass": true,
+      "detail": "All HW9 code files exist."
+    },
+    {
+      "name": "cache_case_labels",
+      "pass": true,
+      "detail": "Counts: {'exact_duplicate': 10, 'paraphrase': 10, 'similar_different_answer': 10, 'unrelated': 10}"
+    },
+    {
+      "name": "threshold_results",
+      "pass": true,
+      "detail": "Thresholds: [0.75, 0.8, 0.85, 0.9, 0.95]"
+    },
+    {
+      "name": "part3_reports",
+      "pass": true,
+      "detail": "Sections 3.2 through 3.5 are present."
+    },
+    {
+      "name": "part4_json_artifacts",
+      "pass": true,
+      "detail": "Lengths: {'reference_data.json': 2, 'training_data.json': 6, 'validation_data.json': 7, 'test_data.json': 8, 'lessons.json': 1}"
+    },
+    {
+      "name": "part4_workflow_and_variants",
+      "pass": true,
+      "detail": "Answering/Evaluator agents and four variants are present."
+    }
+  ],
+  "all_passed": true
+}

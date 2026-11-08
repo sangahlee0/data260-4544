@@ -1,0 +1,24 @@
+{
+  "domain": "open-source package vulnerabilities",
+  "records": [
+    {
+      "id": "GHSA-2f96-g7mh-g2hx",
+      "package": "GitPython",
+      "aliases": ["CVE-2026-67325", "PYSEC-2026-3836"],
+      "summary": "Command injection through Git long-option prefix abbreviation.",
+      "severity": "HIGH",
+      "fixed_version": "3.1.51",
+      "affected_until": "3.1.50",
+      "weaponizable_options": ["upload-pack", "receive-pack", "exec"]
+    },
+    {
+      "id": "GHSA-2cpx-427x-q2c6",
+      "package": "tensorflow",
+      "aliases": ["CVE-2021-29523", "PYSEC-2021-160"],
+      "summary": "Denial of service through a CHECK-fail in AddManySparseToTensorsMap.",
+      "severity": "LOW",
+      "fixed_version": "2.1.4",
+      "affected_until": "2.1.3"
+    }
+  ]
+}

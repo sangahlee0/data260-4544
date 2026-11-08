@@ -174,3 +174,246 @@ Average non-cached latency: 0.000 ms
 Cache hit rate: 30.0% (3/10)
 Average cached latency: 333.871 ms
 Average non-cached latency: 9125.240 ms
+
+
+--- Part 3.3 false-hit report ---
+## 3.3 False hit
+
+- Case: `similar_different_01`
+- Cached query: What is vulnerability ID 1?
+- Incoming query: What is vulnerability ID 2?
+- Similarity score: 0.9008
+- Threshold: 0.85
+- Cached answer returned: ID 1 is a SQL Injection vulnerability in requests.
+- Correct answer: ID 2 is a Remote Code Execution vulnerability.
+- Explanation: [observation about why the embedding confused these two different vulnerability records]
+
+--- Part 3.5 stale invalidation ---
+## 3.5 Stale answers and invalidation
+
+- Versioned record: `s4544_rel_vulnerability_1`
+- Query: What is the urgency score for vulnerability ID 1?
+- Original answer at `s4544-rel-v1`: Vulnerability ID 1 has urgency score 9.
+- Updated record value: urgency score `3`
+- Stale hit at unchanged version: Vulnerability ID 1 has urgency score 9.
+- Invalidation strategy: bump the data-version marker from `s4544-rel-v1` to `s4544-rel-v2` after the record update.
+- Refreshed answer after invalidation: Vulnerability ID 1 has urgency score 3.
+
+
+--- Part 4.1 repair demonstration: 2026-11-07 ---
+## 4.1 Evaluator repair demonstration
+
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+--- Part 4.1 repair demonstration: 2026-11-07 ---
+## 4.1 Evaluator repair demonstration
+
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+--- Part 4.2 lesson memory: 2026-11-07 ---
+## 4.2 Lesson memory demonstration
+
+- Lesson created after the failed answer: `lesson_001`
+- Lesson file: `reports/hw09/lessons.json`
+- Later question: Which version fixes the GitPython command-injection vulnerability?
+- Lessons loaded before answering: ['lesson_001']
+- Answer after lesson reuse: The fixed version is 3.1.51.
+- Lesson use count after reuse: 1
+
+--- Part 4.3 validation: 2026-11-07 ---
+## 4.3 Validated improvement
+
+- Validation cases: 7
+- Correct before lesson: 6/7
+- Correct after lesson: 7/7
+- Unrelated unsupported-answer regressions: 0
+- Lesson kept: `True`
+- Decision: The lesson is kept because failure cases improved or remained unchanged, previously correct answers remained correct, and the unrelated question did not receive an unsupported domain answer.
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `2`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `3`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+### 4.4 Final held-out test comparison
+The same `test_data.json` was used independently for all four variants.
+
+| Variant | Correct answers | Incorrect answers | Average attempts | Average latency (ms) |
+|---|---:|---:|---:|---:|
+| Baseline | 6 | 2 | 1.00 | 0.006 |
+| Evaluator Repair | 8 | 0 | 1.25 | 0.004 |
+| Lesson Memory | 8 | 0 | 1.00 | 0.003 |
+| Validated Improvement | 8 | 0 | 1.00 | 0.003 |
+
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `4`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+### 4.4 Final held-out test comparison
+The same `test_data.json` was used independently for all four variants.
+
+| Variant | Correct answers | Incorrect answers | Average attempts | Average latency (ms) |
+|---|---:|---:|---:|---:|
+| Baseline | 6 | 2 | 1.00 | 0.004 |
+| Evaluator Repair | 8 | 0 | 1.25 | 0.003 |
+| Lesson Memory | 8 | 0 | 1.00 | 0.002 |
+| Validated Improvement | 8 | 0 | 1.00 | 0.002 |
+
+
+--- Part 4 combined run: 2026-11-07 ---
+## Part 4 combined run
+
+### 4.1 Evaluator repair
+```json
+{
+  "question": "Which version fixes the GitPython command-injection vulnerability?",
+  "initial_answer": "GitPython is associated with GHSA-2f96-g7mh-g2hx.",
+  "feedback": "Include the fixed version: 3.1.51.",
+  "revised_answer": "GitPython has a HIGH severity issue. The fixed version is 3.1.51.",
+  "final_evaluation": {
+    "result": "PASS",
+    "explanation": "The answer includes the required fixed version.",
+    "feedback": ""
+  },
+  "attempts": 2
+}
+```
+- Final response: `GitPython has a HIGH severity issue. The fixed version is 3.1.51.`
+
+### 4.2 Lesson memory
+- Lessons loaded: `['lesson_001']`
+- Later answer: GitPython has a HIGH severity issue. The fixed version is 3.1.51.
+- Lesson use count: `5`
+
+### 4.3 Validated improvement
+- Correct before lesson: `6/7`
+- Correct after lesson: `7/7`
+- Unrelated regressions: `0`
+- Lesson kept: `True`
+
+### 4.4 Final held-out test comparison
+The same `test_data.json` was used independently for all four variants.
+
+| Variant | Correct answers | Incorrect answers | Average attempts | Average latency (ms) |
+|---|---:|---:|---:|---:|
+| Baseline | 6 | 2 | 1.00 | 0.005 |
+| Evaluator Repair | 8 | 0 | 1.25 | 0.004 |
+| Lesson Memory | 8 | 0 | 1.00 | 0.003 |
+| Validated Improvement | 8 | 0 | 1.00 | 0.003 |
+
+
+### Part 4 explanation
+
+- Agent communication: the Answering Agent produces an answer, then the Evaluator Agent compares it with the reference dataset and returns `PASS` or `REVISE` feedback.
+- Stopping condition: the repair workflow allows at most two attempts and returns the second result even if it is still `REVISE`.
+- Lesson reuse: a repeated failure creates a structured lesson in `lessons.json`; later questions load matching lessons before answering and increment `use_count`.
+- Validation process: the same validation questions are evaluated before and after the lesson. The lesson is kept only when results improve or remain unchanged and unrelated questions do not receive unsupported domain facts.
+- Limitation: this implementation uses deterministic local answering rules rather than a fully generative model, so the measured results may not represent the variability of a production LLM agent.
