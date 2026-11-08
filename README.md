@@ -97,6 +97,13 @@ data260-4544/
 │   ├── verify-hw06.py
 │   ├── verify-hw07.py
 │   ├── verify-hw08.py
+│   ├── hw09_part1_counter.py
+│   ├── hw09_part2_semantic_cache.py
+│   ├── hw09_part3_threshold_sweep.py
+│   ├── hw09_part3_false_hit.py
+│   ├── hw09_part3_stale_invalidation.py
+│   ├── hw09_part4.py
+│   ├── verify-hw09.py
 │   ├── workflow.py
 │   └── web_application/
 │       ├── index.html
@@ -241,7 +248,7 @@ data260-4544/
 │   │   │   └── tool_reliability.json
 │   │   ├── reproducible_run_instructions.md
 │   │   └── verification.json
-│   └── hw08/
+│   ├── hw08/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
@@ -252,6 +259,21 @@ data260-4544/
 │       │   ├── ordering_results.json
 │       │   └── poison_message.json
 │       ├── reproducible_run_instructions
+│       └── verification.json
+│   └── hw09/
+│       ├── AI_USE.md
+│       ├── METRICS.md
+│       ├── RUN_LOG.txt
+│       ├── cache_cases.yaml
+│       ├── lessons.json
+│       ├── raw/
+│       │   └── agent_runs.jsonl
+│       ├── reference_data.json
+│       ├── reproducible_run_instructions
+│       ├── test_data.json
+│       ├── threshold_results.csv
+│       ├── training_data.json
+│       ├── validation_data.json
 │       └── verification.json
 ├── src/
 │   └── model_client.py
