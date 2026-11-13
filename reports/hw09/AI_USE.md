@@ -9,7 +9,6 @@ After asking for an example of how the results would look like, the first thresh
 
 ### (3) How you detected the problem or verified the result;
 I reviewed the generated false-hit report and compared it with `cache_cases.yaml`. The report labeled both queries as vulnerability ID 2 even though the selected case was supposed to compare ID 1 with ID 2. I corrected the sweep to isolate one cached query per case, reran it, and replaced the threshold results with the corrected CSV values.
-
 I also verified the 40 cache cases by category, the Part 4 validation counts, the two-attempt repair sequence, and the lesson reuse count in the terminal output and report files.
 
 ### (4) What you changed and why it works now;

@@ -5,3 +5,5 @@ requests
 redis
 sentence-transformers
 pyyaml
+streamlit
+pandas
