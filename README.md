@@ -104,6 +104,9 @@ data260-4544/
 │   ├── hw09_part3_stale_invalidation.py
 │   ├── hw09_part4.py
 │   ├── verify-hw09.py
+│   ├── hw10_evaluate.py
+│   ├── hw10_dashboard.py
+│   ├── verify-hw10.py
 │   ├── workflow.py
 │   └── web_application/
 │       ├── index.html
@@ -260,7 +263,7 @@ data260-4544/
 │       │   └── poison_message.json
 │       ├── reproducible_run_instructions
 │       └── verification.json
-│   └── hw09/
+│   ├── hw09/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
@@ -275,6 +278,21 @@ data260-4544/
 │       ├── threshold_results.csv
 │       ├── training_data.json
 │       ├── validation_data.json
+│       └── verification.json
+│   └── hw10/
+│       ├── AI_USE.md
+│       ├── METRICS.md
+│       ├── RUN_LOG.txt
+│       ├── README.md
+│       ├── eval_cases.json
+│       ├── evaluation_results.json
+│       ├── human_labels.csv
+│       ├── judge_runs.json
+│       ├── judge_validation.json
+│       ├── latency_results.csv
+│       ├── metrics.json
+│       ├── reproducible_run_instructions
+│       ├── traces.jsonl
 │       └── verification.json
 ├── src/
 │   └── model_client.py

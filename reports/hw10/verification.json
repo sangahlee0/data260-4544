@@ -1,0 +1,45 @@
+{
+  "homework": 10,
+  "sid4": "4544",
+  "prefix": "s4544",
+  "model": "qwen2.5:3b",
+  "timestamp": "2026-11-14T05:37:03.129517+00:00",
+  "checks": [
+    {
+      "name": "required_hw10_files",
+      "pass": true,
+      "detail": "All required HW10 files exist."
+    },
+    {
+      "name": "frozen_cases_and_labels",
+      "pass": true,
+      "detail": "Cases: 20, labels: 20"
+    },
+    {
+      "name": "judge_validation_statistics",
+      "pass": true,
+      "detail": "Raw comparison rows: 20"
+    },
+    {
+      "name": "three_judge_runs",
+      "pass": true,
+      "detail": "Runs: 3, rows per run: [20, 20, 20]"
+    },
+    {
+      "name": "structured_trace_spans",
+      "pass": true,
+      "detail": "Span count: 363"
+    },
+    {
+      "name": "fifty_cache_miss_requests",
+      "pass": true,
+      "detail": "Latency rows: 50"
+    },
+    {
+      "name": "trace_examples_and_latency_table",
+      "pass": true,
+      "detail": "Trace examples: ['cache_hit', 'cache_miss', 'failed'], stages: 6"
+    }
+  ],
+  "all_passed": true
+}
