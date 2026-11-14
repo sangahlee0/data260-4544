@@ -1,0 +1,62 @@
+# HW10 Reproducible Run Instructions
+
+Run all commands from the `data260-4544/` project root.
+
+## Install dependencies
+
+```bash
+python -m pip install -r code/requirements-hw08.txt
+```
+
+## Start the local judge model
+
+Make sure Ollama is running and the documented model is installed:
+
+```bash
+ollama serve
+ollama pull qwen2.5:3b
+```
+
+## Run Part 2 - Automated evaluation
+
+```bash
+python code/hw10_evaluate.py
+```
+
+This saves `evaluation_results.json` and appends the result to `RUN_LOG.txt`.
+
+## Run Part 3 - Judge validation
+
+The frozen `eval_cases.json` and `human_labels.csv` must not be changed after
+the judge run begins.
+
+```bash
+python code/hw10_evaluate.py --validate-judge
+```
+
+This runs the same 20 cases three times and saves `judge_runs.json` and
+`judge_validation.json`.
+
+## Run Part 4 - Tracing and latency analysis
+
+```bash
+python code/hw10_evaluate.py --tracing
+```
+
+This saves `traces.jsonl`, `latency_results.csv`, and `metrics.json`, and
+appends the trace and latency evidence to `RUN_LOG.txt`.
+
+## Run the HW10 verification script
+
+```bash
+python code/verify-hw10.py
+```
+
+The verifier writes `reports/hw10/verification.json`.
+
+## Open the dashboard
+
+```bash
+streamlit run code/hw10_dashboard.py
+```
+
