@@ -1,6 +1,10 @@
 from __future__ import annotations
+
+import argparse
+import csv
 import json
 import os
+import statistics
 import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
@@ -9,10 +13,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 REPORT_DIR = ROOT / "reports" / "hw10"
 OUTPUT_PATH = REPORT_DIR / "evaluation_results.json"
+RUN_LOG_PATH = REPORT_DIR / "RUN_LOG.txt"
 JUDGE_MODEL = os.environ.get("HW10_JUDGE_MODEL", "qwen2.5:3b")
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
 JUDGE_NAME = f"DeepEval-GEval:{JUDGE_MODEL}"
 JUDGE_TIMEOUT_SECONDS = 30
+
 
 def make_plan(question: str) -> list[str]:
     return [
@@ -21,16 +27,19 @@ def make_plan(question: str) -> list[str]:
         "Write a concise answer",
     ]
 
+
 def write_draft(question: str, plan: list[str]) -> str:
     return f"The question was: {question} The response follows this plan: {', '.join(plan)}."
+
 
 def review_draft(draft: str) -> dict[str, str]:
     if not draft.strip():
         return {"status": "rejected", "answer": "Draft was empty"}
     return {"status": "approved", "answer": draft}
 
+
 def deepeval_geval(kind: str, text: str, question: str) -> dict:
-    #Run DeepEval GEval with the local Ollama model and convert 0-1 to 1-5 for the assignment
+    # Run DeepEval GEval with the local Ollama model and convert 0-1 to 1-5 for the assignment
     from deepeval.metrics import GEval
     from deepeval.models import OllamaModel
     from deepeval.test_case import LLMTestCase, SingleTurnParams
@@ -62,6 +71,7 @@ def deepeval_geval(kind: str, text: str, question: str) -> dict:
         "judge_source": "DeepEval GEval with Ollama",
     }
 
+
 def run_with_timeout(kind: str, text: str, question: str) -> dict:
     pool = ThreadPoolExecutor(max_workers=1)
     future = pool.submit(deepeval_geval, kind, text, question)
@@ -76,6 +86,7 @@ def run_with_timeout(kind: str, text: str, question: str) -> dict:
         raise RuntimeError(f"DeepEval GEval failed for {kind}: {exc}") from exc
     finally:
         pool.shutdown(wait=False, cancel_futures=True)
+
 
 def build_messages(question: str) -> tuple[dict, dict, dict]:
     correlation_id = str(uuid.uuid4())
@@ -107,15 +118,20 @@ def build_messages(question: str) -> tuple[dict, dict, dict]:
     }
     return planner_message, writer_message, final_message
 
+
 def evaluate_messages(planner: dict, writer: dict, final: dict) -> dict:
     required = (planner, writer, final)
     if any(not isinstance(message, dict) for message in required):
         raise ValueError("Planner, Writer, and Reviewer messages must be JSON objects")
     if not all(message.get("correlation_id") for message in required):
-        raise ValueError("Planner, Writer, and Reviewer messages require correlation_id")
+        raise ValueError(
+            "Planner, Writer, and Reviewer messages require correlation_id"
+        )
     ids = {planner["correlation_id"], writer["correlation_id"], final["correlation_id"]}
     if len(ids) != 1:
-        raise ValueError("Planner, Writer, and Reviewer messages do not share correlation_id")
+        raise ValueError(
+            "Planner, Writer, and Reviewer messages do not share correlation_id"
+        )
     if not planner.get("plan"):
         raise ValueError("Planner message is missing plan")
     if not writer.get("draft"):
@@ -131,14 +147,23 @@ def evaluate_messages(planner: dict, writer: dict, final: dict) -> dict:
     if difference > 0:
         interpretation = "The Reviewer output improved on the Writer draft."
     elif difference == 0:
-        interpretation = "The Reviewer output stayed at the same judged quality as the draft."
+        interpretation = (
+            "The Reviewer output stayed at the same judged quality as the draft."
+        )
     else:
         interpretation = "The Reviewer output scored lower than the Writer draft; coordination needs review."
 
     return {
         "correlation_id": planner["correlation_id"],
         "trace_id": planner["trace_id"],
-        "judge": {"name": JUDGE_NAME, "framework": "DeepEval", "metric": "GEval", "model": JUDGE_MODEL, "scale": "1-5", "timeout_seconds": JUDGE_TIMEOUT_SECONDS},
+        "judge": {
+            "name": JUDGE_NAME,
+            "framework": "DeepEval",
+            "metric": "GEval",
+            "model": JUDGE_MODEL,
+            "scale": "1-5",
+            "timeout_seconds": JUDGE_TIMEOUT_SECONDS,
+        },
         "question": question,
         "plan": planner,
         "draft": writer,
@@ -146,7 +171,10 @@ def evaluate_messages(planner: dict, writer: dict, final: dict) -> dict:
         "scores": {
             "plan_quality": plan_result,
             "writer_helpfulness": {**draft_result, "trace_id": writer["trace_id"]},
-            "final_answer_helpfulness": {**final_result, "final_answer": final["answer"]},
+            "final_answer_helpfulness": {
+                **final_result,
+                "final_answer": final["answer"],
+            },
             "final_vs_draft_improvement": {
                 "draft_score": draft_result["score"],
                 "final_score": final_result["score"],
@@ -156,7 +184,8 @@ def evaluate_messages(planner: dict, writer: dict, final: dict) -> dict:
         },
     }
 
-def main() -> None:
+
+def run_part2() -> None:
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     print("DATA260 HW10 Part 2")
     question = "How should a team prioritize a high-severity vulnerability?"
@@ -165,14 +194,201 @@ def main() -> None:
     output = {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "cases": [result],
-        "interpretation": result["scores"]["final_vs_draft_improvement"]["interpretation"],
+        "interpretation": result["scores"]["final_vs_draft_improvement"][
+            "interpretation"
+        ],
         "notes": "DeepEval GEval uses the local Ollama qwen2.5:3b model. The run stops with an error if a message is malformed or GEval times out/fails.",
     }
-    OUTPUT_PATH.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(output, indent=2))
+    output_text = json.dumps(output, indent=2)
+    OUTPUT_PATH.write_text(output_text + "\n", encoding="utf-8")
+    with RUN_LOG_PATH.open("a", encoding="utf-8") as log:
+        log.write("\n--- HW10 Part 2 automated evaluation ---\n")
+        log.write(output_text + "\n")
+    print(output_text)
     print(f"Saved evaluation evidence to {OUTPUT_PATH}")
+    print(f"Appended run log to {RUN_LOG_PATH}")
+
+
+###PART 3: Judge Validation
+CASES_PATH = REPORT_DIR / "eval_cases.json"
+LABELS_PATH = REPORT_DIR / "human_labels.csv"
+RAW_PATH = REPORT_DIR / "judge_runs.json"
+SUMMARY_PATH = REPORT_DIR / "judge_validation.json"
+METRICS_PATH = REPORT_DIR / "METRICS.md"
+
+
+def average_rank(values: list[float]) -> list[float]:
+    ordered = sorted(enumerate(values), key=lambda item: item[1])
+    ranks = [0.0] * len(values)
+    position = 0
+    while position < len(ordered):
+        end = position
+        while end + 1 < len(ordered) and ordered[end + 1][1] == ordered[position][1]:
+            end += 1
+        rank = (position + 1 + end + 1) / 2
+        for index in range(position, end + 1):
+            ranks[ordered[index][0]] = rank
+        position = end + 1
+    return ranks
+
+
+def spearman_correlation(left: list[float], right: list[float]) -> float:
+    left_ranks = average_rank(left)
+    right_ranks = average_rank(right)
+    left_mean = statistics.mean(left_ranks)
+    right_mean = statistics.mean(right_ranks)
+    numerator = sum(
+        (a - left_mean) * (b - right_mean) for a, b in zip(left_ranks, right_ranks)
+    )
+    left_sum = sum((a - left_mean) ** 2 for a in left_ranks)
+    right_sum = sum((b - right_mean) ** 2 for b in right_ranks)
+    denominator = (left_sum * right_sum) ** 0.5
+    return numerator / denominator if denominator else 0.0
+
+
+def load_validation_inputs() -> tuple[list[dict], dict[str, int]]:
+    cases = json.loads(CASES_PATH.read_text(encoding="utf-8"))
+    with LABELS_PATH.open(encoding="utf-8", newline="") as source:
+        labels = {
+            row["case_id"]: int(row["human_label"]) for row in csv.DictReader(source)
+        }
+    if len(cases) != 20 or len(labels) != 20:
+        raise ValueError("Part 3 requires exactly 20 frozen cases and 20 human labels")
+    if {case["case_id"] for case in cases} != set(labels):
+        raise ValueError("Every frozen case must have exactly one human label")
+    if any(label < 1 or label > 5 for label in labels.values()):
+        raise ValueError("Human labels must use the 1-5 scale")
+    return cases, labels
+
+
+def run_validation_judge(cases: list[dict], run_number: int) -> list[dict]:
+    rows = []
+    for case in cases:
+        result = run_with_timeout("answer", case["draft"], case["question"])
+        rows.append(
+            {
+                "run": run_number,
+                "case_id": case["case_id"],
+                "question": case["question"],
+                "draft": case["draft"],
+                "judge_score": result["score"],
+                "raw_geval_score": result["raw_geval_score"],
+                "reason": result["reason"],
+                "judge_source": result["judge_source"],
+            }
+        )
+        print(f"Run {run_number}/3 | {case['case_id']} | score={result['score']}")
+    return rows
+
+
+def run_part3() -> None:
+    print("Student: Sang Ah Lee | DATA260 HW10 Part 3")
+    cases, labels = load_validation_inputs()
+    runs = [run_validation_judge(cases, run_number) for run_number in (1, 2, 3)]
+    first_run = runs[0]
+    human_scores = [labels[row["case_id"]] for row in first_run]
+    judge_scores = [row["judge_score"] for row in first_run]
+    absolute_differences = [
+        abs(human - judge) for human, judge in zip(human_scores, judge_scores)
+    ]
+
+    by_case = {
+        case["case_id"]: [
+            {row["case_id"]: row for row in run}[case["case_id"]] for run in runs
+        ]
+        for case in cases
+    }
+    transitions = []
+    cases_with_change = 0
+    for rows in by_case.values():
+        scores = [row["judge_score"] for row in rows]
+        changes = [
+            abs(scores[index] - scores[index - 1]) for index in range(1, len(scores))
+        ]
+        transitions.extend(changes)
+        if any(change > 0 for change in changes):
+            cases_with_change += 1
+
+    summary = {
+        "judge": {
+            "framework": "DeepEval",
+            "metric": "GEval",
+            "model": JUDGE_MODEL,
+            "scale": "1-5",
+            "timeout_seconds": JUDGE_TIMEOUT_SECONDS,
+        },
+        "case_count": len(cases),
+        "spearman_correlation": round(
+            spearman_correlation(human_scores, judge_scores), 4
+        ),
+        "mean_absolute_difference": round(statistics.mean(absolute_differences), 4),
+        "repeatability": {
+            "runs": 3,
+            "cases_with_any_score_change": cases_with_change,
+            "score_change_rate_pct": round(cases_with_change / len(cases) * 100, 2),
+            "changed_transitions": sum(change > 0 for change in transitions),
+            "mean_absolute_change": round(statistics.mean(transitions), 4),
+            "maximum_absolute_change": max(transitions) if transitions else 0,
+        },
+        "trust_decision": "Do not use this judge as the sole deployment gate yet. Require a larger human-labeled set, agreement across multiple judge models, and review of high-impact disagreements first.",
+        "raw_case_data": [
+            {
+                "case_id": row["case_id"],
+                "human_label": labels[row["case_id"]],
+                "judge_score": row["judge_score"],
+                "absolute_difference": abs(labels[row["case_id"]] - row["judge_score"]),
+            }
+            for row in first_run
+        ],
+    }
+
+    RAW_PATH.write_text(json.dumps(runs, indent=2) + "\n", encoding="utf-8")
+    SUMMARY_PATH.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+    existing = (
+        json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
+        if OUTPUT_PATH.exists()
+        else {}
+    )
+    existing["judge_validation"] = summary
+    OUTPUT_PATH.write_text(json.dumps(existing, indent=2) + "\n", encoding="utf-8")
+    with METRICS_PATH.open("a", encoding="utf-8") as report:
+        report.write("\n## Part 3 - Validate the judge\n\n")
+        report.write(f"- Frozen cases: {len(cases)}\n")
+        report.write(
+            "- Human labels: `human_labels.csv`, committed before judge scores\n"
+        )
+        report.write(f"- Spearman correlation: {summary['spearman_correlation']}\n")
+        report.write(
+            f"- Mean absolute difference: {summary['mean_absolute_difference']}\n"
+        )
+        report.write(
+            f"- Repeatability: {cases_with_change}/{len(cases)} cases changed across the three runs ({summary['repeatability']['score_change_rate_pct']}%).\n"
+        )
+        report.write(
+            f"- Mean absolute score change: {summary['repeatability']['mean_absolute_change']}\n"
+        )
+        report.write(
+            f"- Maximum absolute score change: {summary['repeatability']['maximum_absolute_change']}\n"
+        )
+        report.write(f"- Trust decision: {summary['trust_decision']}\n")
+    print(json.dumps(summary, indent=2))
+    print(f"Saved raw runs to {RAW_PATH}")
+    print(f"Saved validation summary to {SUMMARY_PATH}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Run DATA260 HW10 evaluation or judge validation"
+    )
+    parser.add_argument(
+        "--validate-judge", action="store_true", help="Run Part 3 judge validation"
+    )
+    args = parser.parse_args()
+    if args.validate_judge:
+        run_part3()
+    else:
+        run_part2()
 
 
 if __name__ == "__main__":
     main()
-
