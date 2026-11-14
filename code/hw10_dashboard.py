@@ -1,6 +1,8 @@
 from __future__ import annotations
+
 import json
 from pathlib import Path
+
 import pandas as pd
 import streamlit as st
 
@@ -11,12 +13,15 @@ EVALUATION_PATH = REPORT_DIR / "evaluation_results.json"
 TRACE_PATH = REPORT_DIR / "traces.jsonl"
 
 st.set_page_config(page_title="DATA260 HW10 Operations", layout="wide")
+
+
 @st.cache_data
 def load_json(path_string: str) -> dict:
     path = Path(path_string)
     if not path.exists():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
+
 
 @st.cache_data
 def load_jsonl(path_string: str) -> list[dict]:
@@ -55,8 +60,23 @@ if page == "Summary":
 
     st.subheader("Latency")
     latency = values.get("latency", {})
-    st.dataframe(pd.DataFrame([latency]) if latency else pd.DataFrame(), use_container_width=True)
-    st.caption("Each metric is labeled by the time window and local evidence file above.")
+    st.dataframe(
+        pd.DataFrame([latency]) if latency else pd.DataFrame(), use_container_width=True
+    )
+    stage_latency = metrics.get("stage_latency_experiment", [])
+    if stage_latency:
+        st.subheader("50-request cache-miss stage latency")
+        st.dataframe(pd.DataFrame(stage_latency), use_container_width=True)
+        st.write(
+            f"Dominant contributor: **{metrics.get('dominant_contributor', 'N/A')}**"
+        )
+    trace_examples = metrics.get("trace_examples", {})
+    if trace_examples:
+        st.subheader("Required trace examples")
+        st.json(trace_examples)
+    st.caption(
+        "Each metric is labeled by the time window and local evidence file above."
+    )
 
 elif page == "Evaluation":
     st.title("Evaluation")
@@ -64,7 +84,9 @@ elif page == "Evaluation":
         st.warning("No evaluation_results.json has been generated yet.")
     else:
         st.subheader("Pipeline evaluation")
-        st.dataframe(pd.DataFrame(evaluation.get("cases", [])), use_container_width=True)
+        st.dataframe(
+            pd.DataFrame(evaluation.get("cases", [])), use_container_width=True
+        )
         st.subheader("Judge validation")
         st.json(evaluation.get("judge_validation", {}))
         st.subheader("Interpretation")
@@ -73,16 +95,28 @@ elif page == "Evaluation":
 else:
     st.title("Trace lookup")
     trace_id = st.text_input("Enter trace_id")
-    trace_rows = [row for row in traces if not trace_id or row.get("trace_id") == trace_id]
+    trace_rows = [
+        row for row in traces if not trace_id or row.get("trace_id") == trace_id
+    ]
     if not trace_rows:
         st.info("Enter one of the available trace IDs, or generate traces first.")
     else:
         table = pd.DataFrame(trace_rows)
-        expected = ["trace_id", "stage", "start_time", "end_time", "duration_ms", "status", "error", "cache_path"]
-        st.dataframe(table[[c for c in expected if c in table.columns]], use_container_width=True)
+        expected = [
+            "trace_id",
+            "stage",
+            "start_time",
+            "end_time",
+            "duration_ms",
+            "status",
+            "error",
+            "cache_path",
+        ]
+        st.dataframe(
+            table[[c for c in expected if c in table.columns]], use_container_width=True
+        )
         st.subheader("Journey in stage order")
         for row in trace_rows:
             label = f"{row.get('stage', 'unknown')} - {row.get('status', 'unknown')}"
             with st.expander(label, expanded=True):
                 st.json(row)
-

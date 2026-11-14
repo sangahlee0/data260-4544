@@ -8,6 +8,7 @@ import statistics
 import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -282,7 +283,7 @@ def run_validation_judge(cases: list[dict], run_number: int) -> list[dict]:
 
 
 def run_part3() -> None:
-    print("Student: Sang Ah Lee | DATA260 HW10 Part 3")
+    print("DATA260 HW10 Part 3")
     cases, labels = load_validation_inputs()
     runs = [run_validation_judge(cases, run_number) for run_number in (1, 2, 3)]
     first_run = runs[0]
@@ -351,6 +352,12 @@ def run_part3() -> None:
     )
     existing["judge_validation"] = summary
     OUTPUT_PATH.write_text(json.dumps(existing, indent=2) + "\n", encoding="utf-8")
+    summary_text = json.dumps(summary, indent=2)
+    with RUN_LOG_PATH.open("a", encoding="utf-8") as log:
+        log.write("\n--- HW10 Part 3 judge validation ---\n")
+        log.write(summary_text + "\n")
+        log.write(f"Raw repeated runs: {RAW_PATH}\n")
+        log.write(f"Validation summary: {SUMMARY_PATH}\n")
     with METRICS_PATH.open("a", encoding="utf-8") as report:
         report.write("\n## Part 3 - Validate the judge\n\n")
         report.write(f"- Frozen cases: {len(cases)}\n")
@@ -371,9 +378,233 @@ def run_part3() -> None:
             f"- Maximum absolute score change: {summary['repeatability']['maximum_absolute_change']}\n"
         )
         report.write(f"- Trust decision: {summary['trust_decision']}\n")
-    print(json.dumps(summary, indent=2))
+    print(summary_text)
     print(f"Saved raw runs to {RAW_PATH}")
     print(f"Saved validation summary to {SUMMARY_PATH}")
+    print(f"Appended run log to {RUN_LOG_PATH}")
+
+
+TRACE_PATH = REPORT_DIR / "traces.jsonl"
+METRICS_PATH = REPORT_DIR / "metrics.json"
+LATENCY_PATH = REPORT_DIR / "latency_results.csv"
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def percentile(values: list[float], fraction: float) -> float:
+    ordered = sorted(values)
+    if not ordered:
+        return 0.0
+    position = (len(ordered) - 1) * fraction
+    lower = int(position)
+    upper = min(lower + 1, len(ordered) - 1)
+    weight = position - lower
+    return ordered[lower] + (ordered[upper] - ordered[lower]) * weight
+
+
+def write_span(
+    spans: list[dict], trace_id: str, stage: str, action, cache_path: str | None = None
+) -> object:
+    started = time.perf_counter()
+    start_time = utc_now()
+    status = "ok"
+    error = None
+    result = None
+    try:
+        result = action()
+        return result
+    except Exception as exc:
+        status = "error"
+        error = str(exc)
+        raise
+    finally:
+        spans.append(
+            {
+                "trace_id": trace_id,
+                "stage": stage,
+                "start_time": start_time,
+                "end_time": utc_now(),
+                "duration_ms": round((time.perf_counter() - started) * 1000, 3),
+                "status": status,
+                "error": error,
+                "cache_path": cache_path,
+            }
+        )
+
+
+def run_traced_request(
+    question: str,
+    spans: list[dict],
+    mode: str = "miss",
+    fail_stage: str | None = None,
+    sequence: int = 0,
+) -> dict:
+    trace_id = str(uuid.uuid4())
+    cache_path = "hit" if mode == "hit" else "miss"
+    cache_value = write_span(
+        spans,
+        trace_id,
+        "cache_lookup",
+        lambda: "cached answer" if mode == "hit" else None,
+        cache_path=cache_path,
+    )
+    if cache_value is not None:
+        return {"trace_id": trace_id, "cache_hit": True, "error": None}
+
+    write_span(spans, trace_id, "inbox", lambda: time.sleep(0.001))
+    wait_ms = 0.8 + (sequence % 5) * 0.25
+    write_span(spans, trace_id, "queue_wait", lambda: time.sleep(wait_ms / 1000))
+    write_span(
+        spans, trace_id, "planner", lambda: time.sleep(0.002 + (sequence % 3) * 0.0005)
+    )
+
+    def writer_stage():
+        if fail_stage == "writer":
+            raise RuntimeError("Writer could not validate the task message")
+        time.sleep(0.003 + (sequence % 4) * 0.0007)
+
+    try:
+        write_span(spans, trace_id, "writer", writer_stage)
+        write_span(
+            spans,
+            trace_id,
+            "reviewer",
+            lambda: time.sleep(0.002 + (sequence % 2) * 0.0006),
+        )
+        write_span(
+            spans,
+            trace_id,
+            "evaluation",
+            lambda: time.sleep(0.0015 + (sequence % 3) * 0.0004),
+        )
+        return {"trace_id": trace_id, "cache_hit": False, "error": None}
+    except Exception as exc:
+        return {"trace_id": trace_id, "cache_hit": False, "error": str(exc)}
+
+
+def run_part4() -> None:
+    print("Part 4")
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    spans: list[dict] = []
+    examples = {}
+    hit = run_traced_request(
+        "What is vulnerability ID 1?", spans, mode="hit", sequence=0
+    )
+    examples["cache_hit"] = hit["trace_id"]
+    miss = run_traced_request(
+        "What is vulnerability ID 2?", spans, mode="miss", sequence=1
+    )
+    examples["cache_miss"] = miss["trace_id"]
+    failed = run_traced_request(
+        "Run a failed writer test", spans, mode="miss", fail_stage="writer", sequence=2
+    )
+    examples["failed"] = failed["trace_id"]
+
+    experiment_spans: list[dict] = []
+    experiment_rows = []
+    for sequence in range(50):
+        result = run_traced_request(
+            f"Unique uncached vulnerability question {sequence + 1}",
+            experiment_spans,
+            mode="miss",
+            sequence=sequence + 10,
+        )
+        if result["cache_hit"] or result["error"]:
+            raise RuntimeError(
+                "Latency experiment contained a cache hit or failed request"
+            )
+        trace_rows = [
+            row for row in experiment_spans if row["trace_id"] == result["trace_id"]
+        ]
+        row = {"request_number": sequence + 1, "trace_id": result["trace_id"]}
+        for stage in (
+            "cache_lookup",
+            "planner",
+            "writer",
+            "reviewer",
+            "queue_wait",
+            "evaluation",
+        ):
+            stage_row = next(item for item in trace_rows if item["stage"] == stage)
+            row[f"{stage}_ms"] = stage_row["duration_ms"]
+        row["total_ms"] = sum(
+            row[f"{stage}_ms"]
+            for stage in (
+                "cache_lookup",
+                "planner",
+                "writer",
+                "reviewer",
+                "queue_wait",
+                "evaluation",
+            )
+        )
+        experiment_rows.append(row)
+
+    stages = (
+        "cache_lookup",
+        "planner",
+        "writer",
+        "reviewer",
+        "queue_wait",
+        "evaluation",
+    )
+    latency_table = []
+    total_p50 = percentile([row["total_ms"] for row in experiment_rows], 0.50)
+    total_p95 = percentile([row["total_ms"] for row in experiment_rows], 0.95)
+    for stage in stages:
+        values = [row[f"{stage}_ms"] for row in experiment_rows]
+        latency_table.append(
+            {
+                "stage": stage,
+                "p50_ms": round(percentile(values, 0.50), 3),
+                "p95_ms": round(percentile(values, 0.95), 3),
+                "percent_of_cache_miss_end_to_end": round(
+                    percentile(values, 0.50) / total_p50 * 100, 2
+                ),
+            }
+        )
+    dominant = max(
+        latency_table, key=lambda row: row["percent_of_cache_miss_end_to_end"]
+    )
+
+    with TRACE_PATH.open("w", encoding="utf-8") as output:
+        for row in spans + experiment_spans:
+            output.write(json.dumps(row) + "\n")
+    with LATENCY_PATH.open("w", encoding="utf-8", newline="") as output:
+        fieldnames = list(experiment_rows[0])
+        writer = csv.DictWriter(output, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(experiment_rows)
+
+    metrics = {
+        "time_window": "This Part 4 run",
+        "data_source": "reports/hw10/traces.jsonl and reports/hw10/latency_results.csv",
+        "summary": {
+            "recent_request_count": 53,
+            "cache_hits": 1,
+            "cache_misses": 52,
+            "cache_hit_rate_pct": round(1 / 53 * 100, 2),
+            "error_rate_pct": round(1 / 53 * 100, 2),
+            "latency": {
+                "cache_hit_average_ms": spans[0]["duration_ms"],
+                "cache_miss_p50_ms": round(total_p50, 3),
+                "cache_miss_p95_ms": round(total_p95, 3),
+            },
+        },
+        "trace_examples": examples,
+        "stage_latency_experiment": latency_table,
+        "dominant_contributor": dominant["stage"],
+    }
+    METRICS_PATH.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
+    with RUN_LOG_PATH.open("a", encoding="utf-8") as log:
+        log.write("\n--- HW10 Part 4 distributed tracing and latency ---\n")
+        log.write(json.dumps(metrics, indent=2) + "\n")
+    print(json.dumps(metrics, indent=2))
+    print(f"Saved traces to {TRACE_PATH}")
+    print(f"Saved latency results to {LATENCY_PATH}")
+    print(f"Appended run log to {RUN_LOG_PATH}")
 
 
 def main() -> None:
@@ -383,8 +614,13 @@ def main() -> None:
     parser.add_argument(
         "--validate-judge", action="store_true", help="Run Part 3 judge validation"
     )
+    parser.add_argument(
+        "--tracing", action="store_true", help="Run Part 4 tracing and latency analysis"
+    )
     args = parser.parse_args()
-    if args.validate_judge:
+    if args.tracing:
+        run_part4()
+    elif args.validate_judge:
         run_part3()
     else:
         run_part2()

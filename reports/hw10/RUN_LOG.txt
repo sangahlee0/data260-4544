@@ -1,0 +1,424 @@
+
+--- HW10 Part 2 automated evaluation ---
+{
+  "generated_at": "2026-11-14T01:32:16Z",
+  "cases": [
+    {
+      "correlation_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+      "trace_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+      "judge": {
+        "name": "DeepEval-GEval:qwen2.5:3b",
+        "framework": "DeepEval",
+        "metric": "GEval",
+        "model": "qwen2.5:3b",
+        "scale": "1-5",
+        "timeout_seconds": 30
+      },
+      "question": "How should a team prioritize a high-severity vulnerability?",
+      "plan": {
+        "correlation_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+        "trace_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+        "question": "How should a team prioritize a high-severity vulnerability?",
+        "plan": [
+          "Identify the main question",
+          "Use the available vulnerability information",
+          "Write a concise answer"
+        ],
+        "metadata": {
+          "topic": "s4544_tasks",
+          "stage": "planner"
+        }
+      },
+      "draft": {
+        "correlation_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+        "trace_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+        "question": "How should a team prioritize a high-severity vulnerability?",
+        "plan": [
+          "Identify the main question",
+          "Use the available vulnerability information",
+          "Write a concise answer"
+        ],
+        "draft": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer.",
+        "metadata": {
+          "topic": "s4544_drafts",
+          "stage": "writer"
+        }
+      },
+      "final": {
+        "correlation_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+        "trace_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf",
+        "question": "How should a team prioritize a high-severity vulnerability?",
+        "status": "approved",
+        "answer": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer.",
+        "metadata": {
+          "topic": "s4544_final",
+          "stage": "reviewer"
+        }
+      },
+      "scores": {
+        "plan_quality": {
+          "score": 1,
+          "raw_geval_score": 0.0,
+          "reason": "The actual output does not address the input question about prioritizing a high-severity vulnerability. It instead provides vague steps for identifying a question and writing a concise answer, which are unrelated to the specific task.",
+          "judge_source": "DeepEval GEval with Ollama"
+        },
+        "writer_helpfulness": {
+          "score": 1,
+          "raw_geval_score": 0.1,
+          "reason": "The Actual Output does not address the question posed in the Input. It merely restates the question without providing any guidance on how a team should prioritize a high-severity vulnerability.",
+          "judge_source": "DeepEval GEval with Ollama",
+          "trace_id": "5ac90259-d679-43f4-9d02-f114fd4ff2bf"
+        },
+        "final_answer_helpfulness": {
+          "score": 1,
+          "raw_geval_score": 0.1,
+          "reason": "The Actual Output does not address the question posed in the Input. It merely restates the question without providing any guidance on how a team should prioritize a high-severity vulnerability.",
+          "judge_source": "DeepEval GEval with Ollama",
+          "final_answer": "The question was: How should a team prioritize a high-severity vulnerability? The response follows this plan: Identify the main question, Use the available vulnerability information, Write a concise answer."
+        },
+        "final_vs_draft_improvement": {
+          "draft_score": 1,
+          "final_score": 1,
+          "difference": 0,
+          "interpretation": "The Reviewer output stayed at the same judged quality as the draft."
+        }
+      }
+    }
+  ],
+  "interpretation": "The Reviewer output stayed at the same judged quality as the draft.",
+  "notes": "DeepEval GEval uses the local Ollama qwen2.5:3b model. The run stops with an error if a message is malformed or GEval times out/fails."
+}
+
+--- HW10 Part 3 judge validation ---
+{
+  "judge": {
+    "framework": "DeepEval",
+    "metric": "GEval",
+    "model": "qwen2.5:3b",
+    "scale": "1-5",
+    "timeout_seconds": 30
+  },
+  "case_count": 20,
+  "spearman_correlation": 0.3143,
+  "mean_absolute_difference": 1.95,
+  "repeatability": {
+    "runs": 3,
+    "cases_with_any_score_change": 0,
+    "score_change_rate_pct": 0.0,
+    "changed_transitions": 0,
+    "mean_absolute_change": 0,
+    "maximum_absolute_change": 0
+  },
+  "trust_decision": "Do not use this judge as the sole deployment gate yet. Require a larger human-labeled set, agreement across multiple judge models, and review of high-impact disagreements first.",
+  "raw_case_data": [
+    {
+      "case_id": "case_01",
+      "human_label": 5,
+      "judge_score": 4,
+      "absolute_difference": 1
+    },
+    {
+      "case_id": "case_02",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_03",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_04",
+      "human_label": 5,
+      "judge_score": 4,
+      "absolute_difference": 1
+    },
+    {
+      "case_id": "case_05",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_06",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_07",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_08",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_09",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_10",
+      "human_label": 5,
+      "judge_score": 1,
+      "absolute_difference": 4
+    },
+    {
+      "case_id": "case_11",
+      "human_label": 2,
+      "judge_score": 1,
+      "absolute_difference": 1
+    },
+    {
+      "case_id": "case_12",
+      "human_label": 2,
+      "judge_score": 1,
+      "absolute_difference": 1
+    },
+    {
+      "case_id": "case_13",
+      "human_label": 2,
+      "judge_score": 1,
+      "absolute_difference": 1
+    },
+    {
+      "case_id": "case_14",
+      "human_label": 2,
+      "judge_score": 1,
+      "absolute_difference": 1
+    },
+    {
+      "case_id": "case_15",
+      "human_label": 2,
+      "judge_score": 1,
+      "absolute_difference": 1
+    },
+    {
+      "case_id": "case_16",
+      "human_label": 1,
+      "judge_score": 1,
+      "absolute_difference": 0
+    },
+    {
+      "case_id": "case_17",
+      "human_label": 1,
+      "judge_score": 1,
+      "absolute_difference": 0
+    },
+    {
+      "case_id": "case_18",
+      "human_label": 1,
+      "judge_score": 1,
+      "absolute_difference": 0
+    },
+    {
+      "case_id": "case_19",
+      "human_label": 1,
+      "judge_score": 1,
+      "absolute_difference": 0
+    },
+    {
+      "case_id": "case_20",
+      "human_label": 1,
+      "judge_score": 1,
+      "absolute_difference": 0
+    }
+  ]
+}
+Raw repeated runs: /Users/sangah/Desktop/Data260/data260-4544/reports/hw10/judge_runs.json
+Validation summary: /Users/sangah/Desktop/Data260/data260-4544/reports/hw10/judge_validation.json
+
+--- HW10 Part 4 distributed tracing and latency ---
+{
+  "time_window": "This Part 4 run",
+  "data_source": "reports/hw10/traces.jsonl and reports/hw10/latency_results.csv",
+  "summary": {
+    "recent_request_count": 53,
+    "cache_hits": 1,
+    "cache_misses": 52,
+    "cache_hit_rate_pct": 1.89,
+    "error_rate_pct": 1.89,
+    "latency": {
+      "cache_hit_average_ms": 0.125,
+      "cache_miss_p50_ms": 15.128,
+      "cache_miss_p95_ms": 17.552
+    }
+  },
+  "trace_examples": {
+    "cache_hit": "11ab4c84-9254-4154-820c-4186bbf5716b",
+    "cache_miss": "51304d63-8696-42e2-a597-e00aa1caa80e",
+    "failed": "d1cafe0d-2adf-4803-a533-d6445d129007"
+  },
+  "stage_latency_experiment": [
+    {
+      "stage": "cache_lookup",
+      "p50_ms": 0.005,
+      "p95_ms": 0.018,
+      "percent_of_cache_miss_end_to_end": 0.04
+    },
+    {
+      "stage": "planner",
+      "p50_ms": 3.141,
+      "p95_ms": 3.795,
+      "percent_of_cache_miss_end_to_end": 20.76
+    },
+    {
+      "stage": "writer",
+      "p50_ms": 5.123,
+      "p95_ms": 6.421,
+      "percent_of_cache_miss_end_to_end": 33.87
+    },
+    {
+      "stage": "reviewer",
+      "p50_ms": 2.667,
+      "p95_ms": 3.301,
+      "percent_of_cache_miss_end_to_end": 17.63
+    },
+    {
+      "stage": "queue_wait",
+      "p50_ms": 1.643,
+      "p95_ms": 2.282,
+      "percent_of_cache_miss_end_to_end": 10.86
+    },
+    {
+      "stage": "evaluation",
+      "p50_ms": 2.394,
+      "p95_ms": 2.936,
+      "percent_of_cache_miss_end_to_end": 15.83
+    }
+  ],
+  "dominant_contributor": "writer",
+  "optimization_first": "Optimize writer first because it is the largest p50 share of cache-miss end-to-end latency."
+}
+
+--- HW10 Part 4 distributed tracing and latency ---
+{
+  "time_window": "This Part 4 run",
+  "data_source": "reports/hw10/traces.jsonl and reports/hw10/latency_results.csv",
+  "summary": {
+    "recent_request_count": 53,
+    "cache_hits": 1,
+    "cache_misses": 52,
+    "cache_hit_rate_pct": 1.89,
+    "error_rate_pct": 1.89,
+    "latency": {
+      "cache_hit_average_ms": 0.114,
+      "cache_miss_p50_ms": 15.142,
+      "cache_miss_p95_ms": 17.814
+    }
+  },
+  "trace_examples": {
+    "cache_hit": "76c09fa5-2feb-489f-b252-3ffc2b2f55e5",
+    "cache_miss": "93bb9d74-6876-4811-98b6-b248f5a00da9",
+    "failed": "22d7cf17-cb04-43ef-ae7b-a06c30a07630"
+  },
+  "stage_latency_experiment": [
+    {
+      "stage": "cache_lookup",
+      "p50_ms": 0.005,
+      "p95_ms": 0.008,
+      "percent_of_cache_miss_end_to_end": 0.03
+    },
+    {
+      "stage": "planner",
+      "p50_ms": 3.148,
+      "p95_ms": 3.794,
+      "percent_of_cache_miss_end_to_end": 20.79
+    },
+    {
+      "stage": "writer",
+      "p50_ms": 5.463,
+      "p95_ms": 6.406,
+      "percent_of_cache_miss_end_to_end": 36.08
+    },
+    {
+      "stage": "reviewer",
+      "p50_ms": 2.754,
+      "p95_ms": 3.287,
+      "percent_of_cache_miss_end_to_end": 18.19
+    },
+    {
+      "stage": "queue_wait",
+      "p50_ms": 1.649,
+      "p95_ms": 2.285,
+      "percent_of_cache_miss_end_to_end": 10.89
+    },
+    {
+      "stage": "evaluation",
+      "p50_ms": 2.394,
+      "p95_ms": 2.909,
+      "percent_of_cache_miss_end_to_end": 15.81
+    }
+  ],
+  "dominant_contributor": "writer"
+}
+
+--- HW10 Part 4 distributed tracing and latency ---
+{
+  "time_window": "This Part 4 run",
+  "data_source": "reports/hw10/traces.jsonl and reports/hw10/latency_results.csv",
+  "summary": {
+    "recent_request_count": 53,
+    "cache_hits": 1,
+    "cache_misses": 52,
+    "cache_hit_rate_pct": 1.89,
+    "error_rate_pct": 1.89,
+    "latency": {
+      "cache_hit_average_ms": 0.426,
+      "cache_miss_p50_ms": 15.146,
+      "cache_miss_p95_ms": 17.834
+    }
+  },
+  "trace_examples": {
+    "cache_hit": "111d3591-6e9b-4ee3-8f21-dac6374cd6a5",
+    "cache_miss": "954b5569-8624-4221-9fd7-d109c423b196",
+    "failed": "72b44b38-9a02-4ea7-91b9-40c5bec53284"
+  },
+  "stage_latency_experiment": [
+    {
+      "stage": "cache_lookup",
+      "p50_ms": 0.004,
+      "p95_ms": 0.008,
+      "percent_of_cache_miss_end_to_end": 0.03
+    },
+    {
+      "stage": "planner",
+      "p50_ms": 3.14,
+      "p95_ms": 3.779,
+      "percent_of_cache_miss_end_to_end": 20.73
+    },
+    {
+      "stage": "writer",
+      "p50_ms": 5.51,
+      "p95_ms": 6.402,
+      "percent_of_cache_miss_end_to_end": 36.38
+    },
+    {
+      "stage": "reviewer",
+      "p50_ms": 2.85,
+      "p95_ms": 3.29,
+      "percent_of_cache_miss_end_to_end": 18.82
+    },
+    {
+      "stage": "queue_wait",
+      "p50_ms": 1.644,
+      "p95_ms": 2.264,
+      "percent_of_cache_miss_end_to_end": 10.85
+    },
+    {
+      "stage": "evaluation",
+      "p50_ms": 2.388,
+      "p95_ms": 2.899,
+      "percent_of_cache_miss_end_to_end": 15.76
+    }
+  ],
+  "dominant_contributor": "writer"
+}

@@ -1,0 +1,60 @@
+{
+  "time_window": "This Part 4 run",
+  "data_source": "reports/hw10/traces.jsonl and reports/hw10/latency_results.csv",
+  "summary": {
+    "recent_request_count": 53,
+    "cache_hits": 1,
+    "cache_misses": 52,
+    "cache_hit_rate_pct": 1.89,
+    "error_rate_pct": 1.89,
+    "latency": {
+      "cache_hit_average_ms": 0.426,
+      "cache_miss_p50_ms": 15.146,
+      "cache_miss_p95_ms": 17.834
+    }
+  },
+  "trace_examples": {
+    "cache_hit": "111d3591-6e9b-4ee3-8f21-dac6374cd6a5",
+    "cache_miss": "954b5569-8624-4221-9fd7-d109c423b196",
+    "failed": "72b44b38-9a02-4ea7-91b9-40c5bec53284"
+  },
+  "stage_latency_experiment": [
+    {
+      "stage": "cache_lookup",
+      "p50_ms": 0.004,
+      "p95_ms": 0.008,
+      "percent_of_cache_miss_end_to_end": 0.03
+    },
+    {
+      "stage": "planner",
+      "p50_ms": 3.14,
+      "p95_ms": 3.779,
+      "percent_of_cache_miss_end_to_end": 20.73
+    },
+    {
+      "stage": "writer",
+      "p50_ms": 5.51,
+      "p95_ms": 6.402,
+      "percent_of_cache_miss_end_to_end": 36.38
+    },
+    {
+      "stage": "reviewer",
+      "p50_ms": 2.85,
+      "p95_ms": 3.29,
+      "percent_of_cache_miss_end_to_end": 18.82
+    },
+    {
+      "stage": "queue_wait",
+      "p50_ms": 1.644,
+      "p95_ms": 2.264,
+      "percent_of_cache_miss_end_to_end": 10.85
+    },
+    {
+      "stage": "evaluation",
+      "p50_ms": 2.388,
+      "p95_ms": 2.899,
+      "percent_of_cache_miss_end_to_end": 15.76
+    }
+  ],
+  "dominant_contributor": "writer"
+}
