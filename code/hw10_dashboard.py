@@ -14,6 +14,21 @@ TRACE_PATH = REPORT_DIR / "traces.jsonl"
 
 st.set_page_config(page_title="DATA260 HW10 Operations", layout="wide")
 
+st.markdown(
+    """
+    <style>
+        .stApp {
+            background-color: #e8f5e9;
+        }
+
+        [data-testid="stSidebar"] {
+            background-color: #c8e6c9;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 
 @st.cache_data
 def load_json(path_string: str) -> dict:
@@ -39,10 +54,11 @@ metrics = load_json(str(METRICS_PATH))
 evaluation = load_json(str(EVALUATION_PATH))
 traces = load_jsonl(str(TRACE_PATH))
 
-page = st.sidebar.radio("Page", ["Summary", "Evaluation", "Trace lookup"])
-st.sidebar.caption("Data source: local JSON/JSONL files in reports/hw10")
+summary_tab, evaluation_tab, trace_tab = st.tabs(
+    ["Summary", "Evaluation", "Trace lookup"]
+)
 
-if page == "Summary":
+with summary_tab:
     st.title("DATA260 HW10 Operations Dashboard")
     st.write("System health and evidence from the HW8/HW9 pipeline.")
 
@@ -78,7 +94,7 @@ if page == "Summary":
         "Each metric is labeled by the time window and local evidence file above."
     )
 
-elif page == "Evaluation":
+with evaluation_tab:
     st.title("Evaluation")
     if not evaluation:
         st.warning("No evaluation_results.json has been generated yet.")
@@ -92,7 +108,7 @@ elif page == "Evaluation":
         st.subheader("Interpretation")
         st.write(evaluation.get("interpretation", "Not available yet."))
 
-else:
+with trace_tab:
     st.title("Trace lookup")
     trace_id = st.text_input("Enter trace_id")
     trace_rows = [
