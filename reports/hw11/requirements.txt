@@ -1,0 +1,3 @@
+# HW11 Stock Watch uses only Python 3.8+ standard-library modules.
+# There are no pip dependencies.
+# External service used for the agent demonstrations: Meta Muse (free tier).
