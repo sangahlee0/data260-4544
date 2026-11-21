@@ -279,7 +279,7 @@ data260-4544/
 │       ├── training_data.json
 │       ├── validation_data.json
 │       └── verification.json
-│   └── hw10/
+│   ├── hw10/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
@@ -294,6 +294,25 @@ data260-4544/
 │       ├── reproducible_run_instructions
 │       ├── traces.jsonl
 │       └── verification.json
+│   └── hw11/
+│       ├── AI_USE.md
+│       ├── METRICS.md
+│       ├── Lee_HW11.pdf
+│       ├── requirements.txt
+│       └── verification.json
+├── stock-watch/
+│   ├── MUSE_SETUP.md
+│   ├── README.md
+│   ├── fixtures/
+│   │   ├── day1/
+│   │   ├── day2/
+│   │   └── hw_template/
+│   ├── golden/
+│   │   ├── gold_demo.json
+│   │   └── gold_template.json
+│   ├── policy.md
+│   ├── sources.json
+│   └── watch.py
 ├── src/
 │   └── model_client.py
 ├── .gitignore
@@ -304,22 +323,4 @@ data260-4544/
 ├── Makefile
 └── README.md
 ```
-
-## HW11 — Stock Watch
-
-The HW11 Stock Watch work is in `stock-watch/`. The main deliverables are:
-
-- `stock-watch/sources.json` — AAPL, NVDA, and MSFT tickers and SEC CIKs.
-- `stock-watch/policy.md` — materiality policy and decision rules.
-- `stock-watch/golden/gold_template.json` — 12 labeled cases, two per category.
-- `stock-watch/fixtures/hw_template/` — fictional RSS, SEC, and price fixtures.
-- `reports/hw11/AI_USE.md` — AI-use disclosure and analysis notes.
-- `reports/hw11/METRICS.md` — reported and explained golden-set metrics.
-- `reports/hw11/requirements.txt` — HW11 runtime requirements.
-- `code/verify-hw11.py` — local artifact verifier.
-- `reports/hw11/verification.json` — verifier output.
-
-The Muse schedule, chat demonstrations, trace output, and Usage-page evidence are
-external/manual evidence. A separate `reports/hw11/metrics.json` file is not required.
-
 
