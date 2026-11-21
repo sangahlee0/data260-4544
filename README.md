@@ -279,7 +279,7 @@ data260-4544/
 │       ├── training_data.json
 │       ├── validation_data.json
 │       └── verification.json
-│   └── hw10/
+│   ├── hw10/
 │       ├── AI_USE.md
 │       ├── METRICS.md
 │       ├── RUN_LOG.txt
@@ -294,6 +294,25 @@ data260-4544/
 │       ├── reproducible_run_instructions
 │       ├── traces.jsonl
 │       └── verification.json
+│   └── hw11/
+│       ├── AI_USE.md
+│       ├── METRICS.md
+│       ├── Lee_HW11.pdf
+│       ├── requirements.txt
+│       └── verification.json
+├── stock-watch/
+│   ├── MUSE_SETUP.md
+│   ├── README.md
+│   ├── fixtures/
+│   │   ├── day1/
+│   │   ├── day2/
+│   │   └── hw_template/
+│   ├── golden/
+│   │   ├── gold_demo.json
+│   │   └── gold_template.json
+│   ├── policy.md
+│   ├── sources.json
+│   └── watch.py
 ├── src/
 │   └── model_client.py
 ├── .gitignore
@@ -304,5 +323,4 @@ data260-4544/
 ├── Makefile
 └── README.md
 ```
-
 

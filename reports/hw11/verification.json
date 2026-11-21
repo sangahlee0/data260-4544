@@ -1,0 +1,33 @@
+{
+  "homework": 11,
+  "sid4": "4544",
+  "timestamp": "2026-11-21T02:52:56.007608+00:00",
+  "checks": [
+    {
+      "name": "required_files",
+      "pass": true,
+      "detail": "All HW11 files exist."
+    },
+    {
+      "name": "watchlist_and_ciks",
+      "pass": true,
+      "detail": "Tickers: ['AAPL', 'MSFT', 'NVDA'], CIKs: ['AAPL', 'MSFT', 'NVDA']"
+    },
+    {
+      "name": "materiality_policy",
+      "pass": true,
+      "detail": "Policy contains decision types, thresholds, and SEC item guidance."
+    },
+    {
+      "name": "golden_set",
+      "pass": true,
+      "detail": "Cases: 12, categories: {'adversarial': 2, 'ambiguous': 2, 'boundary': 2, 'interruption': 2, 'near_duplicate': 2, 'normal': 2}"
+    },
+    {
+      "name": "fixture_validity",
+      "pass": true,
+      "detail": "XML counts: {'newswire.xml': 12, 'edgar_8k.xml': 3}; CSV files parsed."
+    }
+  ],
+  "all_passed": true
+}
