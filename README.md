@@ -314,6 +314,7 @@ The HW11 Stock Watch work is in `stock-watch/`. The main deliverables are:
 - `stock-watch/golden/gold_template.json` — 12 labeled cases, two per category.
 - `stock-watch/fixtures/hw_template/` — fictional RSS, SEC, and price fixtures.
 - `reports/hw11/AI_USE.md` — AI-use disclosure and analysis notes.
+- `reports/hw11/METRICS.md` — reported and explained golden-set metrics.
 - `reports/hw11/requirements.txt` — HW11 runtime requirements.
 - `code/verify-hw11.py` — local artifact verifier.
 - `reports/hw11/verification.json` — verifier output.
